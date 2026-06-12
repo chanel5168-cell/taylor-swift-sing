@@ -39,6 +39,8 @@ border:1px solid var(--border);border-radius:10px;padding:10px 8px;font-size:14p
 .spk{background:var(--card2);border:1px solid var(--border);color:var(--lav);border-radius:8px;
 padding:5px 9px;font-size:16px;cursor:pointer;flex-shrink:0}
 .en2{font-weight:700;color:var(--mint)}.zh2{color:var(--dim);font-size:15px}
+.spd{background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:20px;padding:7px 13px;font-size:15px;cursor:pointer}
+.spd.on{background:linear-gradient(135deg,var(--pink),var(--lav));color:#1a0f22;font-weight:800;border-color:transparent}
 .chorus{background:var(--card2);border-left:3px solid var(--pink);border-radius:0 8px 8px 0;padding:8px 12px}
 .markbtn{width:100%;margin-top:10px;background:linear-gradient(135deg,var(--pink),var(--lav));
 border:none;color:#1a0f22;font-weight:800;font-size:16px;padding:11px;border-radius:11px;cursor:pointer}
@@ -53,6 +55,14 @@ border:none;color:#1a0f22;font-weight:800;font-size:16px;padding:11px;border-rad
 <div class="note">
 📅 <b>怎麼用</b>:建議每首花 1~2 週 → 一年唱遍 26 首。先聽 MV 抓旋律 → 看「歌曲故事」懂在唱什麼 → 記「重點單字」(點 🔊 聽發音)→ 練「副歌」→ 演唱會大合唱!<br>
 🔗 <b>完整歌詞 + 中文翻譯</b>點每首的連結看(版權關係不放整首);這裡教你<b>看懂 + 唱得出來</b>。
+</div>
+
+<div class="note" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+  <span style="font-weight:700">🔊 發音語速</span>
+  <button class="spd" data-r="0.5" onclick="setRate(0.5)">🐢 很慢</button>
+  <button class="spd" data-r="0.7" onclick="setRate(0.7)">🚶 慢</button>
+  <button class="spd" data-r="0.9" onclick="setRate(0.9)">🏃 正常</button>
+  <span style="color:var(--dim);font-size:13px;width:100%">學唱建議先「很慢/慢」聽清楚每個音,熟了再調「正常」。每首單字的 🔊 都會用這個速度。</span>
 </div>
 
 <div class="prog"><span id="pct" style="font-weight:800;color:var(--pink)">0/26</span>
@@ -202,6 +212,10 @@ pron:"fortnight=「FORT-nait」;ruined=「ROO-ind」。"}
 
 const KEY="tsLearn26";
 let done=JSON.parse(localStorage.getItem(KEY)||"[]");
+let RATE=parseFloat(localStorage.getItem("tsRate")||"0.7");
+function setRate(r){RATE=r;localStorage.setItem("tsRate",r);
+  document.querySelectorAll(".spd").forEach(b=>b.classList.toggle("on",parseFloat(b.dataset.r)===r));
+  speak("This is the speaking speed");}
 const enc=encodeURIComponent;
 function links(t){
   const q=enc("Taylor Swift "+t);
@@ -212,7 +226,7 @@ function links(t){
   </div>`;
 }
 function speak(t){
-  try{const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.9;
+  try{const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=RATE;
     speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}
 }
 function render(){
@@ -249,4 +263,5 @@ function mark(n,e){e.stopPropagation();
   localStorage.setItem(KEY,JSON.stringify(done));render();
   document.getElementById("s"+n).classList.add("open");}
 render();
+document.querySelectorAll(".spd").forEach(b=>b.classList.toggle("on",parseFloat(b.dataset.r)===RATE));
 </script></body></html>
