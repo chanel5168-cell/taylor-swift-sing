@@ -484,6 +484,33 @@ function koLinks(s){
     </div>
     <div style="color:var(--dim);font-size:13px">看拼音跟著念 → 開跟唱影片用 0.75 倍速一句一句練。整首歌詞在連結裡(版權關係不放進 App)。</div></div>`;
 }
+// 每首韓團歌的韓文單字/片語:依歌曲主題挑的「一般常用韓文詞彙」,非該曲歌詞
+const KOVOC={
+"Maria":[["사랑","sarang","愛"],["마음","maeum","心、心意"],["괜찮아","gwaenchana","沒關係"],["걱정마","geokjeongma","別擔心"],["나","na","我"],["행복","haengbok","幸福"],["예뻐","yeppeo","漂亮"]],
+"Twit":[["바보","babo","傻瓜"],["좋아해","joahae","喜歡你"],["너","neo","你"],["왜","wae","為什麼"],["마음","maeum","心"],["귀여워","gwiyeowo","可愛"],["사랑","sarang","愛"]],
+"Chili":[["멋져","meotjyeo","帥、酷"],["매워","maewo","辣"],["최고","choego","最棒"],["춤","chum","跳舞"],["신나","sinna","嗨、興奮"],["빛나","binna","發光"],["좋아","joa","好"]],
+"I Love My Body":[["나","na","我"],["사랑","sarang","愛"],["자유","jayu","自由"],["행복","haengbok","幸福"],["최고","choego","最棒"],["예뻐","yeppeo","漂亮"],["마음","maeum","心"]],
+"Good Goodbye":[["안녕","annyeong","再見、你好"],["잘가","jalga","好走、再見"],["이별","ibyeol","離別"],["고마워","gomawo","謝謝"],["눈물","nunmul","眼淚"],["끝","kkeut","結束"],["사랑","sarang","愛"]],
+"So Cute":[["귀여워","gwiyeowo","可愛"],["예뻐","yeppeo","漂亮"],["좋아","joa","喜歡"],["웃어","useo","笑一個"],["너","neo","你"],["신나","sinna","開心"],["사랑","sarang","愛"]],
+"DDU-DU DDU-DU":[["예뻐","yeppeo","漂亮"],["멋져","meotjyeo","酷"],["돈","don","錢"],["최고","choego","最棒"],["강해","ganghae","強"],["봐","bwa","看"],["빛나","binna","發光"]],
+"Kill This Love":[["사랑","sarang","愛"],["끝","kkeut","結束"],["이별","ibyeol","離別"],["안녕","annyeong","再見"],["아파","apa","痛"],["강해","ganghae","堅強"],["가자","gaja","走吧"]],
+"How You Like That":[["봐","bwa","看"],["다시","dasi","再一次"],["최고","choego","最棒"],["멋져","meotjyeo","酷"],["빛나","binna","發光"],["강해","ganghae","強"],["좋아","joa","讚"]],
+"Pink Venom":[["멋져","meotjyeo","酷"],["빨강","ppalgang","紅色"],["봐","bwa","看"],["춤","chum","跳舞"],["강해","ganghae","厲害"],["최고","choego","最棒"],["신나","sinna","嗨"]],
+"Shut Down":[["최고","choego","最棒"],["봐","bwa","看"],["멋져","meotjyeo","酷"],["강해","ganghae","強"],["돈","don","錢"],["다시","dasi","再次"],["가자","gaja","走吧"]],
+"Lovesick Girls":[["사랑","sarang","愛"],["아파","apa","痛"],["눈물","nunmul","眼淚"],["밤","bam","夜晚"],["혼자","honja","獨自"],["마음","maeum","心"],["너","neo","你"]],
+"As If It's Your Last":[["사랑해","saranghae","我愛你"],["너","neo","你"],["마음","maeum","心"],["함께","hamkke","一起"],["춤","chum","跳舞"],["좋아해","joahae","喜歡你"],["오늘","oneul","今天"]],
+"Crooked":[["혼자","honja","獨自"],["밤","bam","夜晚"],["눈물","nunmul","眼淚"],["자유","jayu","自由"],["미안해","mianhae","對不起"],["아파","apa","痛"],["다시","dasi","再"]],
+"Heartbreaker":[["마음","maeum","心"],["사랑","sarang","愛"],["너","neo","你"],["왜","wae","為什麼"],["눈물","nunmul","眼淚"],["이별","ibyeol","離別"],["아파","apa","痛"]],
+"Crayon":[["놀자","nolja","一起玩"],["신나","sinna","嗨"],["춤","chum","跳舞"],["웃어","useo","笑"],["가자","gaja","走吧"],["좋아","joa","讚"],["왜","wae","為什麼"]],
+"Untitled, 2014":[["사랑","sarang","愛"],["보고싶어","bogosipeo","想你"],["눈물","nunmul","眼淚"],["혼자","honja","獨自"],["기억","gieok","記憶"],["다시","dasi","再一次"],["너","neo","你"]],
+"POWER":[["최고","choego","最棒"],["돈","don","錢"],["강해","ganghae","強"],["봐","bwa","看"],["빛나","binna","發光"],["멋져","meotjyeo","酷"],["가자","gaja","走吧"]]
+};
+function koVocHtml(s){
+  const kv=KOVOC[s.en];if(!kv)return "";
+  return `<div class="sec"><div class="lab">🇰🇷 這首的韓文單字 &amp; 片語(點 🔊 聽韓語)</div>
+    ${kv.map(v=>`<div class="voc"><button class="spk" onclick="speak('${v[0]}','ko-KR')">🔊</button>
+      <div><span class="en2">${v[0]}</span> <span class="zh2">${v[1]} · ${v[2]}</span></div></div>`).join("")}</div>`;
+}
 // 英文發音小卡示範字(一般單字,非歌詞)
 const ENPAIRS=[
 ["think","θ 咬舌,不是 sink"],["this","ð 咬舌 + 振動"],["very","v 咬下唇,不是 berry"],
@@ -538,9 +565,10 @@ function render(){
         ${(ART==="mix"&&s.a&&s.a!=="Mariah Carey")?koLinks(s):""}
         <div class="sec"><div class="lab">🎵 這首在唱什麼</div>${s.story}</div>
         <div class="sec"><div class="lab">🎤 副歌跟唱重點</div><div class="chorus">${s.chorus}</div></div>
-        <div class="sec"><div class="lab">📖 重點單字 &amp; 片語(點 🔊 聽發音)</div>
+        <div class="sec"><div class="lab">📖 ${(ART==="mix"&&s.a&&s.a!=="Mariah Carey")?"歌裡的英文單字 &amp; hook":"重點單字 &amp; 片語"}(點 🔊 聽發音)</div>
           ${s.voc.map(v=>`<div class="voc"><button class="spk" onclick="speak('${v[0].replace(/'/g,"\\'")}')">🔊</button>
             <div><span class="en2">${v[0]}</span> <span class="zh2">${v[1]}</span></div></div>`).join("")}</div>
+        ${(ART==="mix"&&s.a&&s.a!=="Mariah Carey")?koVocHtml(s):""}
         <div class="sec"><div class="lab">🗣️ 發音 / 連音 tips</div>${s.pron}</div>
         ${planHtml(s.n)}
         <div class="sec"><button class="qbtn" onclick="openQuiz(${s.n})">📝 隨堂測驗(${s.voc.length} 個題庫,跟偶像 PK 記憶力!)</button>
