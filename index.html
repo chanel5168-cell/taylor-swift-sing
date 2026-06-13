@@ -449,9 +449,40 @@ function links(t,a){
     <a class="lk" target="_blank" href="https://genius.com/search?q=${q}">📖 Genius</a>
   </div>`;
 }
-function speak(t){
-  try{const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=RATE;
+function speak(t,lang){
+  try{const u=new SpeechSynthesisUtterance(t);u.lang=lang||"en-US";u.rate=RATE;
     speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}
+}
+// 韓文跟唱攻略(常用字為一般詞彙,非歌詞;整首歌詞一律走外部連結)
+const KCHEAT=[
+["안녕","annyeong","嗨 / 你好"],["사랑해","saranghae","我愛你"],["보고싶어","bogosipeo","好想你"],
+["너","neo","你"],["나","na","我"],["밤","bam","夜晚"],["눈물","nunmul","眼淚"],
+["좋아","joa","喜歡 / 好"],["미안해","mianhae","對不起"],["괜찮아","gwaenchana","沒關係"],
+["예뻐","yeppeo","漂亮"],["가자","gaja","走吧 / 一起來"]
+];
+function koCard(){
+  return `<div class="note" style="border-color:var(--lav)">
+🇰🇷 <b>韓文跟唱 &amp; 咬字攻略</b>(韓團歌專用)<br><br>
+1️⃣ <b>真要咬字準,先學 한글(韓文字母)</b>:只有 40 音、規則超清楚,1～2 小時就能自己讀,發音最準。你的「語言學習 AI」有韓文 + 字母練習,可以搭配用。<br><br>
+2️⃣ <b>台灣人最容易念錯的音</b>:<br>
+　• <b>ㄹ</b>:介於 L／R 之間,唱快歌時輕輕彈過<br>
+　• <b>ㅓ(eo) ≠ ㅗ(o)</b>:ㅓ 嘴放鬆像「ㄜ」,ㅗ 嘟嘴像「ㄛ」<br>
+　• <b>緊音 ㄲ ㄸ ㅃ ㅆ ㅉ</b>:用力、短促、不送氣<br>
+　• <b>收尾音(받침)</b>:字尾子音要收住、別吞掉,咬字才清楚<br><br>
+3️⃣ <b>練整首的方法</b>:每首韓團歌點「🇰🇷 拼音歌詞」看羅馬拼音跟著念,再點「🎤 跟唱影片」開卡拉OK/歌詞影片,用 YouTube 調 <b>0.75 倍速</b>一句一句跟,反覆幾次就會了。<br><br>
+🔊 <b>先念念這些常用字</b>(點 🔊 聽韓語發音、跟著咬清楚):
+<div style="margin-top:8px">${KCHEAT.map(k=>`<div class="voc"><button class="spk" onclick="speak('${k[0]}','ko-KR')">🔊</button>
+  <div><span class="en2">${k[0]}</span> <span class="zh2">${k[1]} · ${k[2]}</span></div></div>`).join("")}</div>
+</div>`;
+}
+function koLinks(s){
+  const q=enc(s.a+" "+s.en);
+  return `<div class="sec"><div class="lab">🇰🇷 韓文跟唱(整首在這裡練)</div>
+    <div class="links">
+    <a class="lk tr" target="_blank" href="https://www.google.com/search?q=${enc(s.en+" "+s.a+" romanized lyrics 가사 발음")}">🇰🇷 拼音歌詞</a>
+    <a class="lk" target="_blank" href="https://www.youtube.com/results?search_query=${q}+karaoke+lyrics">🎤 跟唱影片</a>
+    </div>
+    <div style="color:var(--dim);font-size:13px">看拼音跟著念 → 開跟唱影片用 0.75 倍速一句一句練。整首歌詞在連結裡(版權關係不放進 App)。</div></div>`;
 }
 function planHtml(n){
   const dd=DAYS[n]||[];
@@ -465,6 +496,7 @@ function planHtml(n){
 }
 function render(){
   const list=document.getElementById("list");let h="",lastEra="";
+  if(ART==="mix")h+=koCard();
   SONGS.forEach(s=>{
     const eraName=s.era.includes(" · ")?s.era.split(" · ")[1]:s.era;
     if(eraName!==lastEra){h+=`<div class="era">💿 ${eraName}</div>`;lastEra=eraName;}
@@ -477,6 +509,7 @@ function render(){
       </div>
       <div class="body">
         ${links(s.en,s.a)}
+        ${(ART==="mix"&&s.a&&s.a!=="Mariah Carey")?koLinks(s):""}
         <div class="sec"><div class="lab">🎵 這首在唱什麼</div>${s.story}</div>
         <div class="sec"><div class="lab">🎤 副歌跟唱重點</div><div class="chorus">${s.chorus}</div></div>
         <div class="sec"><div class="lab">📖 重點單字 &amp; 片語(點 🔊 聽發音)</div>
