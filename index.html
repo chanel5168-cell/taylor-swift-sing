@@ -484,6 +484,32 @@ function koLinks(s){
     </div>
     <div style="color:var(--dim);font-size:13px">看拼音跟著念 → 開跟唱影片用 0.75 倍速一句一句練。整首歌詞在連結裡(版權關係不放進 App)。</div></div>`;
 }
+// 英文發音小卡示範字(一般單字,非歌詞)
+const ENPAIRS=[
+["think","θ 咬舌,不是 sink"],["this","ð 咬舌 + 振動"],["very","v 咬下唇,不是 berry"],
+["rice","r 捲舌,不是 lice"],["sheep","長母音 ee"],["ship","短母音 i"],
+["beat","字尾 t 要收出來"],["gonna","= going to(縮讀)"],["wanna","= want to(縮讀)"]
+];
+function enCard(){
+  return `<div class="note" style="border-color:var(--mint)">
+🗣️ <b>英文發音 &amp; 跟唱小卡</b>(台灣人最容易卡的地方)<br><br>
+1️⃣ <b>字尾子音要「收」出來(最重要!)</b><br>
+　like／beat／friend／love 的尾音 k／t／d／v 要輕輕發出來、別吞掉,咬字立刻清楚。<br><br>
+2️⃣ <b>幾個常念錯的音</b>:<br>
+　• <b>th</b>:think(咬舌)、this(咬舌 + 振動)—— 不是 ㄙ／ㄗ<br>
+　• <b>v</b>:上排牙齒輕咬下唇(very,不是 berry)<br>
+　• <b>r ≠ l</b>:rice 捲舌 ≠ lice<br>
+　• <b>長短母音</b>:sheep(長)≠ ship(短),長度要分<br><br>
+3️⃣ <b>跟唱關鍵 —— 連音 &amp; 縮讀</b>(歌手唱很快就是這個):<br>
+　• gonna = going to、wanna = want to、gotta = got to<br>
+　• 連音:love it →「lo-vit」、an apple →「a-napple」<br><br>
+4️⃣ <b>重音</b>:每個英文字有重音節,重的拉長、輕的快帶過,聽起來才道地。<br><br>
+5️⃣ <b>練習法</b>:先用上面 🐢 很慢 聽單字 🔊 → 跟著念 → 整句放慢跟唱,反覆幾次就順了。<br><br>
+🔊 <b>點點看這幾個示範音</b>:
+<div style="margin-top:8px">${ENPAIRS.map(k=>`<div class="voc"><button class="spk" onclick="speak('${k[0]}')">🔊</button>
+  <div><span class="en2">${k[0]}</span> <span class="zh2">${k[1]}</span></div></div>`).join("")}</div>
+</div>`;
+}
 function planHtml(n){
   const dd=DAYS[n]||[];
   return `<div class="sec"><div class="lab">📅 14 天學會這首歌 · 已完成 ${dd.length}/14 天</div>
@@ -496,7 +522,7 @@ function planHtml(n){
 }
 function render(){
   const list=document.getElementById("list");let h="",lastEra="";
-  if(ART==="mix")h+=koCard();
+  if(ART==="mix")h+=koCard();else h+=enCard();
   SONGS.forEach(s=>{
     const eraName=s.era.includes(" · ")?s.era.split(" · ")[1]:s.era;
     if(eraName!==lastEra){h+=`<div class="era">💿 ${eraName}</div>`;lastEra=eraName;}
