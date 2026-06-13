@@ -7,7 +7,6 @@
 <style>
 :root{--bg:#140d1a;--card:#211528;--card2:#2c1c36;--border:#4a2f57;--text:#f3e9f7;
 --dim:#b79ec6;--pink:#ff6fae;--gold:#ffd166;--mint:#7ad9c5;--lav:#c9a9ff}
-/* 賈斯汀:冷色藍紫(Justice 風),跟泰勒絲粉紫區隔 */
 body.justin{--bg:#0d1320;--card:#15202e;--card2:#1c2a3c;--border:#2f4a63;--text:#e9f1f7;
 --dim:#9ab4cc;--pink:#6f8cff;--gold:#ffd166;--mint:#7ad9c5;--lav:#b08cff}
 *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,var(--bg),#1c1126);color:var(--text);
@@ -55,6 +54,25 @@ border:none;color:#1a0f22;font-weight:800;font-size:16px;padding:11px;border-rad
 .song.done .markbtn{background:var(--card2);color:var(--mint);border:1px solid var(--mint)}
 .foot{color:var(--dim);font-size:13px;text-align:center;margin:18px 0 8px;line-height:1.8}
 .era{color:var(--lav);font-weight:700;font-size:14px;margin:16px 0 2px}
+.plan{margin-top:4px}
+.day{display:flex;gap:9px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed #3a2546}
+.day:last-child{border:0}.day.dd .dtt{opacity:.5}
+.dchk{background:none;border:0;font-size:20px;cursor:pointer;flex-shrink:0;padding:0;line-height:1.4}
+.dtt{font-size:15px}.dtt b{color:var(--lav)}
+.ddesc{color:var(--dim);font-size:14px;margin-top:1px}
+.qjump{color:var(--gold);font-weight:700;cursor:pointer;text-decoration:underline}
+.qbtn{width:100%;background:var(--card2);border:1px solid var(--gold);color:var(--gold);font-weight:800;font-size:15px;padding:11px;border-radius:11px;cursor:pointer}
+.quizwrap{margin-top:10px;background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:13px}
+.qbar{font-size:13px;color:var(--dim);margin-bottom:6px}
+.qq{font-size:15px;color:var(--gold);font-weight:700}
+.qsub{font-size:21px;font-weight:800;margin:6px 0 11px;color:var(--text)}
+.qopts{display:flex;flex-direction:column;gap:8px}
+.qopt{text-align:left;background:var(--card);border:1px solid var(--border);color:var(--text);font-size:16px;padding:11px 12px;border-radius:10px;cursor:pointer}
+.qopt.ok{background:#15402f;border-color:var(--mint);color:#bff3e3}
+.qopt.no{background:#4a1f2e;border-color:#ff7a9c;color:#ffd0db}
+.qfb{margin:9px 0 4px;font-size:15px}.ok2{color:var(--mint);font-weight:800}.no2{color:#ff9bb3;font-weight:800}
+.qnext{width:100%;margin-top:8px;background:linear-gradient(135deg,var(--pink),var(--lav));border:0;color:#1a0f22;font-weight:800;font-size:16px;padding:11px;border-radius:10px;cursor:pointer}
+.qdone{text-align:center;font-size:17px;font-weight:800;color:var(--mint);line-height:1.9}
 </style></head><body class="taylor"><div class="wrap">
 
 <div class="switch">
@@ -66,8 +84,9 @@ border:none;color:#1a0f22;font-weight:800;font-size:16px;padding:11px;border-rad
 <div class="sub" id="sub">26 首演唱會必唱曲 · 跟著學、跟著唱 ✨</div>
 
 <div class="note">
-📅 <b>怎麼用</b>:建議每首花 1~2 週 → 一年唱遍 26 首。先聽 MV 抓旋律 → 看「歌曲故事」懂在唱什麼 → 記「重點單字」(點 🔊 聽發音)→ 練「副歌」→ 演唱會大合唱!<br>
-🔗 <b>完整歌詞 + 中文翻譯</b>點每首的連結看(版權關係不放整首);這裡教你<b>看懂 + 唱得出來</b>。
+📅 <b>14 天學會一首歌</b>:每首都附 <b>14 天每日計畫</b>(聽歌→單字→副歌→發音→整首跟唱),第 <b>5·7·10·13 天穿插複習測驗</b>,把英文真正記起來!<br>
+📝 每首有 <b>互動考題</b>(中英選擇題、即時對錯+發音、計分)→ 用跟偶像合唱的心情學 🎤<br>
+🔗 <b>完整歌詞 + 中文翻譯</b>點每首的連結看(版權關係不放整首)。
 </div>
 
 <div class="note" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
@@ -75,7 +94,7 @@ border:none;color:#1a0f22;font-weight:800;font-size:16px;padding:11px;border-rad
   <button class="spd" data-r="0.5" onclick="setRate(0.5)">🐢 很慢</button>
   <button class="spd" data-r="0.7" onclick="setRate(0.7)">🚶 慢</button>
   <button class="spd" data-r="0.9" onclick="setRate(0.9)">🏃 正常</button>
-  <span style="color:var(--dim);font-size:13px;width:100%">學唱建議先「很慢/慢」聽清楚每個音,熟了再調「正常」。每首單字的 🔊 都會用這個速度。</span>
+  <span style="color:var(--dim);font-size:13px;width:100%">學唱建議先「很慢/慢」聽清楚每個音,熟了再調「正常」。單字 🔊 和考題發音都用這個速度。</span>
 </div>
 
 <div class="prog"><span id="pct" style="font-weight:800;color:var(--pink)">0/26</span>
@@ -85,8 +104,8 @@ border:none;color:#1a0f22;font-weight:800;font-size:16px;padding:11px;border-rad
 
 <div class="foot">
 🎶 為 Chanel 做的 · 跟著偶像學英文<br>
-進度自動存在這支手機(兩位歌手各自記)· 可「加到主畫面」當 App<br>
-（學完 26 首想再加,跟我說 😊）
+進度自動存在這支手機(兩位歌手、每首 14 天各自記)· 可「加到主畫面」當 App<br>
+（學完想再加歌手或歌曲,跟我說 😊）
 </div>
 
 <script>
@@ -94,132 +113,132 @@ const TAYLOR=[
 {n:1,en:"Love Story",zh:"愛情故事",era:"2008 · Fearless",
 story:"把自己和愛人比作羅密歐與茱麗葉,但改寫成 Happy Ending —— 爸爸反對、兩人偷偷相愛,最後王子來求婚。甜炸的初戀神曲。",
 chorus:"副歌她對著 Romeo 呼喊「帶我走、去一個只有我們的地方」,情緒一路往上衝,是全場最大合唱。先抓這段旋律+情緒,字會自然跟上。",
-voc:[["Romeo & Juliet","羅密歐與茱麗葉(經典悲劇戀人)"],["alone","單獨、兩人獨處"],["scarlet letter","紅字(禁忌之愛的象徵)"],["prince / princess","王子 / 公主"],["faith","信念、相信"]],
+voc:[["Romeo & Juliet","羅密歐與茱麗葉(經典悲劇戀人)"],["alone","單獨、兩人獨處"],["scarlet letter","紅字(禁忌之愛的象徵)"],["prince / princess","王子 / 公主"],["faith","信念、相信"],["true love","真愛"],["close your eyes","閉上眼睛"],["wait for me","等我"]],
 pron:"Romeo=「ROH-mee-oh」;「take me」t 很輕、連成「tay-mi」;somewhere=「SUM-where」。"},
 {n:2,en:"You Belong With Me",zh:"你屬於我",era:"2008 · Fearless",
 story:"暗戀身邊的好朋友,覺得自己比他的女友更懂他、更適合他 —— 經典的「好朋友變心動」校園情歌。",
 chorus:"副歌一直唱「你其實該和我在一起」,直白又上頭,跟著喊 belong with me 就對了。",
-voc:[["belong","屬於"],["cheer captain","啦啦隊隊長"],["bleachers","露天看台"],["sneakers","球鞋"],["dreaming","做夢、幻想"]],
+voc:[["belong","屬於"],["cheer captain","啦啦隊隊長"],["bleachers","露天看台"],["sneakers","球鞋"],["dreaming","做夢、幻想"],["belong with me","該和我在一起"],["all this time","這麼久以來"],["the one","那個對的人"]],
 pron:"belong=「bee-LONG」;「with me」連音 wɪð-mi。"},
 {n:3,en:"Fearless",zh:"無所畏懼",era:"2008 · Fearless",
 story:"無懼地墜入愛河 —— 在暴風雨、停車場裡也想牽手跳舞的那種勇敢心動。",
 chorus:"副歌講「在這最棒的夜晚、毫無畏懼地和你跳舞」,輕盈又甜。",
-voc:[["fearless","無所畏懼"],["storm","暴風雨"],["dance","跳舞"],["first kiss","初吻"],["brave","勇敢"]],
+voc:[["fearless","無所畏懼"],["storm","暴風雨"],["dance","跳舞"],["first kiss","初吻"],["brave","勇敢"],["in the rain","在雨中"],["pull me close","把我拉近"],["best night","最棒的夜晚"]],
 pron:"fearless=「FEER-less」;dance 美式=「dæns」。"},
 {n:4,en:"Enchanted",zh:"著迷",era:"2010 · Speak Now",
 story:"第一次見面就被對方迷住,整晚滿腦子都是他,既緊張又期待會不會再相見。少女心爆棚。",
 chorus:"副歌反覆唱「能遇見你,我整個人都著迷了」,旋律夢幻,適合慢慢拉長音唱。",
-voc:[["enchanted","著迷、陶醉"],["wonderstruck","驚艷、看呆"],["blushing","臉紅"],["restless","坐立難安、睡不著"],["all night","整晚"]],
+voc:[["enchanted","著迷、陶醉"],["wonderstruck","驚艷、看呆"],["blushing","臉紅"],["restless","坐立難安、睡不著"],["all night","整晚"],["to meet you","能遇見你"],["wishing","許願、盼望"],["pacing","來回踱步(緊張)"]],
 pron:"enchanted=「en-CHAN-tid」;wonderstruck=「WUN-der-struck」。"},
 {n:5,en:"22",zh:"22歲",era:"2012 · Red",
 story:"22 歲的自由與混亂 —— 和朋友徹夜狂歡,又快樂又困惑又孤單,獻給青春的派對神曲。",
 chorus:"副歌大喊「今晚我們要像 22 歲一樣!」全場最歡樂的合唱段。",
-voc:[["carefree","無憂無慮"],["happy, free, confused","快樂、自由、困惑"],["lonely","孤單"],["miserable","悲慘"],["pretend","假裝"]],
+voc:[["carefree","無憂無慮"],["happy, free, confused","快樂、自由、困惑"],["lonely","孤單"],["miserable","悲慘"],["pretend","假裝"],["feel like","感覺像"],["make fun of","取笑"],["fall in love","墜入愛河"]],
 pron:"twenty-two 口語唱「TWEN-ee-two」;confused=「kən-FYOOZD」。"},
 {n:6,en:"We Are Never Ever Getting Back Together",zh:"我們再也不會復合",era:"2012 · Red",
 story:"分手後對前任放話「我們永遠、永遠不會再復合」,輕快又解氣的甩前任神曲。",
 chorus:"副歌一連串「we are never ever ever...」越疊越長,跟著唱超紓壓。",
-voc:[["never ever","絕對不、永遠不"],["get back together","(情侶)復合"],["exhausting","累人的"],["forever","永遠"],["talk","談、聊"]],
+voc:[["never ever","絕對不、永遠不"],["get back together","(情侶)復合"],["exhausting","累人的"],["forever","永遠"],["talk","談、聊"],["we are done","我們結束了"],["for good","永久地、徹底地"],["over","結束了、過去了"]],
 pron:"never=「NEV-er」;getting 口語=「GEH-din」;ever 連著唱很順。"},
 {n:7,en:"I Knew You Were Trouble",zh:"我早知道你是麻煩",era:"2012 · Red",
 story:"明知對方是麻煩、是壞男孩,還是淪陷了,最後受傷又後悔。情緒從心動到崩潰。",
 chorus:"副歌唱「我一開始就知道你是麻煩」,帶點懊悔,記住 trouble 這個字就抓得到。",
-voc:[["trouble","麻煩、危險人物"],["the moment","那一刻"],["lying on the cold ground","倒在冰冷的地上(意象)"],["shame","羞愧"],["mistake","錯誤"]],
+voc:[["trouble","麻煩、危險人物"],["the moment","那一刻"],["cold ground","冰冷的地上(意象)"],["shame","羞愧"],["mistake","錯誤"],["walked in","走了進來"],["fall apart","崩潰、瓦解"],["blame","責怪"]],
 pron:"trouble=「TRUH-bul」;knew=「nyoo」。"},
 {n:8,en:"All Too Well (10 Minute Version)",zh:"記得太清楚",era:"2012/2021 · Red",
 story:"細數一段刻骨銘心又心碎的戀情 —— 從圍巾、秋天的甜蜜回憶,到被辜負的痛。公認她最會說故事的情歌。",
 chorus:"重複「我記得太清楚了 (all too well)」,情緒堆疊,適合投入感情慢慢唱。",
-voc:[["all too well","記得太清楚(忘不掉)"],["scarf","圍巾"],["autumn","秋天"],["remember","記得"],["broke","弄碎、心碎"]],
+voc:[["all too well","記得太清楚(忘不掉)"],["scarf","圍巾"],["autumn","秋天"],["remember","記得"],["broke","弄碎、心碎"],["leaves falling","落葉紛飛"],["used to","以前(曾經會)"],["keep","留著、保存"]],
 pron:"autumn 的 n 不發音=「AW-tum」;all too well 連著「awl-too-wel」。"},
 {n:9,en:"Shake It Off",zh:"甩開",era:"2014 · 1989",
 story:"別管別人怎麼批評,跳起來把負能量通通甩掉 —— 超洗腦的正能量神曲,演唱會必跳。",
 chorus:"副歌一直唱「shake it off」,配手勢甩一甩,最好記、最好跟。",
-voc:[["shake it off","甩開、別放心上"],["haters","酸民、討厭你的人"],["fake","假的"],["gonna","going to 的口語"],["play","玩、耍"]],
+voc:[["shake it off","甩開、別放心上"],["haters","酸民、討厭你的人"],["fake","假的"],["gonna","going to 的口語"],["play","玩、耍"],["liars","騙子"],["beat","節拍、拍子"],["never miss","從不錯過"]],
 pron:"gonna=「GAH-na」;shake it off 連音「shay-kit-off」。"},
 {n:10,en:"Blank Space",zh:"空白",era:"2014 · 1989",
 story:"自嘲媒體把她寫成「戀愛瘋女」,乾脆演給你看 ——「我這正好有個空位,下一個就寫你」,又酷又幽默。",
 chorus:"副歌唱「我有一張空白名單,寫上你的名字」,節奏分明很好跟。",
-voc:[["blank space","空白處"],["nightmare","惡夢"],["darling","親愛的"],["game","遊戲、把戲"],["insane","瘋狂"]],
+voc:[["blank space","空白處"],["nightmare","惡夢"],["darling","親愛的"],["game","遊戲、把戲"],["insane","瘋狂"],["magic","魔法"],["mad love","瘋狂的愛"],["last name","姓氏"]],
 pron:"常被聽錯:Starbucks lovers 其實是「long list of ex-lovers」;blank=「blæŋk」。"},
-{n:11,en:"Style",zh:"經典never退流行",era:"2014 · 1989",
+{n:11,en:"Style",zh:"經典 · 永不退流行",era:"2014 · 1989",
 story:"一段分分合合、戒不掉的戀情,比喻成「像永不退流行的經典」—— 紅唇、白T、午夜開車那種復古酷。",
 chorus:"副歌唱「我們永遠不會退流行 (never go out of style)」,慵懶又帶勁。",
-voc:[["style","風格、經典"],["never go out of style","永不退流行"],["classic","經典的"],["red lip","紅唇"],["midnight","午夜"]],
+voc:[["style","風格、經典"],["go out of style","退流行"],["classic","經典的"],["red lip","紅唇"],["midnight","午夜"],["good girl","乖女孩"],["bad boy","壞男孩"],["drive","開車兜風"]],
 pron:"style=「stahyl」;out of 連音「ou-də」。"},
 {n:12,en:"Bad Blood",zh:"心結",era:"2014 · 1989",
 story:"被好朋友背叛後的決裂宣言 ——「我們之間結下了梁子」,氣勢十足的戰歌。",
 chorus:"副歌大喊「我們之間有 bad blood」,短促有力,跟著喊超有氣勢。",
-voc:[["bad blood","不和、心結、仇"],["problem","問題、麻煩"],["scar","疤痕"],["mad","抓狂、生氣"],["enemies","敵人"]],
+voc:[["bad blood","不和、心結、仇"],["problem","問題、麻煩"],["scar","疤痕"],["mad","抓狂、生氣"],["enemies","敵人"],["band-aid","OK繃"],["bullet","子彈"],["take a look","看一看"]],
 pron:"bad blood=「bæd-blʌd」;重拍在 blood。"},
 {n:13,en:"...Ready For It?",zh:"準備好了嗎",era:"2017 · reputation",
 story:"新戀情的開場,帶點危險與興奮 ——「你準備好了嗎?」前奏超有記憶點。",
 chorus:"副歌反問「你準備好了嗎」,前段念白(rap)、副歌放開唱,對比很爽。",
-voc:[["ready for it","準備好面對"],["robber / heist","強盜 / 搶案(比喻愛情冒險)"],["island","小島"],["younger","更年輕的"],["mine","我的"]],
+voc:[["ready for it","準備好面對"],["robber / heist","強盜 / 搶案(比喻愛情冒險)"],["island","小島"],["younger","更年輕的"],["mine","我的"],["are you ready","你準備好了嗎"],["keep","把你留住"],["plays it cool","裝酷"]],
 pron:"ready=「REH-dee」;for it 連音「fə-rit」。"},
 {n:14,en:"Look What You Made Me Do",zh:"看你逼我做了什麼",era:"2017 · reputation",
 story:"對撕破臉的對手反擊 ——「看看你逼我變成什麼樣子」,黑化復仇的宣言曲。",
 chorus:"副歌冷冷地唱「look what you made me do」,一字一頓,跟著念超有戲。",
-voc:[["made me do","逼我做"],["list","名單"],["revenge","報復"],["the old me is dead","舊的我已經死了(名句)"],["karma","因果、報應"]],
+voc:[["made me do","逼我做"],["list","名單"],["revenge","報復"],["the old me","以前的我"],["karma","因果、報應"],["look what...","看看…(發生了什麼)"],["count up","清算、數一數"],["get smarter","變更精明"]],
 pron:"made me 連音「may-mi」;do 拉長。"},
 {n:15,en:"Delicate",zh:"脆弱微妙",era:"2017 · reputation",
 story:"新感情很美但很脆弱,小心翼翼怕嚇跑對方 ——「我名聲不好,但你還喜歡我嗎?」,柔軟誠實。",
 chorus:"副歌軟軟地反問「這樣會不會太…?」,輕聲唱出脆弱感。",
-voc:[["delicate","脆弱、微妙、要小心"],["reputation","名聲"],["dive in","投入、跳進去"],["isn't it...?","這樣不會…嗎?"],["somebody","某個人"]],
+voc:[["delicate","脆弱、微妙、要小心"],["reputation","名聲"],["dive in","投入、跳進去"],["isn't it","這樣不會…嗎"],["somebody","某個人"],["third drink","第三杯酒"],["is it cool","這樣可以嗎"],["look at you","看著你"]],
 pron:"delicate=「DEH-li-kit」(尾音輕);isn't=「IZ-ənt」。"},
 {n:16,en:"Don't Blame Me",zh:"別怪我",era:"2017 · reputation",
 story:"愛到上癮、無法自拔 ——「別怪我,是愛讓我瘋」,福音風的大器情歌,副歌很過癮。",
 chorus:"副歌嘶吼「別怪我,是愛逼瘋了我」,放開嗓子唱最爽。",
-voc:[["blame","責怪"],["drug","毒品(比喻愛讓人上癮)"],["oh Lord","天哪(語氣)"],["crazy","瘋狂"],["addicted","上癮"]],
+voc:[["blame","責怪"],["drug","毒品(比喻愛讓人上癮)"],["oh Lord","天哪(語氣)"],["crazy","瘋狂"],["addicted","上癮"],["don't blame me","別怪我"],["fall in love","墜入愛河"],["set me free","給我自由"]],
 pron:"blame=「bleym」;don't 口語省成「dohn」。"},
 {n:17,en:"Cruel Summer",zh:"殘酷的夏天",era:"2019 · Lover",
 story:"夏天裡偷偷又熱烈的愛,既心動又煎熬 —— 橋段那聲嘶吼是全場名場面,近年最夯合唱曲。",
 chorus:"橋段(bridge)突然爆發喊出「我愛你」那段,全場跟著嘶吼,超有感染力。",
-voc:[["cruel","殘酷的"],["summer","夏天"],["fever dream","發燒般的夢、迷亂"],["devils","魔鬼"],["snuck","偷偷溜(sneak 過去式)"]],
+voc:[["cruel","殘酷的"],["summer","夏天"],["fever dream","發燒般的夢、迷亂"],["devils","魔鬼"],["snuck","偷偷溜(sneak 過去式)"],["I love you","我愛你"],["bad boy","壞男孩"],["hang my head","低下頭(難為情)"]],
 pron:"cruel=「KROO-əl」(兩音節);summer=「SUM-er」。"},
 {n:18,en:"Lover",zh:"愛人",era:"2019 · Lover",
 story:"像婚禮般溫柔的情歌,把對方當成共度一生的人 —— 留著聖誕燈、慢舞、一輩子。甜而不膩。",
 chorus:"副歌輕唱「你能當我一生的愛人嗎」,適合搖擺慢慢唱。",
-voc:[["lover","愛人、情人"],["forever","永遠"],["Christmas lights","聖誕燈"],["my, my, my","(語助,加強情緒)"],["overdramatic","太over、太戲劇化"]],
+voc:[["lover","愛人、情人"],["forever","永遠"],["Christmas lights","聖誕燈"],["overdramatic","太over、太戲劇化"],["settle down","安定下來"],["can I be","我可以當…嗎"],["forevermore","永永遠遠"],["sweet","甜蜜的"]],
 pron:"lover=「LUH-ver」;forever=「fə-REV-er」。"},
 {n:19,en:"The Man",zh:"如果我是男人",era:"2019 · Lover",
 story:"諷刺性別雙標 ——「如果我是男人,同樣的行為就會被稱讚」,聰明又帶刺的態度歌。",
 chorus:"副歌唱「如果我是個 man 就好了」,語氣帶反諷,跟著唱很有態度。",
-voc:[["the man","(這裡指)大人物、被推崇的男人"],["if I was","如果我是…"],["boss","老闆"],["double standard","雙重標準"],["get away with","逃過懲罰/被原諒"]],
+voc:[["the man","(這裡)大人物、被推崇的男人"],["if I was","如果我是…"],["boss","老闆"],["double standard","雙重標準"],["get away with","逃過懲罰/被原諒"],["powerful","有權勢的"],["respect","尊重"],["fast cars","跑車"]],
 pron:"man=「mæn」;get away 連音「geh-də-way」。"},
 {n:20,en:"cardigan",zh:"開襟毛衣",era:"2020 · folklore",
 story:"從中年回望少女時的初戀 ——「被全世界忽視時,你卻把我當成最愛的舊毛衣」。文學感很強的慢歌。",
 chorus:"副歌把自己比作一件「被珍惜的 cardigan」,情緒內斂,適合輕聲投入。",
-voc:[["cardigan","開襟毛衣"],["vintage","復古、老件"],["sidewalk","人行道"],["chase","追逐"],["under someone's bed","被收在某人床下(被珍藏的意象)"]],
+voc:[["cardigan","開襟毛衣"],["vintage","復古、老件"],["sidewalk","人行道"],["chase","追逐"],["favorite","最愛的"],["I knew you","我就知道你"],["high heels","高跟鞋"],["heartbeat","心跳"]],
 pron:"cardigan=「CAR-di-gun」;vintage=「VIN-tij」。"},
 {n:21,en:"august",zh:"八月",era:"2020 · folklore",
 story:"夏末一段沒有名分的戀情,美好卻留不住 ——「他從來都不是我的」。淡淡的惆悵與不捨。",
 chorus:"副歌拉長唱「八月就這樣溜走了」,情緒像嘆息,適合慢慢拖音。",
-voc:[["august","八月"],["slipped away","悄悄溜走"],["never mine","從來不屬於我"],["back porch","後院門廊"],["wanting","渴望"]],
+voc:[["august","八月"],["slipped away","悄悄溜走"],["never mine","從來不屬於我"],["back porch","後院門廊"],["wanting","渴望"],["living for","為…而活著"],["whisper","低語"],["the end","結束、尾聲"]],
 pron:"august=「AW-gust」;slipped=「slipt」。"},
 {n:22,en:"willow",zh:"柳樹",era:"2020 · evermore",
 story:"像柳枝隨風(隨愛)擺動 —— 神祕、心甘情願地被對方牽引。輕盈魔幻的旋律。",
 chorus:"副歌唱「越是想抓你、越深陷」,輕飄飄的繞圈感,跟著哼很療癒。",
-voc:[["willow","柳樹"],["wreck","殘骸;(口語)為某人著迷"],["lost","迷失"],["magnetic","有磁性、吸引人"],["the more I...","我越是…(句型)"]],
+voc:[["willow","柳樹"],["wreck","(口語)為某人著迷;殘骸"],["lost","迷失"],["magnetic","有磁性、吸引人"],["the more I","我越是…(句型)"],["follow you","跟隨你"],["show me","讓我看看"],["the wind","風"]],
 pron:"willow=「WIL-oh」;wreck=「rek」。"},
 {n:23,en:"Anti-Hero",zh:"反派英雄",era:"2022 · Midnights",
 story:"坦白自己的不安與毛病 ——「問題人物,其實就是我」。超有共鳴的自嘲金曲,人人都唱得出那句。",
 chorus:"副歌唱「問題就是我,嗨,是我」,自嘲又上頭,全場必合唱。",
-voc:[["anti-hero","反英雄(有缺點的主角)"],["problem","問題"],["at tea time","下午茶時間(意:把我攤開檢視)"],["depression","沮喪、憂鬱"],["covert","隱密的"]],
+voc:[["anti-hero","反英雄(有缺點的主角)"],["problem","問題"],["it's me","是我"],["depression","沮喪、憂鬱"],["covert","隱密的"],["get older","變老"],["growing","成長、變大"],["nightmare","惡夢"]],
 pron:"anti-hero=「AN-tai-HEER-oh」;it's me, hi 連著「its-mi-hai」。"},
 {n:24,en:"Karma",zh:"因果報應",era:"2022 · Midnights",
 story:"相信善惡終有報 ——「業力是我的好朋友,會替我把公道討回來」。輕鬆暢快、自信滿滿。",
 chorus:"副歌一連串「karma is my...」用各種比喻,輕快好記又好跟。",
-voc:[["karma","因果、報應"],["breeze","微風"],["coming back around","繞回來(報應上身)"],["cat","貓"],["relaxing","放鬆的"]],
+voc:[["karma","因果、報應"],["breeze","微風"],["coming back around","繞回來(報應上身)"],["cat","貓"],["relaxing","放鬆的"],["sweet","甜美的"],["coming for you","要來找你算帳"],["keep my side","站在我這邊"]],
 pron:"karma=「CAR-ma」;coming=「CUH-ming」。"},
 {n:25,en:"Lavender Haze",zh:"薰衣草迷霧",era:"2022 · Midnights",
 story:"沉浸在戀愛那片迷濛的紫色氛圍裡,不理外界閒言碎語 ——「只想守住這份感覺」。慵懶迷幻。",
 chorus:"副歌反覆「lavender haze」,氛圍感重,適合放鬆搖擺著唱。",
-voc:[["lavender","薰衣草(色)"],["haze","霧氣、迷濛"],["chill","放鬆、冷靜"],["stay","停留、守住"],["talk shit","講閒話/亂講(俚語)"]],
+voc:[["lavender","薰衣草(色)"],["haze","霧氣、迷濛"],["chill","放鬆、冷靜"],["stay","停留、守住"],["talk","講閒話、議論"],["mood","心情、氛圍"],["surreal","超現實的、夢幻的"],["get out","走開、別管"]],
 pron:"lavender=「LAV-en-der」;haze=「heyz」。"},
 {n:26,en:"Fortnight (feat. Post Malone)",zh:"兩星期",era:"2024 · TTPD",
 story:"和 Post Malone 合唱,講一段短暫卻揮之不去的感情遺憾 ——「只愛了你兩星期,卻毀了我」。慵懶迷幻、新專輯開場曲。",
 chorus:"副歌淡淡地唱那段「fortnight」的遺憾,氣音很多,適合貼著旋律輕唱。",
-voc:[["fortnight","兩星期(14天)"],["ruined","毀了、糟蹋"],["lover","愛人"],["touch","碰觸"],["alright","還好、沒事(口語)"]],
+voc:[["fortnight","兩星期(14天)"],["ruined","毀了、糟蹋"],["lover","愛人"],["touch","碰觸"],["alright","還好、沒事(口語)"],["good morning","早安"],["pretend","假裝"],["across the way","在對街"]],
 pron:"fortnight=「FORT-nait」;ruined=「ROO-ind」。"}
 ];
 
@@ -227,146 +246,165 @@ const JUSTIN=[
 {n:1,en:"Baby (feat. Ludacris)",zh:"寶貝",era:"2010 · 早期 (My World)",
 story:"賈斯汀的成名爆紅曲。15 歲的他唱失戀心碎,苦苦哀求對方別走 ——「baby baby baby ohh」那句是全世界都會跟的洗腦合唱。",
 chorus:"副歌不停喊「baby baby baby ohh」,簡單到全場秒會,先把這句唱熟就贏一半。",
-voc:[["baby","寶貝(對情人的暱稱)"],["mine","我的"],["lose","失去"],["thought","以為、認為(think 過去式)"],["go","離開、走"]],
+voc:[["baby","寶貝(對情人的暱稱)"],["mine","我的"],["lose","失去"],["thought","以為(think 過去式)"],["go","離開、走"],["always","永遠、總是"],["my first love","我的初戀"],["no one","沒有人"]],
 pron:"baby=「BAY-bee」;「you know you love me」連著唱「yu-no-yu-luv-mi」。"},
 {n:2,en:"One Time",zh:"我的唯一",era:"2010 · 早期 (My World)",
 story:"他的出道單曲,青澀甜蜜的初戀宣言 ——「你是我的唯一、我的 one time」,滿滿少年感。",
 chorus:"副歌唱「你是我的 one and only」,輕快好跟,記住 one time / only 就抓得到。",
-voc:[["one time","我的唯一(此生唯一)"],["only","唯一"],["heart","心"],["shawty","俚語:寶貝、女孩"],["dance","跳舞"]],
+voc:[["one time","我的唯一(此生唯一)"],["only","唯一"],["heart","心"],["shawty","俚語:寶貝、女孩"],["dance","跳舞"],["forever","永遠"],["be the one","成為那個對的人"],["till the end","直到最後"]],
 pron:"one=「wʌn」;only=「OHN-lee」;shawty=「SHOR-dee」。"},
 {n:3,en:"Never Say Never (feat. Jaden Smith)",zh:"永不放棄",era:"2010 · 早期 (My World)",
 story:"他同名電影的主題曲,熱血勵志 ——「永遠不要說不可能」,跌倒了再站起來。",
 chorus:"副歌大喊「never say never」,鼓舞人心,跟著吼超有力量。",
-voc:[["never say never","永不言敗、別說不可能"],["fight","戰鬥、努力"],["fall","跌倒"],["stronger","更強壯"],["give up","放棄"]],
+voc:[["never say never","永不言敗、別說不可能"],["fight","戰鬥、努力"],["fall","跌倒"],["stronger","更強壯"],["give up","放棄"],["get back up","重新站起來"],["make it through","撐過去、熬過去"],["stand tall","抬頭挺胸"]],
 pron:"never=「NEV-er」;「say never」連著唱。"},
 {n:4,en:"Boyfriend",zh:"男朋友",era:"2012 · Believe",
 story:"轉大人的耳語式情歌 ——「如果我是你男朋友,絕不會放開你」,帥氣又撩。",
 chorus:"副歌輕聲唱「if I was your boyfriend」,氣音很多,貼著旋律輕唱最有味道。",
-voc:[["boyfriend","男朋友"],["never let you go","絕不放開你"],["swag","帥氣、有型(俚語)"],["hold","抱、握"],["treat","對待"]],
+voc:[["boyfriend","男朋友"],["never let you go","絕不放開你"],["swag","帥氣、有型(俚語)"],["hold","抱、握"],["treat","對待"],["if I was","如果我是…"],["show you off","把你秀出來"],["spend time","共度時光"]],
 pron:"boyfriend=「BOY-frend」;「if I was」連著「if-ai-wʌz」。"},
 {n:5,en:"As Long As You Love Me (feat. Big Sean)",zh:"只要你愛我",era:"2012 · Believe",
 story:"無懼一切的深情告白 ——「就算沒錢、就算辛苦,只要你愛我,什麼都不重要」。",
 chorus:"副歌反覆唱「as long as you love me」,情緒飽滿,是全場大合唱段。",
-voc:[["as long as","只要…就"],["love","愛"],["fearless","無所畏懼"],["broke","沒錢、破產"],["matter","重要、有關係"]],
+voc:[["as long as","只要…就"],["love","愛"],["fearless","無所畏懼"],["broke","沒錢、破產"],["matter","重要、有關係"],["nothing else matters","其他都不重要"],["hold on","撐住"],["right here","就在這裡"]],
 pron:"「as long as」連著「æz-long-æz」;love=「lʌv」。"},
 {n:6,en:"Beauty and a Beat (feat. Nicki Minaj)",zh:"美麗與節拍",era:"2012 · Believe",
 story:"嗨翻全場的派對舞曲 ——「今晚把你秀出來,跟著節拍狂歡」,演唱會必跳。",
 chorus:"副歌唱「show you off tonight」配著強拍,跟著身體擺動就對了。",
-voc:[["beauty","美麗、美人"],["beat","節拍、節奏"],["tonight","今晚"],["show off","炫耀、秀出來"],["lights","燈光"]],
+voc:[["beauty","美麗、美人"],["beat","節拍、節奏"],["tonight","今晚"],["show off","炫耀、秀出來"],["lights","燈光"],["blow your mind","讓你驚艷、嘆為觀止"],["let's go","走吧、開始"],["all night long","整個晚上"]],
 pron:"beauty=「BYOO-tee」;beat=「biit」;「show you off」連著唱。"},
 {n:7,en:"What Do You Mean?",zh:"你到底什麼意思",era:"2015 · Purpose",
 story:"感情裡的拉扯與困惑 ——「你說要又說不要,到底什麼意思?」熱帶浩室節奏超洗腦。",
 chorus:"副歌一直問「what do you mean?」,口氣又無奈又上頭,很好跟。",
-voc:[["what do you mean","你到底什麼意思"],["confused","困惑的"],["nod","點頭"],["overthink","想太多"],["time","時間"]],
+voc:[["what do you mean","你到底什麼意思"],["confused","困惑的"],["nod","點頭"],["overthink","想太多"],["time","時間"],["make up your mind","拿定主意、做決定"],["running out of time","時間快來不及了"],["yes or no","要還是不要"]],
 pron:"「what do you」口語連成「wuh-də-yu」;mean=「miin」。"},
 {n:8,en:"Sorry",zh:"對不起",era:"2015 · Purpose",
 story:"低頭認錯求原諒 ——「現在說對不起會不會太遲?」雷鬼舞曲節奏,百聽不膩。",
 chorus:"副歌唱「is it too late now to say sorry?」,跟著搖擺唱超紓壓。",
-voc:[["sorry","對不起"],["too late","太遲了"],["forgive","原諒"],["mistake","錯誤"],["chance","機會"]],
+voc:[["sorry","對不起"],["too late","太遲了"],["forgive","原諒"],["mistake","錯誤"],["chance","機會"],["second chance","第二次機會"],["make it right","彌補、改正"],["learn from","從…學到教訓"]],
 pron:"sorry=「SOR-ee」;「too late」連著「tu-leyt」。"},
 {n:9,en:"Love Yourself",zh:"好好愛你自己",era:"2015 · Purpose",
 story:"和紅髮艾德合寫的酸甜分手歌 —— 表面說「你該好好愛自己」,其實是優雅地嗆前任。木吉他超好聽。",
 chorus:"副歌唱「you should go and love yourself」,看似祝福、實則白眼,唱出那點傲嬌最對味。",
-voc:[["love yourself","好好愛自己(此處帶反諷)"],["ego","自我、自負"],["waste","浪費"],["opinion","意見、看法"],["ought to","應該"]],
+voc:[["love yourself","好好愛自己(此處帶反諷)"],["ego","自我、自負"],["waste","浪費"],["opinion","意見、看法"],["ought to","應該"],["go and...","去做某事"],["my time","我的時間"],["never there","從不在身邊"]],
 pron:"yourself=「yor-SELF」;「should go」連著唱。"},
 {n:10,en:"Company",zh:"作伴",era:"2015 · Purpose",
 story:"想找個伴卻不必有名分 ——「我們不用當朋友,但今晚能不能陪我?」輕快慵懶。",
 chorus:"副歌唱「can I be your company?」,旋律黏黏的,跟著哼很順。",
-voc:[["company","作伴、陪伴"],["friends","朋友"],["tonight","今晚"],["keep","保持、留住"],["secret","祕密"]],
+voc:[["company","作伴、陪伴"],["friends","朋友"],["tonight","今晚"],["keep","保持、留住"],["secret","祕密"],["down for","願意、樂意一起"],["just tonight","就今晚"],["no strings","不牽絆、不認真"]],
 pron:"company=「CUM-pa-nee」;「can I」連著「kæn-ai」。"},
 {n:11,en:"Where Are Ü Now (with Skrillex & Diplo)",zh:"你現在在哪",era:"2015 · Purpose",
 story:"和電音雙人組合作 —— 對離開的人喊話「我需要你的時候,你到底在哪?」副歌那個變形音效是名場面。",
 chorus:"副歌唱「where are you now」反覆堆疊,接著電音 drop 全場爆嗨。",
-voc:[["where are you now","你現在在哪"],["need","需要"],["lost","迷失"],["save","拯救"],["alone","孤單"]],
+voc:[["where are you now","你現在在哪"],["need","需要"],["lost","迷失"],["save","拯救"],["alone","孤單"],["gave you everything","給了你一切"],["right here","就在這裡"],["wait on","等候、守候"]],
 pron:"「where are you」連著「wer-ə-yu」;now=「nau」。"},
 {n:12,en:"Cold Water (Major Lazer feat. Justin Bieber)",zh:"冷水",era:"2016–19 · 合作金曲",
 story:"承諾在對方最痛苦時撐住他 ——「當你快溺水,我會是你的那盆冷水把你拉回現實」。溫暖又有力。",
 chorus:"副歌唱「I'll be your cold water」,情緒往上衝,放開唱最過癮。",
-voc:[["cold water","冷水(此處比喻拉你回神的依靠)"],["drowning","溺水"],["reach","伸手搆、觸及"],["faith","信念"],["alone","孤單"]],
+voc:[["cold water","冷水(此處比喻拉你回神的依靠)"],["drowning","溺水"],["reach","伸手搆、觸及"],["faith","信念"],["alone","孤單"],["I'll be there","我會在你身邊"],["under","沉下去、撐不住"],["find your way","找到出路"]],
 pron:"water 美式=「WAH-der」;drowning=「DROW-ning」。"},
 {n:13,en:"Let Me Love You (DJ Snake feat. Justin Bieber)",zh:"讓我愛你",era:"2016–19 · 合作金曲",
 story:"挽救一段快熄滅的愛 ——「別放棄,讓我來愛你、把你修好」。副歌一 drop 全場跳起來。",
 chorus:"副歌唱「don't you give up, let me love you」,情緒高漲,是合唱+蹦跳段。",
-voc:[["let me love you","讓我愛你"],["give up","放棄"],["broken","破碎的"],["fix","修補"],["fight","奮戰"]],
+voc:[["let me love you","讓我愛你"],["give up","放棄"],["broken","破碎的"],["fix","修補"],["fight","奮戰"],["don't give up","別放棄"],["hold you tight","緊緊抱住你"],["the rest of my life","我的餘生"]],
 pron:"「let me」連著「leh-mi」;love=「lʌv」。"},
 {n:14,en:"Despacito (Remix)",zh:"慢慢來",era:"2016–19 · 合作金曲",
 story:"史上最紅西語神曲的混音版,賈斯汀獻唱開場。「despacito」是西文「慢慢地」,熱情奔放的拉丁節奏。",
 chorus:"副歌那句「despacito」全世界都會跟,順便學一個西文字超有趣。",
-voc:[["despacito","(西文)慢慢地"],["slow","慢"],["sign","跡象、訊號"],["passion","熱情"],["body","身體"]],
+voc:[["despacito","(西文)慢慢地"],["slow","慢"],["sign","跡象、訊號"],["passion","熱情"],["body","身體"],["step by step","一步一步"],["little by little","一點一點地"],["favorite","最愛的"]],
 pron:"despacito=「des-pa-SEE-to」;這首多為西語,跟著音節唱就好。"},
 {n:15,en:"I Don't Care (with Ed Sheeran)",zh:"我不在乎",era:"2016–19 · 合作金曲",
 story:"和紅髮艾德合唱 —— 在派對裡渾身不自在,但「只要有你在身邊,我什麼都不在乎」。輕快療癒。",
 chorus:"副歌唱「I don't care, as long as you love me」,跟著拍手唱很開心。",
-voc:[["I don't care","我不在乎"],["party","派對"],["anxious","焦慮、不安"],["nobody","沒有人"],["beside","在…旁邊"]],
+voc:[["I don't care","我不在乎"],["party","派對"],["anxious","焦慮、不安"],["nobody","沒有人"],["beside","在…旁邊"],["by your side","在你身邊"],["feel at home","感到自在像在家"],["out of place","格格不入"]],
 pron:"「don't care」連著「dohn-ker」;anxious=「ANK-shəs」。"},
 {n:16,en:"10,000 Hours (with Dan + Shay)",zh:"一萬個小時",era:"2016–19 · 合作金曲",
 story:"婚禮期的甜蜜情歌 ——「我願意花一萬個小時,好好認識你的全部」。鄉村流行、溫柔深情。",
 chorus:"副歌唱「I'd spend 10,000 hours and all the rest on you」,適合慢慢投入感情唱。",
-voc:[["ten thousand hours","一萬個小時"],["learn","了解、學會"],["heart","心"],["start","開始"],["the rest of my life","我的餘生"]],
+voc:[["ten thousand hours","一萬個小時"],["learn","了解、學會"],["heart","心"],["start","開始"],["the rest of my life","我的餘生"],["get to know","好好認識"],["from the start","從一開始"],["all of you","你的全部"]],
 pron:"thousand=「THOW-zənd」;hours 的 h 不發音=「OW-erz」。"},
 {n:17,en:"Yummy",zh:"好迷人",era:"2020 · Changes",
 story:"婚後的俏皮情歌 ——「你就是那麼讓人著迷 (yummy)」,輕鬆放閃。",
 chorus:"副歌反覆唱「yeah you got that yummy」,輕快好記,跟著點頭唱。",
-voc:[["yummy","好吃的;(此處)迷人、誘人"],["flatter","奉承、討好"],["stay","留下"],["roll","滾、轉"],["all night","整晚"]],
+voc:[["yummy","好吃的;(此處)迷人、誘人"],["flatter","奉承、討好"],["stay","留下"],["roll","滾、轉"],["all night","整晚"],["bouquet","一束花"],["keep on","繼續"],["right beside me","就在我身邊"]],
 pron:"yummy=「YUM-ee」;「got that」連著「gah-dæt」。"},
 {n:18,en:"Intentions (feat. Quavo)",zh:"真心",era:"2020 · Changes",
 story:"大方稱讚另一半的暖心情歌 ——「我的出發點都是真心的,你值得世界上最好的」。甜而真誠。",
 chorus:"副歌唱「my intentions are good」,溫柔肯定,跟著輕唱很舒服。",
-voc:[["intentions","心意、出發點"],["heart of gold","金子般的心(善良)"],["picture","畫面、想像"],["goals","目標"],["honest","誠實的"]],
+voc:[["intentions","心意、出發點"],["heart of gold","金子般的心(善良)"],["picture","畫面、想像"],["goals","目標"],["honest","誠實的"],["stay the night","留下過夜"],["take care of","照顧"],["the one","那個對的人"]],
 pron:"intentions=「in-TEN-shənz」;honest 的 h 不發音=「ON-ist」。"},
 {n:19,en:"Lonely (with benny blanco)",zh:"孤獨",era:"2020 · Changes",
 story:"最赤裸的自白 ——「擁有了一切,卻沒有一個能打電話的人;全世界都知道我的名字,我卻好孤獨」。鋼琴清唱、超催淚。",
 chorus:"副歌輕輕唱「everybody knows my name now, but it's just lonely」,氣音很多,貼著旋律輕唱。",
-voc:[["lonely","孤獨的"],["nobody","沒有一個人"],["fame","名氣"],["everybody knows","大家都知道"],["alone","獨自一人"]],
+voc:[["lonely","孤獨的"],["nobody","沒有一個人"],["fame","名氣"],["everybody knows","大家都知道"],["alone","獨自一人"],["had it all","曾擁有一切"],["what if","如果…會怎樣"],["growing up","成長過程中"]],
 pron:"lonely=「LOHN-lee」;「knows my name」連著唱。"},
 {n:20,en:"Holy (feat. Chance the Rapper)",zh:"神聖",era:"2021 · Justice",
 story:"把愛形容成「神聖 (holy)」般純粹 —— 帶福音色彩的告白,信仰與愛交織。",
 chorus:"副歌唱「the way you hold me feels so holy」,大器又溫暖,放聲唱很感動。",
-voc:[["holy","神聖的"],["running to","奔向"],["faith","信仰"],["promise","承諾"],["the way you","你…的樣子"]],
+voc:[["holy","神聖的"],["running to","奔向"],["faith","信仰"],["promise","承諾"],["the way you","你…的樣子"],["hold me","抱著我"],["right beside you","就在你身邊"],["till the end","直到最後"]],
 pron:"holy=「HOH-lee」;「the way you」連著「də-wey-yu」。"},
 {n:21,en:"Peaches (feat. Daniel Caesar & Giveon)",zh:"蜜桃",era:"2021 · Justice",
 story:"近年最紅的慵懶情歌 ——「我的蜜桃來自喬治亞」,輕鬆愜意、滿滿夏日氛圍。",
 chorus:"副歌唱「I got my peaches out in Georgia」,慵懶搖擺,超好跟超洗腦。",
-voc:[["peaches","桃子(此處俏皮指最愛的人事物)"],["got","有、擁有"],["out in","在(某地)"],["need","需要"],["finest","最棒的"]],
+voc:[["peaches","桃子(此處俏皮指最愛的人事物)"],["got","有、擁有"],["out in","在(某地)"],["need","需要"],["finest","最棒的"],["make the move","主動出擊"],["sweet","甜的"],["all the time","一直、總是"]],
 pron:"peaches=「PEE-chiz」;Georgia=「JOR-ja」。"},
 {n:22,en:"Ghost",zh:"幽魂",era:"2021 · Justice",
 story:"思念逝去的人 ——「如果不能再靠近你,我寧願留著你的影子 (ghost)」。傷感又動聽,MV 超催淚。",
 chorus:"副歌唱「I'll settle for the ghost of you」,情緒滿溢,適合投入感情唱。",
-voc:[["ghost","幽靈、(此處)殘影、思念"],["miss","想念"],["settle for","退而求其次、將就"],["close","靠近"],["memory","回憶"]],
+voc:[["ghost","幽靈、(此處)殘影、思念"],["miss","想念"],["settle for","退而求其次、將就"],["close","靠近"],["memory","回憶"],["hold on to","緊抓著不放"],["let go","放手"],["the ghost of you","你的殘影"]],
 pron:"ghost=「gohst」;「settle for」連著「seh-tl-fər」。"},
 {n:23,en:"Hold On",zh:"撐住",era:"2021 · Justice",
 story:"給陷入低潮的人打氣 ——「撐住,我絕不會放開你」。溫暖有力的鼓勵歌。",
 chorus:"副歌唱「just hold on」,堅定又溫柔,跟著唱很有力量。",
-voc:[["hold on","撐住、堅持住"],["give up","放棄"],["too late","太遲"],["fight","奮鬥"],["reason","理由"]],
+voc:[["hold on","撐住、堅持住"],["give up","放棄"],["too late","太遲"],["fight","奮鬥"],["reason","理由"],["count on","依靠、指望"],["it's not too late","還不算太遲"],["stay alive","活下去、撐住"]],
 pron:"「hold on」連著「hohl-don」;give up=「giv-ʌp」。"},
 {n:24,en:"Anyone",zh:"非你不可",era:"2021 · Justice",
 story:"堅定的深情宣言 ——「如果不是你,那就誰都不是」。副歌氣勢磅礴,常當演唱會開場。",
 chorus:"副歌唱「if it's not you, it's not anyone」,放聲高唱超有感染力。",
-voc:[["anyone","任何人"],["only","唯一"],["swear","發誓"],["forever","永遠"],["believe","相信"]],
+voc:[["anyone","任何人"],["only","唯一"],["swear","發誓"],["forever","永遠"],["believe","相信"],["look back","回頭看"],["right now","此刻、現在"],["no one else","沒有別人"]],
 pron:"anyone=「EN-ee-wʌn」;「it's not」連著「its-nat」。"},
 {n:25,en:"Somebody",zh:"某個人",era:"2021 · Justice",
 story:"領悟到想成為某人生命中重要的人 ——「我想當對你有意義的那個人」。明亮輕快、好跳。",
 chorus:"副歌唱「I wanna be somebody to you」,正能量滿滿,跟著蹦蹦跳跳唱。",
-voc:[["somebody","某個重要的人"],["free","自由"],["alone","獨自"],["learn","學會"],["hold","擁抱、把握"]],
+voc:[["somebody","某個重要的人"],["free","自由"],["alone","獨自"],["learn","學會"],["hold","擁抱、把握"],["figure out","弄清楚、想通"],["need somebody","需要一個人"],["be there","在身邊陪伴"]],
 pron:"somebody=「SUM-bah-dee」;wanna=「WAH-na」。"},
 {n:26,en:"Stay (with The Kid LAROI)",zh:"別走",era:"2021 · Justice",
 story:"2021 全球爆紅神曲 —— 明知自己一團糟,還是求對方「留下來,我需要你」。節奏超快、全場狂跟。",
 chorus:"副歌飛快唱「I need you to stay」,語速很快,先抓「I need you to stay」這句反覆練。",
-voc:[["stay","留下"],["need","需要"],["change","改變"],["mess","一團糟"],["every little thing","每一件小事"]],
+voc:[["stay","留下"],["need","需要"],["change","改變"],["mess","一團糟"],["every little thing","每一件小事"],["I need you to stay","我需要你留下"],["for a minute","就一下下"],["get through","撐過、度過"]],
 pron:"「need you」連著「nee-ju」;stay=「stey」。"}
 ];
 
 const ARTISTS={
   taylor:{name:"泰勒絲",emoji:"🎤",search:"Taylor Swift",key:"tsLearn26",
-    sub:"26 首演唱會必唱曲 · 跟著學、跟著唱 ✨",songs:TAYLOR},
+    sub:"26 首演唱會必唱曲 · 14 天學會一首 ✨",songs:TAYLOR},
   justin:{name:"賈斯汀",emoji:"🎙️",search:"Justin Bieber",key:"jbLearn26",
-    sub:"26 首演唱會必唱曲 · 跟著學、跟著唱 ✨",songs:JUSTIN}
+    sub:"26 首演唱會必唱曲 · 14 天學會一首 ✨",songs:JUSTIN}
 };
+
+// 14 天每日計畫(第 5/7/10/13 天穿插複習測驗,最後一格為 1 = 有測驗連結)
+const PLAN=[
+ ["🎧","沉浸聽歌","把 MV 聽 3 遍,只感受旋律和情緒,看「歌曲故事」懂這首在唱什麼。"],
+ ["📖","單字 (1/3)","學前 3 個單字 / 片語,每個點 🔊 跟念 5 次。"],
+ ["📖","單字 (2/3)","學中間 3 個,和昨天的一起再念一遍。"],
+ ["📖","單字 (3/3)","學最後幾個,8 個今天全部念過一輪。"],
+ ["📝","複習測驗","做一次「隨堂測驗」,答錯的回去再聽 🔊。",1],
+ ["🎤","練副歌","看「副歌跟唱重點」,跟著 MV 把副歌唱 5 遍。"],
+ ["🏁","第一週驗收","邊聽邊唱副歌 + 再測一次,看自己進步多少。",1],
+ ["🗣️","發音特訓","看「發音 / 連音 tips」,難念的地方慢速跟讀。"],
+ ["🎶","練主歌","跟著 MV 把主歌(verse)也唱一遍,不熟的字回去查。"],
+ ["📝","主動回憶","做測驗,這次先「看中文想英文」再看答案。",1],
+ ["🐢","半速跟唱","用慢速整首跟唱,抓住每一個連音。"],
+ ["🏃","正常速跟唱","正常速整首唱一遍,享受跟偶像合唱的感覺。"],
+ ["📝","綜合考題","做最後一次測驗,目標全對!",1],
+ ["🎉","結業合唱","完整唱完整首,按下「標記學會」,換下一首!"]
+];
 
 let ART=localStorage.getItem("singArtist")||"taylor";
 if(!ARTISTS[ART])ART="taylor";
-let cur,SONGS,KEY,done;
+let cur,SONGS,KEY,done,DAYS;
 const enc=encodeURIComponent;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t;}return a;}
 
 let RATE=parseFloat(localStorage.getItem("tsRate")||"0.7");
 function setRate(r){RATE=r;localStorage.setItem("tsRate",r);
@@ -382,6 +420,7 @@ function setArtist(a){
 function load(){
   cur=ARTISTS[ART];SONGS=cur.songs;KEY=cur.key;
   done=JSON.parse(localStorage.getItem(KEY)||"[]");
+  DAYS=JSON.parse(localStorage.getItem("days_"+ART)||"{}");
   document.getElementById("h1").textContent=cur.emoji+" "+cur.name+" 跟唱學英文";
   document.getElementById("sub").textContent=cur.sub;
 }
@@ -396,6 +435,16 @@ function links(t){
 function speak(t){
   try{const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=RATE;
     speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}
+}
+function planHtml(n){
+  const dd=DAYS[n]||[];
+  return `<div class="sec"><div class="lab">📅 14 天學會這首歌 · 已完成 ${dd.length}/14 天</div>
+   <div class="plan">${PLAN.map((p,i)=>{const d=i+1,isd=dd.includes(d);
+     return `<div class="day${isd?' dd':''}">
+       <button class="dchk" onclick="toggleDay(${n},${d},event)">${isd?'✅':'⬜'}</button>
+       <div class="dtt"><b>Day ${d}</b> ${p[0]} ${p[1]}
+         <div class="ddesc">${p[2]}${p[3]?` <span class="qjump" onclick="openQuiz(${n})">→ 去測驗</span>`:''}</div>
+       </div></div>`;}).join("")}</div></div>`;
 }
 function render(){
   const list=document.getElementById("list");let h="",lastEra="";
@@ -413,10 +462,13 @@ function render(){
         ${links(s.en)}
         <div class="sec"><div class="lab">🎵 這首在唱什麼</div>${s.story}</div>
         <div class="sec"><div class="lab">🎤 副歌跟唱重點</div><div class="chorus">${s.chorus}</div></div>
-        <div class="sec"><div class="lab">📖 重點單字(點 🔊 聽發音)</div>
+        <div class="sec"><div class="lab">📖 重點單字 &amp; 片語(點 🔊 聽發音)</div>
           ${s.voc.map(v=>`<div class="voc"><button class="spk" onclick="speak('${v[0].replace(/'/g,"\\'")}')">🔊</button>
             <div><span class="en2">${v[0]}</span> <span class="zh2">${v[1]}</span></div></div>`).join("")}</div>
         <div class="sec"><div class="lab">🗣️ 發音 / 連音 tips</div>${s.pron}</div>
+        ${planHtml(s.n)}
+        <div class="sec"><button class="qbtn" onclick="openQuiz(${s.n})">📝 隨堂測驗(${s.voc.length} 個題庫,跟偶像 PK 記憶力!)</button>
+          <div class="quizwrap" id="quizwrap${s.n}" style="display:none"><div id="quiz${s.n}"></div></div></div>
         <button class="markbtn" onclick="mark(${s.n},event)">${isDone?'✓ 已學會(點取消)':'標記學會 ✅'}</button>
       </div></div>`;
   });
@@ -430,6 +482,64 @@ function mark(n,e){e.stopPropagation();
   if(done.includes(n))done=done.filter(x=>x!==n);else done.push(n);
   localStorage.setItem(KEY,JSON.stringify(done));render();
   document.getElementById("s"+n).classList.add("open");}
+function toggleDay(n,d,e){e.stopPropagation();
+  let arr=DAYS[n]||[];const has=arr.includes(d);
+  if(has)arr=arr.filter(x=>x!==d);else arr.push(d);
+  DAYS[n]=arr;localStorage.setItem("days_"+ART,JSON.stringify(DAYS));
+  const btn=e.target,row=btn.closest(".day");
+  if(has){row.classList.remove("dd");btn.textContent="⬜";}else{row.classList.add("dd");btn.textContent="✅";}
+  const lab=row.closest(".sec").querySelector(".lab");
+  if(lab)lab.textContent="📅 14 天學會這首歌 · 已完成 "+arr.length+"/14 天";}
+
+// ===== 互動考題 =====
+const QZ={};
+function openQuiz(n){
+  const w=document.getElementById("quizwrap"+n);
+  document.getElementById("s"+n).classList.add("open");
+  w.style.display="block";startQuiz(n);
+  w.scrollIntoView({behavior:"smooth",block:"center"});
+}
+function startQuiz(n){
+  const s=SONGS.find(x=>x.n===n);
+  const pool=shuffle(s.voc.slice());
+  const pick=pool.slice(0,Math.min(6,pool.length));
+  const qs=pick.map(w=>{
+    const askEn=Math.random()<0.5;
+    const others=shuffle(s.voc.filter(v=>v!==w)).slice(0,3);
+    const opts=shuffle([w].concat(others)).map(v=>({t:askEn?v[0]:v[1],ok:v===w}));
+    return {word:w,askEn,opts,q:askEn?"這個中文的英文是?":"這個英文的意思是?",sub:askEn?w[1]:w[0]};
+  });
+  QZ[n]={qs,i:0,score:0,answered:false};
+  renderQuiz(n);
+}
+function renderQuiz(n){
+  const st=QZ[n],c=document.getElementById("quiz"+n);
+  if(st.i>=st.qs.length){
+    const p=Math.round(st.score/st.qs.length*100);
+    const m=p>=100?("完美!可以跟"+cur.name+"同台合唱了 🎤"):p>=67?"很棒!再聽幾次就滿分 💪":"沒關係,回去多點幾次 🔊 再來 😊";
+    c.innerHTML=`<div class="qdone">🏁 ${st.score} / ${st.qs.length} 答對!<br>${m}</div>
+      <button class="qnext" onclick="startQuiz(${n})">🔁 再測一次</button>`;
+    return;
+  }
+  const q=st.qs[st.i];
+  c.innerHTML=`<div class="qbar">第 ${st.i+1} / ${st.qs.length} 題 · 已答對 ${st.score}</div>
+    <div class="qq">${q.q}</div><div class="qsub">${q.sub}</div>
+    <div class="qopts">${q.opts.map((o,j)=>`<button class="qopt" onclick="answer(${n},${j})">${o.t}</button>`).join("")}</div>`;
+  st.answered=false;
+}
+function answer(n,j){
+  const st=QZ[n];if(st.answered)return;st.answered=true;
+  const q=st.qs[st.i],c=document.getElementById("quiz"+n);
+  c.querySelectorAll(".qopt").forEach((b,k)=>{b.disabled=true;
+    if(q.opts[k].ok)b.classList.add("ok");else if(k===j)b.classList.add("no");});
+  if(q.opts[j].ok)st.score++;
+  speak(q.word[0]);
+  const fb=q.opts[j].ok?'<span class="ok2">✅ 答對了!</span>':'<span class="no2">❌ 正確是綠色那個</span>';
+  c.insertAdjacentHTML("beforeend",
+    `<div class="qfb">${fb} <span class="zh2">${q.word[0]} = ${q.word[1]}</span></div>
+     <button class="qnext" onclick="nextQ(${n})">${st.i+1>=st.qs.length?'看成績 🏁':'下一題 ▶'}</button>`);
+}
+function nextQ(n){QZ[n].i++;renderQuiz(n);}
 
 document.body.className=ART;
 document.querySelectorAll(".art").forEach(b=>b.classList.toggle("on",b.dataset.a===ART));
