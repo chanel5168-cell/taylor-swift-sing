@@ -571,7 +571,7 @@ function render(){
         ${(ART==="mix"&&s.a&&s.a!=="Mariah Carey")?koVocHtml(s):""}
         <div class="sec"><div class="lab">🗣️ 發音 / 連音 tips</div>${s.pron}</div>
         ${planHtml(s.n)}
-        <div class="sec"><button class="qbtn" onclick="openQuiz(${s.n})">📝 隨堂測驗(${s.voc.length} 個題庫,跟偶像 PK 記憶力!)</button>
+        <div class="sec"><button class="qbtn" onclick="openQuiz(${s.n})">📝 隨堂測驗(${s.voc.length+(KOVOC[s.en]?KOVOC[s.en].length:0)} 個題庫,跟偶像 PK 記憶力!)</button>
           <div class="quizwrap" id="quizwrap${s.n}" style="display:none"><div id="quiz${s.n}"></div></div></div>
         <button class="markbtn" onclick="mark(${s.n},event)">${isDone?'✓ 已學會(點取消)':'標記學會 ✅'}</button>
       </div></div>`;
@@ -605,13 +605,27 @@ function openQuiz(n){
 }
 function startQuiz(n){
   const s=SONGS.find(x=>x.n===n);
-  const pool=shuffle(s.voc.slice());
-  const pick=pool.slice(0,Math.min(6,pool.length));
+  const enPool=s.voc.map(v=>({term:v[0],zh:v[1],lang:"en"}));
+  const koPool=(KOVOC[s.en]||[]).map(v=>({term:v[0],zh:v[2],lang:"ko",rom:v[1]}));
+  const pool=enPool.concat(koPool);
+  const pick=shuffle(pool.slice()).slice(0,Math.min(koPool.length?8:6,pool.length));
+  function distinct(src,w){const seen=new Set([w.zh]),out=[];
+    for(const v of shuffle(src.slice())){if(v===w||seen.has(v.zh))continue;seen.add(v.zh);out.push(v);if(out.length===3)break;}
+    return out;}
   const qs=pick.map(w=>{
-    const askEn=Math.random()<0.5;
-    const others=shuffle(s.voc.filter(v=>v!==w)).slice(0,3);
-    const opts=shuffle([w].concat(others)).map(v=>({t:askEn?v[0]:v[1],ok:v===w}));
-    return {word:w,askEn,opts,q:askEn?"這個中文的英文是?":"這個英文的意思是?",sub:askEn?w[1]:w[0]};
+    const samePool=w.lang==="ko"?koPool:enPool;
+    const askMeaning=Math.random()<0.5;
+    let opts,qtext,sub;
+    if(askMeaning){ // 詞 → 中(選項都是中文,意思互不重複)
+      opts=shuffle([w].concat(distinct(pool,w))).map(v=>({t:v.zh,ok:v===w}));
+      qtext=w.lang==="ko"?"這個韓文的意思是?":"這個英文的意思是?";
+      sub=w.lang==="ko"?(w.term+" ("+w.rom+")"):w.term;
+    }else{ // 中 → 詞(選項是同語言的詞,意思互不重複)
+      opts=shuffle([w].concat(distinct(samePool,w))).map(v=>({t:v.lang==="ko"?(v.term+" "+v.rom):v.term,ok:v===w}));
+      qtext=w.lang==="ko"?"這個中文的韓文是?":"這個中文的英文是?";
+      sub=w.zh;
+    }
+    return {item:w,opts,q:qtext,sub};
   });
   QZ[n]={qs,i:0,score:0,answered:false};
   renderQuiz(n);
@@ -637,10 +651,11 @@ function answer(n,j){
   c.querySelectorAll(".qopt").forEach((b,k)=>{b.disabled=true;
     if(q.opts[k].ok)b.classList.add("ok");else if(k===j)b.classList.add("no");});
   if(q.opts[j].ok)st.score++;
-  speak(q.word[0]);
+  speak(q.item.term,q.item.lang==="ko"?"ko-KR":"en-US");
   const fb=q.opts[j].ok?'<span class="ok2">✅ 答對了!</span>':'<span class="no2">❌ 正確是綠色那個</span>';
+  const disp=q.item.lang==="ko"?(q.item.term+" ("+q.item.rom+")"):q.item.term;
   c.insertAdjacentHTML("beforeend",
-    `<div class="qfb">${fb} <span class="zh2">${q.word[0]} = ${q.word[1]}</span></div>
+    `<div class="qfb">${fb} <span class="zh2">${disp} = ${q.item.zh}</span></div>
      <button class="qnext" onclick="nextQ(${n})">${st.i+1>=st.qs.length?'看成績 🏁':'下一題 ▶'}</button>`);
 }
 function nextQ(n){QZ[n].i++;renderQuiz(n);}
