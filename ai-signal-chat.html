@@ -1,0 +1,1977 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 戰隊指揮中心 v2</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+:root{--bg:#0b0e14;--card:#141a24;--card2:#1a2230;--border:#2a3440;--text:#e8edf4;--text2:#8899b0;--accent:#4fc3f7;--green:#4caf7d;--red:#ef5366;--yellow:#f5c842;--orange:#ff8a50;--jensen:#76b900;--wei:#0057b7;--zuck:#0064e0;--elon:#e82127;--trump:#c8102e;--buffett:#00a651;--gates:#008272;--bnf:#ff6b9d;--cns:#9b59b6;--soros:#f39c12;--joman:#e74c3c;--zhounan:#1abc9c;--juren:#ff4757;--phoebus:#2ed573}
+body{background:var(--bg);color:var(--text);min-height:100vh}
+.topbar{background:linear-gradient(135deg,#0f1a2e,#1a2a44);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px}
+.topbar h1{font-size:18px;font-weight:700;background:linear-gradient(90deg,#4fc3f7,#76b900,#f5c842,#ef5366,#00a651);-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
+.topbar .sub{font-size:11px;color:var(--text2);-webkit-text-fill-color:var(--text2)}
+.tabs{display:flex;gap:4px;background:var(--bg);padding:8px 24px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:7px 18px;border-radius:8px 8px 0 0;cursor:pointer;font-size:13px;font-weight:600;color:var(--text2);border:1px solid transparent;border-bottom:none;transition:.2s;white-space:nowrap}
+.tab:hover{color:var(--text);background:var(--card)}
+.tab.active{color:var(--accent);background:var(--card);border-color:var(--border)}
+.content{padding:16px 24px;max-width:1440px;margin:0 auto}
+.page{display:none}.page.active{display:block}
+
+/* Product Filter */
+.filter-bar{display:flex;gap:6px;padding:10px 0;flex-wrap:wrap;justify-content:flex-start;margin-bottom:4px}
+.filter-pill{padding:5px 12px;border-radius:20px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-size:12px;font-weight:600;white-space:nowrap;transition:.15s}
+.filter-pill:hover{border-color:var(--accent);color:var(--text)}
+.filter-pill.active{background:var(--accent);color:#111;border-color:var(--accent)}
+.filter-pill .cnt{font-size:10px;background:var(--card2);padding:1px 6px;border-radius:8px;margin-left:4px}
+.filter-pill.active .cnt{background:rgba(0,0,0,.2);color:#111}
+
+/* Signal Grid */
+.signal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-bottom:16px}
+.signal-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+.signal-card:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3)}
+.signal-card .avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff;float:left;margin-right:8px}
+.signal-card h3{font-size:13px;margin-bottom:0}
+.signal-card .title{font-size:10px;color:var(--text2);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.signal-card .signal{font-size:10px;padding:2px 8px;border-radius:20px;display:inline-block;font-weight:600}
+.signal.bull{background:rgba(76,175,125,.2);color:var(--green)}.signal.bear{background:rgba(239,83,102,.2);color:var(--red)}.signal.neutral{background:rgba(245,200,66,.15);color:var(--yellow)}
+.signal-card .quote{font-size:11px;color:var(--text2);margin:6px 0;line-height:1.5;font-style:italic;border-left:2px solid var(--border);padding-left:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.signal-card .impact{font-size:10px;color:var(--text2);margin-top:4px}
+.signal-card .impact span{color:var(--accent);font-weight:600}
+.signal-card .time{font-size:9px;color:var(--text2);margin-top:4px;text-align:right}
+.signal-badge{position:absolute;top:8px;right:8px;font-size:8px;padding:1px 5px;border-radius:6px;font-weight:600}
+.badge-new{background:var(--red);color:#fff}.badge-hot{background:var(--orange);color:#fff}.badge-watch{background:var(--yellow);color:#111}
+.signal-group{margin-bottom:16px}
+.signal-group h4{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;margin-bottom:8px;padding:4px 0;border-bottom:2px solid var(--border)}
+
+/* Summary */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:16px}
+.summary-card{background:var(--card2);border-radius:8px;padding:12px;text-align:center}
+.summary-card .num{font-size:24px;font-weight:700}
+.summary-card .label{font-size:11px;color:var(--text2);margin-top:3px}
+.summary-card .num.green{color:var(--green)}.summary-card .num.red{color:var(--red)}.summary-card .num.yellow{color:var(--yellow)}
+
+/* Feed + News dual column */
+.feed-news{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:0;overflow:hidden}
+.feed-news .fn-tabs{display:flex;border-bottom:1px solid var(--border)}
+.feed-news .fn-tab{padding:8px 16px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;transition:.15s;background:none;border-top:none;border-left:none;border-right:none}
+.feed-news .fn-tab:hover{color:var(--text)}
+.feed-news .fn-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.feed-news .fn-body{padding:10px 14px;max-height:380px;overflow-y:auto}
+.feed-news .fn-body .col{display:none}
+.feed-news .fn-body .col.active{display:block}
+.api-key-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.feed-item:last-child{border-bottom:none}
+.feed-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.feed-dot.bull{background:var(--green)}.feed-dot.bear{background:var(--red)}.feed-dot.neutral{background:var(--yellow)}
+.feed-text{line-height:1.5}
+.feed-text b{cursor:pointer}.feed-text b:hover{color:var(--accent)}
+.feed-time{font-size:10px;color:var(--text2);margin-top:2px}
+.feed-source{font-size:9px;color:var(--text2);margin-top:1px;display:flex;gap:4px;align-items:center}
+.feed-source a{color:var(--accent);cursor:pointer;text-decoration:none}
+.feed-source a:hover{text-decoration:underline}
+
+.signal-hint{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--card2);border:1px solid var(--border);border-radius:8px;font-size:11px;color:var(--text2);margin-bottom:12px;flex-wrap:wrap}
+.signal-hint .signal-countdown{margin-left:auto;font-weight:600;color:var(--accent);font-size:12px;white-space:nowrap}
+
+/* News items */
+.news-item{padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;line-height:1.5}
+.news-item:last-child{border-bottom:none}
+.news-item .nsrc{font-size:10px;color:var(--text2);margin-top:2px}
+.news-item .ntag{display:inline-block;font-size:9px;padding:1px 6px;border-radius:4px;background:var(--card2);color:var(--text2);margin-right:4px}
+.api-key-row{display:flex;gap:8px;align-items:center;margin-bottom:10px;flex-wrap:wrap}
+.api-key-row input{padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:12px;outline:none;flex:1;min-width:150px}
+.api-key-row input:focus{border-color:var(--accent)}
+.api-key-row button{padding:6px 14px;border-radius:6px;border:none;background:var(--accent);color:#111;font-weight:600;cursor:pointer;font-size:12px}
+.api-key-row button:hover{opacity:.85}
+.api-key-row .hint{font-size:11px;color:var(--text2)}
+
+/* Chat */
+.chat-layout{display:grid;grid-template-columns:240px 1fr;gap:16px;height:calc(100vh - 180px);min-height:500px}
+/* 巨人傑專頁 */
+.jr-wrap{max-width:1100px;margin:0 auto;padding:0 4px}
+.jr-hero{background:linear-gradient(135deg,#1a0a0a,#2d1515);border:1px solid #ff4757;border-radius:14px;padding:24px;margin-bottom:18px;position:relative;overflow:hidden}
+.jr-hero::after{content:'';position:absolute;top:-50%;right:-20%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,71,87,.08),transparent 70%)}
+.jr-hero .name{font-size:28px;font-weight:800;color:#ff4757;margin-bottom:2px}
+.jr-hero .sub{font-size:13px;color:var(--text2);margin-bottom:10px}
+.jr-hero .badge-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.jr-hero .badge-row span{padding:3px 10px;border-radius:12px;font-size:10px;font-weight:600;background:rgba(255,71,87,.15);color:#ff4757;border:1px solid rgba(255,71,87,.3)}
+.jr-hero .stat{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.jr-hero .stat-item{background:var(--card);border-radius:8px;padding:10px;text-align:center}
+.jr-hero .stat-item .num{font-size:20px;font-weight:700;color:var(--accent);display:block}
+.jr-hero .stat-item .lbl{font-size:10px;color:var(--text2)}
+.jr-hero .links{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.jr-hero .links a{padding:5px 14px;border-radius:8px;font-size:11px;font-weight:600;text-decoration:none;transition:.15s;border:1px solid var(--border)}
+.jr-hero .links a:hover{opacity:.8}
+.jr-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:14px}
+.jr-section h3{font-size:15px;font-weight:700;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--border);display:flex;align-items:center;gap:8px}
+.jr-table{width:100%;border-collapse:collapse;font-size:12px}
+.jr-table th{padding:7px 8px;text-align:left;color:var(--text2);font-weight:600;border-bottom:1px solid var(--border);font-size:11px}
+.jr-table td{padding:7px 8px;border-bottom:1px solid var(--border);vertical-align:top}
+.jr-table tr:hover td{background:var(--card2)}
+.jr-table .ticker{font-weight:700;color:var(--accent);font-size:13px}
+.jr-table .badge{padding:1px 7px;border-radius:8px;font-size:9px;font-weight:600;display:inline-block}
+.badge-mention{background:rgba(255,71,87,.2);color:#ff4757}
+.badge-related{background:rgba(79,195,247,.15);color:var(--accent)}
+.jr-quote{padding:12px;background:var(--card2);border-left:3px solid #ff4757;border-radius:6px;margin:8px 0;font-size:12px;font-style:italic;line-height:1.7;color:var(--text2)}
+.jr-sectitle{font-size:13px;font-weight:600;margin:10px 0 6px;color:var(--text)}
+.jr-twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:768px){.jr-twocol{grid-template-columns:1fr}}
+.chat-sidebar{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px;overflow-y:auto}
+.chat-sidebar h3{font-size:13px;color:var(--text2);margin-bottom:8px;padding:0 6px}
+.persona-btn{display:flex;align-items:center;gap:8px;width:100%;padding:8px 10px;border-radius:8px;border:none;background:transparent;color:var(--text);cursor:pointer;text-align:left;font-size:12px;transition:.15s;margin-bottom:3px}
+.persona-btn:hover{background:var(--card2)}.persona-btn.active{background:var(--card2);border:1px solid var(--accent)}
+.persona-btn .mini-av{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;flex-shrink:0}
+.chat-main{background:var(--card);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;overflow:hidden}
+.chat-header{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.chat-header .ch-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:#fff}
+.chat-header h2{font-size:14px;font-weight:600}
+.chat-header .tag{font-size:10px;color:var(--text2)}
+.chat-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:85%;padding:8px 12px;border-radius:10px;font-size:12px;line-height:1.6;animation:fadeIn .3s}
+.msg.user{background:var(--accent);color:#111;align-self:flex-end;border-bottom-right-radius:3px}
+.msg.bot{background:var(--card2);border:1px solid var(--border);align-self:flex-start;border-bottom-left-radius:3px}
+.msg.system{background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.3);align-self:center;text-align:center;font-size:11px;color:var(--yellow);max-width:70%}
+.msg .sender{font-size:10px;font-weight:600;margin-bottom:3px;display:block}
+.chat-input{display:flex;gap:6px;padding:10px 14px;border-top:1px solid var(--border)}
+.chat-input input{flex:1;padding:8px 12px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:12px;outline:none}
+.chat-input input:focus{border-color:var(--accent)}
+.chat-input button{padding:8px 16px;border-radius:6px;border:none;background:var(--accent);color:#111;font-weight:600;cursor:pointer;transition:.15s;font-size:12px}
+.chat-input button:hover{opacity:.85}.chat-input button:disabled{opacity:.4;cursor:not-allowed}
+.suggestions{display:flex;gap:5px;padding:6px 14px 0;flex-wrap:wrap}
+.suggestions button{font-size:10px;padding:3px 8px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:.15s}
+.suggestions button:hover{color:var(--text);border-color:var(--accent);background:var(--card2)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.typing{display:flex;gap:3px;padding:10px 0}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--text2);animation:bounce 1.4s infinite}
+.typing span:nth-child(2){animation-delay:.2s}.typing span:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-8px)}}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:8px}
+@media(max-width:768px){.chat-layout{grid-template-columns:1fr;height:auto}.chat-sidebar{display:flex;overflow-x:auto;padding:6px;gap:3px}.chat-sidebar h3{display:none}.persona-btn{flex-shrink:0;width:auto;flex-direction:column;padding:6px 10px;font-size:11px}.persona-btn .mini-av{margin:0}.signal-grid{grid-template-columns:1fr}.content{padding:10px 12px}.feed-news{grid-template-columns:1fr}.summary-grid{grid-template-columns:repeat(2,1fr)}.topbar h1{font-size:15px}.filter-bar{flex-wrap:wrap;overflow-x:visible}.filter-pill{font-size:11px;padding:5px 11px}.tabs{flex-wrap:wrap;overflow-x:visible}}
+
+/* Round Table */
+.round-toggle{display:flex;gap:4px;margin-bottom:10px;padding:3px;background:var(--bg);border-radius:8px}
+.round-toggle button{flex:1;padding:5px 8px;border-radius:6px;border:none;background:transparent;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;transition:.15s}
+.round-toggle button.active{background:var(--accent);color:#111}
+.round-toggle button:hover:not(.active){color:var(--text)}
+.persona-btn .ck{width:14px;height:14px;border-radius:3px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:9px;color:transparent;flex-shrink:0;transition:.15s}
+.persona-btn .ck.on{background:var(--accent);border-color:var(--accent);color:#111}
+.persona-btn .tag{font-size:9px;color:var(--text2);margin-left:auto}
+.round-pills{display:flex;gap:4px;flex-wrap:wrap;padding:6px 14px 0}
+.round-pills span{font-size:10px;padding:2px 8px;border-radius:10px;background:var(--card2);font-weight:600}
+.round-msg{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:8px;font-size:12px;line-height:1.6}
+.round-msg .r-header{display:flex;align-items:center;gap:6px;margin-bottom:4px;font-size:11px;font-weight:600}
+.round-msg .r-header .r-dot{width:6px;height:6px;border-radius:50%}
+
+/* 財務工程試算 */
+.fin-section input,.fin-section select{padding:8px 10px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:13px;outline:none;width:100%}
+.fin-section input:focus,.fin-section select:focus{border-color:var(--accent)}
+.fin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fin-grid label,.fin-debt label{display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--text2)}
+.fin-debt{display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr auto;gap:8px;align-items:end;margin-bottom:8px}
+.fin-income{display:grid;grid-template-columns:1.4fr 1fr 0.95fr auto;gap:8px;align-items:end;margin-bottom:8px}
+.fin-alloc{display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:8px;align-items:end;margin-bottom:8px}
+.fin-btn{padding:9px 18px;border-radius:8px;border:none;background:var(--accent);color:#111;font-weight:700;cursor:pointer;font-size:13px}
+.fin-btn:hover{opacity:.85}
+.fin-btn.alt{background:var(--card2);color:var(--text);border:1px solid var(--border)}
+.fin-del{padding:8px 10px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--red);cursor:pointer;height:36px}
+.fin-res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+@media(max-width:768px){.fin-grid{grid-template-columns:1fr}.fin-debt{grid-template-columns:1fr 1fr}.fin-debt .fin-del{grid-column:span 2;width:100%}.fin-income{grid-template-columns:1fr 1fr}.fin-alloc{grid-template-columns:1fr 1fr}}
+
+/* AI 即時模式設定列 */
+.ai-bar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:8px 14px;border-bottom:1px solid var(--border);background:var(--card2)}
+.ai-bar input[type=password]{flex:1;min-width:140px;padding:5px 8px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:11px;outline:none}
+.ai-bar input[type=password]:focus{border-color:var(--accent)}
+.ai-bar select{padding:5px 6px;border-radius:6px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:11px;outline:none}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><h1>AI 戰隊指揮中心 v2</h1><div class="sub">26 位巨頭與財經專家 · 新聞聚合 · 對談室 · 圓桌查證</div></div>
+  <div style="font-size:11px;color:var(--text2)" id="clock"></div>
+</div>
+
+<div class="tabs">
+  <div class="tab active" data-tab="signals">📡 信號儀表板</div>
+  <div class="tab" data-tab="chat">💬 對談室</div>
+  <div class="tab" data-tab="junrenjie">🏆 巨人傑研究</div>
+  <div class="tab" data-tab="finance">🧮 財務工程</div>
+</div>
+
+<div class="content">
+
+<div id="page-signals" class="page active">
+
+<div class="summary-grid">
+  <div class="summary-card"><div class="num green" id="bullCount">0</div><div class="label">看多信號</div></div>
+  <div class="summary-card"><div class="num red" id="bearCount">0</div><div class="label">看空信號</div></div>
+  <div class="summary-card"><div class="num yellow" id="neutralCount">0</div><div class="label">中性信號</div></div>
+  <div class="summary-card"><div class="num" id="totalCount" style="color:var(--accent)">26</div><div class="label">追蹤人物</div></div>
+  <div class="summary-card"><div class="num" id="aiScore" style="color:var(--green)">--</div><div class="label">綜合信心指數</div></div>
+  <div class="summary-card"><div class="num" id="newsCount" style="color:var(--orange)">0</div><div class="label">最新新聞</div></div>
+</div>
+
+<div class="filter-bar" id="filterBar"></div>
+
+<div class="signal-hint">
+  <span>💡</span> 信號每 <strong>60 秒</strong>隨機生成一次，資料為模擬內容僅供參考。點擊卡片可與該人物對談求證。
+  <span class="signal-countdown" id="signalCountdown"></span>
+</div>
+
+<div class="signal-grid" id="signalGrid"></div>
+
+<div class="feed-news">
+  <div class="fn-tabs">
+    <button class="fn-tab active" onclick="switchFnTab('feed',this)">📰 即時訊號流</button>
+    <button class="fn-tab" onclick="switchFnTab('news',this)">🌐 新聞聚合</button>
+  </div>
+  <div class="fn-body">
+    <div class="col active" id="feedCol"><div id="feedList"></div></div>
+    <div class="col" id="newsCol">
+      <div class="api-key-row">
+        <input id="newsApiKey" placeholder="NewsAPI key（選填，留空用模擬新聞）" type="text">
+        <button onclick="fetchRealNews()">載入新聞</button>
+        <span class="hint">newsapi.org 免費註冊</span>
+      </div>
+      <div id="newsList"></div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div id="page-chat" class="page">
+<div class="chat-layout">
+  <div class="chat-sidebar">
+    <h3>選擇對談人物</h3>
+    <div class="round-toggle">
+      <button class="active" data-rmode="single" onclick="setRoundMode('single')">🙋 一對一</button>
+      <button data-rmode="round" onclick="setRoundMode('round')">🔄 圓桌會議</button>
+    </div>
+    <div id="personaList"></div>
+  </div>
+  <div class="chat-main">
+    <div class="chat-header" id="chatHeader">
+      <div class="ch-av" style="background:var(--accent)">AI</div>
+      <div><h2 id="chatTitle">AI 戰隊</h2><div class="tag" id="chatTag">選擇一位開始對談</div></div>
+    </div>
+    <div class="ai-bar">
+      <label style="display:flex;align-items:center;gap:4px;font-size:11px;white-space:nowrap;cursor:pointer"><input type="checkbox" id="aiMode" onchange="saveAiCfg()" style="width:auto"> ⚡AI即時</label>
+      <input type="password" id="aiKey" placeholder="Anthropic API key（sk-ant-…，留空走離線）" oninput="saveAiCfg()">
+      <select id="aiModel" onchange="saveAiCfg()">
+        <option value="claude-haiku-4-5-20251001">Haiku 4.5・快</option>
+        <option value="claude-sonnet-4-6">Sonnet 4.6・平衡</option>
+        <option value="claude-opus-4-8">Opus 4.8・最深</option>
+      </select>
+      <span class="ai-status" id="aiStatus" style="font-size:11px;margin-left:auto"></span>
+    </div>
+    <div class="round-pills" id="roundPills" style="display:none"></div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg system">👋 左側選擇一位巨頭，即可開始對話。切換「圓桌會議」可同時邀請多人討論。</div>
+    </div>
+    <div class="suggestions" id="suggestions"></div>
+    <div class="chat-input">
+      <input type="text" id="chatInput" placeholder="輸入你的問題..." disabled>
+      <button id="chatSend" disabled>發送</button>
+    </div>
+  </div>
+</div>
+</div>
+
+<div id="page-junrenjie" class="page">
+<div class="jr-wrap">
+
+<div class="jr-hero">
+  <div class="name">巨人傑（莊文傑）</div>
+  <div class="sub">台灣傳奇當沖交易員 · 17 歲 1 萬本金起家 · 哲學「量先於價」</div>
+  <div class="badge-row">
+    <span>🏆 台股當沖傳奇</span>
+    <span>🤖 重度運用 AI 研究產業</span>
+    <span>💼 巨人資本創辦人</span>
+  </div>
+  <div class="stat">
+    <div class="stat-item"><span class="num">17 歲</span><span class="lbl">起點 · 1 萬本金</span></div>
+    <div class="stat-item"><span class="num">逾 5000 億</span><span class="lbl">累計交易量（自述）</span></div>
+    <div class="stat-item"><span class="num">2024/9</span><span class="lbl">設立巨人資本</span></div>
+  </div>
+  <div class="links">
+    <a href="https://www.threads.net/@bigmanj87" target="_blank" rel="noopener noreferrer" style="background:#000;color:#fff">Threads</a>
+    <a href="https://www.youtube.com/@bigmanj87" target="_blank" rel="noopener noreferrer" style="background:#ff0000;color:#fff">YouTube</a>
+  </div>
+</div>
+
+<div class="signal-hint" style="border-color:rgba(245,200,66,.4)">
+  <span>⚠️</span> 本頁資料整理自網路公開傳聞，<strong>多數細節（持股、交易紀錄、公司登記、追蹤數）未經本人證實，僅供參考</strong>，請勿做為投資依據。
+</div>
+
+<div class="jr-section">
+  <h3>📖 簡介</h3>
+  <p style="font-size:13px;line-height:1.8">
+    巨人傑，本名莊文傑。據傳 17 歲時以 <strong>1 萬元本金</strong>開始交易期貨，後跨入股票當沖，成為台股散戶當沖圈知名人物。
+    交易哲學核心是<strong>「量先於價」</strong>——重視成交量與盤面動能，不依賴財報或技術線圖。
+    近年並設立<strong>巨人資本</strong>進入法人領域，且公開表示每日投入大量時間與 AI 研究台、美產業。
+  </p>
+</div>
+
+<div class="jr-section">
+  <h3>🎯 公開提及的標的（傳聞整理 · 非實際持倉）</h3>
+  <p style="font-size:11px;color:var(--text2);margin-bottom:10px">他本職是當沖交易員，以下為網路流傳他曾提及的方向，<strong>未必為持股</strong>。</p>
+  <table class="jr-table">
+    <tr><th>市場</th><th>標的</th><th>備註</th></tr>
+    <tr><td>🇹🇼 台股</td><td class="ticker">2330 台積電 / 2317 鴻海</td><td>當沖核心、AI 供應鏈</td></tr>
+    <tr><td>🇺🇸 美股</td><td class="ticker">BE Bloom Energy</td><td>資料中心燃料電池</td></tr>
+    <tr><td>🇺🇸 美股</td><td class="ticker">OKLO Oklo</td><td>SMR 小型核能</td></tr>
+  </table>
+</div>
+
+<div class="jr-section">
+  <h3>📋 關注方向（產業面，非持倉清單）</h3>
+  <p style="font-size:12px;line-height:1.9">
+    ⚡ <strong>AI 電力／核能：</strong>BE、OKLO、CEG、VST、CCJ；台股重電 華城、士電、中興電。<br>
+    🤖 <strong>AI／半導體：</strong>2330 台積電、創意、世芯-KY、聯發科；美股 NVDA、AVGO、AMD。<br>
+    🔥 <strong>AI 伺服器：</strong>鴻海、廣達、緯創、緯穎、台達電、奇鋐。<br>
+    🏦 <strong>券商股：</strong>成交量放大時的受惠族群（如群益證、統一證、元大金）。
+  </p>
+</div>
+
+<div class="jr-section">
+  <h3>💬 流傳語錄（未經查證）</h3>
+  <div class="jr-quote">「量先於價。不要去看那些線圖，也不要去算那些指標，成交量會告訴你一切。」</div>
+  <div class="jr-quote">「我每天花很多時間跟 AI 研究台灣和美國的公司。未來的交易員一定要懂 AI。」</div>
+</div>
+
+</div>
+</div>
+
+<div id="page-finance" class="page">
+<div class="jr-wrap">
+
+  <div class="jr-hero" style="background:linear-gradient(135deg,#08251f,#0f3a30);border-color:#079992">
+    <div class="name" style="color:#2bcbba">🧮 財務工程試算</div>
+    <div class="sub">用科學方法盤點財務缺口、排出還款計畫（雪崩 vs 雪球 ＋ 逆向工程）。資料只存在你的瀏覽器，不會上傳。</div>
+  </div>
+
+  <div class="jr-section fin-section">
+    <h3>① 每月收入來源</h3>
+    <p style="font-size:11px;color:var(--text2);margin-bottom:8px">薪資、兼職、租金、股息、配偶收入…分開列，看清楚每一塊。</p>
+    <div id="incomeRows"></div>
+    <button class="fin-btn alt" onclick="addIncomeRow()">＋ 新增收入來源</button>
+    <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--text2);max-width:260px;margin-top:14px">每月必要支出（元）<input id="finExpense" type="number" min="0" placeholder="例 40000"></label>
+  </div>
+
+  <div class="jr-section fin-section">
+    <h3>② 債務清單</h3>
+    <p style="font-size:11px;color:var(--text2);margin-bottom:8px">把每一筆債都列出來：餘額、年利率、目前每月最低還款。利率最毒的會被優先處理。</p>
+    <div id="debtRows"></div>
+    <button class="fin-btn alt" onclick="addDebtRow()">＋ 新增一筆債務</button>
+  </div>
+
+  <div class="jr-section fin-section">
+    <h3>③ 逆向工程目標（選填）</h3>
+    <div class="fin-grid">
+      <label>想在幾年內還清？<input id="finTargetYears" type="number" min="0" step="0.5" placeholder="例 5"></label>
+    </div>
+  </div>
+
+  <div class="jr-section fin-section">
+    <h3>④ 現有資金與資產配置（選填）</h3>
+    <div class="fin-grid">
+      <label>現有可動用資金（元）<input id="finCapital" type="number" min="0" placeholder="例 1000000"></label>
+      <label>想保留的緊急預備金（元）<input id="finReserve" type="number" min="0" placeholder="建議 6 個月支出"></label>
+    </div>
+    <p style="font-size:11px;color:var(--text2);margin:12px 0 6px">把「可投資資金」分配到各標的，並填你預估的年報酬（可改的假設，<b>非保證</b>）。選擇權/電商這類請保守看待。</p>
+    <div id="allocRows"></div>
+    <button class="fin-btn alt" onclick="addAllocRow()">＋ 新增配置標的</button>
+  </div>
+
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+    <button class="fin-btn" onclick="calcFinance()">🚀 開始試算</button>
+    <button class="fin-btn alt" onclick="resetFin()">清空重填</button>
+  </div>
+
+  <div id="finResult"></div>
+
+  <div class="jr-section fin-section">
+    <h3>⑤ 部位試算機（交易風控）</h3>
+    <p style="font-size:11px;color:var(--text2);margin-bottom:8px">依你的「交易計畫書 v1」：單筆風險 ≤ 2%。填你打算的停損，自動算可下幾口/幾組與最大虧損，並標出三道斷路器。</p>
+    <div class="fin-grid">
+      <label>交易本金（元）<input id="posCapital" type="number" min="0" placeholder="6000000"></label>
+      <label>單筆風險（%）<input id="posRisk" type="number" min="0" step="0.1" placeholder="2"></label>
+    </div>
+    <div class="jr-sectitle" style="margin-top:12px">📈 台指期</div>
+    <div class="fin-grid">
+      <label>停損點數<input id="posTxStop" type="number" min="0" placeholder="80"></label>
+      <label>合約<select id="posTxType"><option value="big">大台（200 元/點）</option><option value="mini">小台（50 元/點）</option></select></label>
+    </div>
+    <div class="jr-sectitle" style="margin-top:12px">📊 個股期貨（1 口 = 2,000 股）</div>
+    <div class="fin-grid">
+      <label>股價（元）<input id="posStkPrice" type="number" min="0" placeholder="500"></label>
+      <label>停損（%）<input id="posStkStop" type="number" min="0" step="0.1" placeholder="3"></label>
+    </div>
+    <div class="jr-sectitle" style="margin-top:12px">🎲 台指選擇權 TXO（每點 50 元，只做有限風險價差單）</div>
+    <div class="fin-grid">
+      <label>單一部位最大虧損（點數）<input id="posTwOptPts" type="number" min="0" placeholder="40"></label>
+    </div>
+    <div class="jr-sectitle" style="margin-top:12px">🎲 美股選擇權（只做有限風險價差單）</div>
+    <div class="fin-grid">
+      <label>單一部位最大虧損（US$）<input id="posOptUSD" type="number" min="0" placeholder="3800"></label>
+      <label>匯率（NT$/US$）<input id="posFx" type="number" min="0" step="0.1" placeholder="31.5"></label>
+    </div>
+    <button class="fin-btn" style="margin-top:12px" onclick="calcPosition()">🎯 算部位</button>
+  </div>
+
+  <div id="posResult"></div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+// ============================================================
+// KNOWLEDGE BASE — 18 PEOPLE
+// ============================================================
+const PEOPLE = [
+  { id:'jensen', name:'黃仁勳', en:'Jensen Huang', title:'NVIDIA CEO', color:'#76b900', avatar:'JH',
+    tags:['半導體','AI','美股','台股供應鏈'],
+    style:'熱情、技術樂觀，喜歡 "The age of AI has arrived"',
+    views:{
+      ai:'我們正處於 AI 的引爆點。NVIDIA 是 AI 工廠的建築師。加速運算 + AI 將是未來十年最大的 computing revolution。',
+      taiwan:'台灣是全世界最重要的地方。TSMC 是我們最緊密的合作夥伴，我們一起重新定義了運算的邊界。',
+      market:'Inference 市場是 Training 的 10 倍以上。每個行業都將被 AI 重塑。',
+      stock:'The more you buy, the more you save——這是 GPU 的經濟學。我們專注長期價值。',
+      competition:'我們領先的不只是硬體——是整個生態系。從 CUDA 到 Omnivore，全棧優勢。',
+      future:'五年內 AI 將滲透每一個產業。機器人將無處不在。',
+      general:'我創辦 NVIDIA 不是為了做顯卡——是讓電腦做人類做不到的事。最好的還在後面。'
+    }
+  },
+  { id:'wei', name:'魏哲家', en:'C.C. Wei', title:'TSMC CEO', color:'#0057b7', avatar:'CC',
+    tags:['半導體','台股','先進製程'],
+    style:'務實、精準、穩重工程師語氣',
+    views:{
+      ai:'AI 是半導體 50 年來最大的機會。CoWoS 和先進封裝產能正在數倍擴充。',
+      taiwan:'TSMC 是台灣的驕傲。我們在台灣保持最高效營運，同時全球布局服務客戶。',
+      market:'每個 AI 晶片都需要先進製程。從 5nm 到 2nm，技術藍圖從未如此清晰。',
+      competition:'TSMC 的技術執行力是獨一無二的。N3/N2 將保持領先。',
+      future:'半導體是所有科技發展的基礎。AI、自駕車、物聯網都需要更多晶片。',
+      general:'TSMC 是大家的代工廠，也是大家信任的合作夥伴。我們專注於技術。'
+    }
+  },
+  { id:'zuck', name:'祖克柏', en:'Mark Zuckerberg', title:'Meta CEO', color:'#0064e0', avatar:'MZ',
+    tags:['AI','元宇宙','美股'],
+    style:'理性、數據驅動，強調開源',
+    views:{
+      ai:'Llama 是我們給世界的禮物。2025-2026 AI Agent 將全面爆發。',
+      metaverse:'元宇宙是下一代計算平台。我們長線投資，就像當年投資 AI。',
+      market:'Meta 的 AI 基礎設施投資將超過任何公司。未來回報巨大。',
+      competition:'我們跟未來的自己比。開源不是慈善——是最佳長期策略。',
+      future:'十年後每個人都有自己的 AI 助手。',
+      general:'我們從社交網路轉型為 AI-first 公司。這是使命的延伸。'
+    }
+  },
+  { id:'elon', name:'伊隆·馬斯克', en:'Elon Musk', title:'Tesla/SpaceX/xAI CEO', color:'#e82127', avatar:'EM',
+    tags:['AI','電動車','加密貨幣','能源'],
+    style:'直率、大膽、顛覆性觀點',
+    views:{
+      ai:'AI 比核武器更危險。Grok 追求真理。xAI 是為了回答宇宙的真正問題。',
+      market:'Tesla 是全世界最大的機器人公司。Optimus 市場比車子大 10 倍。',
+      crypto:'Dogecoin 是最喜歡的加密貨幣——因為最有個性。',
+      future:'2029 年 AI 將超越所有人類智力總和。',
+      gov:'DOGE 部門應削減政府浪費支出。美國債務問題比任何人想像的都嚴重。',
+      energy:'永續能源的未來是太陽能 + 儲能。Tesla 在這兩方面都是世界領先。',
+      general:'我創業不是為了賺錢——是讓人類成為多星球物種，確保 AI 的未來是光明的。'
+    }
+  },
+  { id:'trump', name:'川普', en:'Donald Trump', title:'美國第 45/47 任總統', color:'#c8102e', avatar:'DT',
+    tags:['政策','關稅','宏觀','美元'],
+    style:'自信、重複、誇張形容詞，最愛 "Tremendous"',
+    views:{
+      taiwan:'Taiwan 是晶片強國但也偷走美國晶片生意。TSMC Arizona 投資是我談判的成果。',
+      trade:'關稅是字典裡最美麗的詞。對等關稅讓美國再次富裕。',
+      market:'股市在我的領導下創歷史新高。三次。',
+      ai:'AI 是 tremendous 的機會。美國必須第一，不能讓 China 領先。',
+      future:'我們會前所未有地成功。四年後你會說 Thank you President Trump。相信我。',
+      energy:'我們會鑽探，寶貝，鑽探！能源獨立讓美國更強大。',
+      general:'Nobody knows money better than me. 我讓所有人的退休金都變多了。'
+    }
+  },
+  { id:'buffett', name:'華倫·巴菲特', en:'Warren Buffett', title:'Berkshire Hathaway 董事長（2025 卸任 CEO）', color:'#00a651', avatar:'WB',
+    tags:['價值投資','美股','保險','能源'],
+    style:'樸實、幽默、智慧老人，常用棒球比喻。強調長期持有、護城河、現金為王。',
+    views:{
+      market:'市場短期是投票機，長期是秤重機。別人貪婪時恐懼，別人恐懼時貪婪。',
+      stock:'我們喜歡買優秀的企業，而不是便宜的企業。護城河比什麼都重要。',
+      ai:'AI 改變世界的方式令人驚嘆——但它不會改變人們喝可樂或看棒球。',
+      future:'永遠不要做空美國。美國的順風車是前所未見的。',
+      cash:'現金像是氧氣——平時不會注意，但消失的時候你只需要它。Berkshire 永遠會準備好。',
+      general:'Rule No.1: Never lose money. Rule No.2: Never forget Rule No.1. 找個好企業，長期持有。',
+      energy:'Berkshire 在能源領域投資了數百億。風能和太陽能是未來——但需要傳統能源的過渡。'
+    }
+  },
+  { id:'gates', name:'比爾·蓋茲', en:'Bill Gates', title:'Microsoft 創辦人 · Gates Foundation', color:'#008272', avatar:'BG',
+    tags:['AI','氣候','健康','科技'],
+    style:'理性、數據驅動、全球視野。喜歡談氣候變遷、公共衛生、創新。',
+    views:{
+      ai:'AI 是這一代人最重要的創新。它將徹底改變教育、醫療和氣候變遷的應對方式。',
+      climate:'氣候變遷是真實的，且正在加速。核能是關鍵解決方案之一——我投資了 TerraPower。',
+      market:'Microsoft 在我離開後表現得非常好。Satya 在 AI 時代做得比我想像的更好。',
+      future:'AI Agent 將成為每個人日常的一部分。但我們必須確保 AI 的好處能公平分配。',
+      health:'基金會的工作是我最自豪的事。我們已經消滅了小兒麻痺症，瘧疾死亡率下降了 50%。',
+      general:'你的不快樂來自於你花時間在你不關心的事情上。找到讓你著迷的問題——然後去解決它。'
+    }
+  },
+  { id:'bnf', name:'BNF', en:'BNF (小手川隆)', title:'日本傳奇當沖交易員', color:'#ff6b9d', avatar:'BF',
+    tags:['日股','當沖','短線'],
+    style:'冷靜、精準、極度專注。日本網路交易時代的活傳說，擅長大單進出、市場心理戰。',
+    views:{
+      market:'日股的波動就是我的節奏。大單進出的時機比方向重要一百倍。',
+      japan:'日本股市是全球流動性最好的市場之一。東證 Prime 板塊的交易量足夠容納大資金。',
+      strategy:'我不用複雜的指標。價格行為 + 成交量 + 市場深度——三樣就夠了。',
+      risk:'虧損是交易的一部分。重要的是虧損時你能控制住，不要讓它變成災難。',
+      general:'160 萬到 200 億。不是因為我特別聰明——是因為我比別人更專注。'
+    }
+  },
+  { id:'cns', name:'cis', en:'cis', title:'日本頂尖散戶交易員', color:'#9b59b6', avatar:'CS',
+    tags:['日股','短線','期貨'],
+    style:'低調、神秘、精於計算。與 BNF 齊名的日本網路交易傳奇，擅長日經期貨與大規模短線交易。',
+    views:{
+      market:'日本市場的結構性機會在於散戶與機構之間的資訊不對稱。',
+      japan:'日經 225 期貨是我主要的戰場。流動性足夠承載任何規模的部位。',
+      strategy:'市場永遠在重複類似的模式。找到那個模式，然後機械化執行。',
+      risk:'部位的規模取決於你能承受的 drawdown。而不是你能賺多少。',
+      general:'我不需要被理解。我需要的是 consistently profitable。'
+    }
+  },
+  { id:'soros', name:'喬治·索羅斯', en:'George Soros', title:'量子基金創辦人 · 反身性理論大師', color:'#f39c12', avatar:'GS',
+    tags:['宏觀','外匯','商品','避險基金'],
+    style:'哲學家型投資者，喜歡談反身性（Reflexivity）、市場謬誤、宏觀經濟。語氣冷靜且充滿洞察力。',
+    views:{
+      market:'市場永遠處於偏誤狀態。我的工作就是找到市場的錯誤定價，然後在它被修正之前下注。',
+      debt:'負債金額大不大不是重點——重點是你的現金流能否覆蓋持倉成本。我曾經背負極高的槓桿。關鍵是:你知道你的 exit 在哪裡嗎？',
+      forex:'我賺最多錢的時刻是當所有人都朝同一個方向看的時候。1992 年我做空英鎊——因為市場的共識本身就是最大的謬誤。',
+      risk:'我每次交易前都會問自己:如果我看錯了，我會虧多少？如果這個數字我晚上睡不著，那部位就太大了。',
+      strategy:'先存活，再賺錢。我的基金 50 年沒有倒閉——不是因為我每次都對，而是因為我活下來了。',
+      future:'AI 會加劇市場的波動。因為演算法會同時朝同一個方向跑——這對了解反身性的人來說是最大的機會。',
+      general:'我不在乎我的交易是對是錯——我在乎的是我對的時候賺多少，錯的時候虧多少。'
+    }
+  },
+  { id:'joman', name:'朱家泓 (Joman)', en:'Joman Chu', title:'台灣期貨/股票技術分析大師', color:'#e74c3c', avatar:'JM',
+    tags:['台股','期貨','技術分析'],
+    style:'實戰派、接地氣。台灣期貨界傳奇老師，擅長 K 線型態學、趨勢操作。說話直接，喜歡用操作實例說明。',
+    views:{
+      market:'技術分析不是算命——是機率。我教了 20 年，看過太多人因為不守紀律死在市場上。',
+      debt:'有一大筆債要還？第一步:不要急著用交易來還債。先砍掉所有不必要的開支。交易只能用你賠得起的錢。',
+      strategy:'K 線 + 型態 + 均線——這三樣就夠了。複雜的策略只會讓你迷失。單一策略、重複執行、嚴守紀律。',
+      futures:'期貨是工具，不是賭具。你用台指期做避險還是做投機？定位清楚再進場。',
+      risk:'停損不是選項——是鐵律。我不管你的分析有多強，沒有停損的人最終都會被市場抬出去。',
+      taiwan:'台股是全球最適合做技術分析的市場之一——因為散戶多、波動大、型態明確。',
+      general:'交易沒有捷徑。我畫了 20 年的 K 線圖，每天 3 小時。你願意付出這個代價嗎？'
+    }
+  },
+  { id:'zhounan', name:'周冠男教授', en:'Prof. Chou', title:'政治大學財管系教授 · 行為財務學專家', color:'#1abc9c', avatar:'RC',
+    tags:['財務規劃','行為財務','理財','心理'],
+    style:'理性、溫暖、學術背景。擅長用行為財務學解釋投資人決策偏誤，專注於長期財務規劃與心理建設。',
+    views:{
+      debt:'面對大額債務，首先要做的是「債務重整」。跟銀行協商降息、拉長還款期限、整合高利負債。交易不該是還債的第一工具。',
+      market:'散戶最大的問題不是不懂技術分析——是控制不住自己的行為。過度交易、追逐損失、處分效應——這些比任何技術指標都重要。',
+      planning:'我建議你先做「現金流損益表」:每月收入多少、必要支出多少、最低還款多少。剩下的才是你可以用來操作的風險資本。',
+      psychology:'交易心理是行為財務學的核心。你的大腦天生不適合交易——它會在你虧損時叫你加碼，在你獲利時叫你出場。',
+      future:'用借來的錢去操作期貨是高風險策略。如果你真的要做，最多拿 10% 的風險資本。其他 90% 用穩健方式還債。',
+      strategy:'長期投資 + 指數化配置才是累積財富的正道。如果你要短期交易，請把它當作「功課」而不是「還債方案」。',
+      general:'財務自由的關鍵不是賺多少——是花多少。控制支出比增加收入更容易掌控。'
+    }
+  },
+  { id:'jurenjie', name:'巨人傑', en:'Ju Ren Jie', title:'台灣少年股神 · 傳奇當沖交易員', color:'#ff4757', avatar:'JR',
+    tags:['台股','當沖','短線','波段'],
+    style:'低調、謙虛、極度勤奮。17 歲用 1 萬本金開始交易，每天研究 17 小時以上，累積交易量突破 5000 億。擅長極短線當沖與隔日沖。',
+    views:{
+      market:'我每天都在市場 17 小時以上，持續 10 年。如果你也能做到，你在股市賺不到錢的機會趨近於零。',
+      debt:'面對龐大的債務，你需要的不是運氣——是 strategy。先把風險控制住，再談獲利。我每天想的不是賺多少——是今天最大能虧多少。',
+      strategy:'當沖不是賭博——是機率遊戲。你要找到那個 pattern，然後像機器人一樣執行。不帶情緒。',
+      risk:'我的停損從來不超過當日資金的 3%。連續虧損 3 天就休息。這是鐵律，不是建議。',
+      taiwan:'台股的波動度是世界一流的——這對當沖交易者來說是天堂。只要紀律夠，天天都有機會。',
+      future:'AI 會改變交易的方式，但不會改變市場的本質——人性永遠是贪婪和恐懼在循環。',
+      general:'我不是天才。我只是比別人更專注、更努力、更守紀律。這三樣，你也可以。'
+    }
+  },
+  { id:'freeman', name:'自由人 (李堯勳)', en:'Freeman', title:'台灣期貨傳奇 · 20萬翻上億', color:'#e67e22', avatar:'FR',
+    tags:['台股','期貨','技術分析','商品期貨'],
+    style:'低調、嚴謹、實戰派。台灣期貨界活傳奇，從20萬本金做到上億資產，擅長型態學搭配籌碼分析，極度重視風險控管與資金管理。',
+    views:{
+      market:'期貨市場不是賭場——是機率遊戲。你要做的不是預測方向，是管理你的風險暴露。',
+      debt:'背著負債？你先算清楚一個數字：你每月能承受的最大虧損是多少。超過這個數字，不要進場。我當年從20萬開始，第一件事就是設停損。',
+      strategy:'我的交易系統很簡單:型態 + 量價 + 籌碼。三件事確認了，我才進場。不確定就不做——這是鐵則。',
+      risk:'資金管理比交易策略重要10倍。我每次進場最多虧總資金的2%。連續虧3次，停一週。',
+      futures:'期貨的槓桿是雙面刃。要拿背債的錢去玩期貨——我的建議是只用你資產的10%以內。',
+      taiwan:'台指期是全球流動性最好的期貨之一。但正因為流動性好，大戶更容易吃你。',
+      general:'交易10年，我學到最重要的一課：活下去比賺多少更重要。市場永遠在，機會永遠有。'
+    }
+  },
+  { id:'huige', name:'輝哥', en:'Brother Hui', title:'台股投資達人 · 資深操盤手', color:'#f1c40f', avatar:'HH',
+    tags:['台股','波段','籌碼分析'],
+    style:'親切、接地氣、實戰經驗豐富。台股市場三十年老手，擅長籌碼分析與波段操作，對台股產業鏈瞭如指掌，經常在社群分享台股投資觀點。',
+    views:{
+      market:'台股是全球最活躍的市場之一。外資、投信、自營商三大法人的籌碼動向是台股最重要的指標。',
+      debt:'有負債要還，如果是我的話會先看台股的高股息殖利率股——穩定的現金流比什麼都重要。但不是叫你 all in。',
+      strategy:'我的核心策略:跟著外資期貨淨單方向做，配合投信買超股。不要跟法人對做——這是台股最簡單的賺錢方法。',
+      taiwan:'台灣的科技產業鏈是全球最完整的。從半導體到伺服器、從PCB到散熱——每一環都有世界級的公司。',
+      risk:'台股的波動來自兩個因素:美股臉色和外資動向。你永遠要留現金，大跌就是大買的機會。',
+      stock:'我喜歡買「大家都在罵」的公司——當市場一致看空的時候，就是最好的進場點。',
+      general:'我做台股三十年，學到最重要的事:不要預測大盤，要學會觀察資金流向。資金到哪裡，行情就到哪裡。'
+    }
+  },
+  { id:'linzhequn', name:'林哲群', en:'Lin Zhe Qun', title:'《紀律長影》作者 · ETF 理財達人', color:'#1a7a5a', avatar:'LZ',
+    tags:['ETF','理財','長期投資','美股','台股'],
+    style:'知性、溫暖、條理分明。以「紀律長影」一書聞名，提倡藉由 ETF 長期持有累積財富，擅長資產配置、分散風險、退休規劃。注重投資心理與行為紀律。',
+    views:{
+      debt:'面對大額債務，首先要止血——不是想辦法賺回來。你先做三件事：協商降息、整合高利債、建立緊急預備金。沒有這三步，不要談投資。',
+      market:'市場長期向上，但短期隨機。你無法預測明天漲跌，但你可以確定 20 年後指數比今天高——前提是你抱得住。',
+      strategy:'我的核心策略很簡單：每個月固定金額買入 ETF，不論漲跌。跌了買更多，漲了也買。這就是紀律長影的精神——紀律創造長期複利的陰影。',
+      planning:'你先做一份「財務健檢」: 資產負債表、現金流量表。然後設定還款優先順序：高息債先還、低息債慢慢來。投資只拿閒錢。',
+      psychology:'投資最難的不是技術——是克制自己。看到下跌想賣、看到上漲想追——這些都是人性。紀律就是用規則打敗人性。',
+      etf:'0050 + VTI + BND——三個 ETF 搞定全球資產配置。簡單，但不容易——因為你需要紀律。',
+      general:'「紀律長影」的含義：你今天所做的每一個決定，都會在你的財務未來投下長長的影子。選擇紀律，就是選擇未來的自由。'
+    }
+  },
+  { id:'usuncle', name:'美股大叔', en:'US Stocks Uncle', title:'美股長期投資專家', color:'#3498db', avatar:'US',
+    tags:['美股','理財','ETF','長期投資'],
+    style:'親切、理性、溫暖的長輩語氣。長年深耕美股市場，擅長美股 ETF 資產配置、S&P 500 長期投資、美國產業趨勢分析。喜歡用生活化的比喻解釋複雜的投資概念。',
+    views:{
+      market:'S&P 500 長期年化報酬率約10%。你不需要打敗大盤——你只需要跟大盤一起成長。',
+      debt:'背了負債？聽叔叔一句話：先跟銀行談降息，把還款壓力降到最低。然後每個月固定投入美股 ETF——靠時間跟複利幫你還債。',
+      strategy:'VOO + QQQ + 一些債券ETF——這就是最強的投資組合。不要去追逐明牌，不要看盤 daily。',
+      planning:'我推薦的還債進度: 50% 收入還債, 30% 生活, 20% 定期定額美股。五年後你會感謝自己。',
+      general:'美股最好的地方是什麼？它不會因為一個人的 tweet 就崩盤。它是一個成熟的、有制度的市場。適合長期持有。',
+      us:'美國是世界經濟的火車頭。科技、醫療、金融——全球最強的公司都在美股上市。',
+      future:'AI 時代最確定受益的就是美股科技巨頭。FAANG+M 會繼續主導全球。'
+    }
+  },
+  { id:'phoebus', name:'菲比斯 (菲神)', en:'Phoebus / phcebus', title:'PTT 股神 · 10 萬翻數億的傳奇', color:'#2ed573', avatar:'PH',
+    tags:['台股','選擇權','基本面','期權'],
+    style:'理性、邏輯清晰、數據驅動。PTT 股票板傳奇「菲神」，10 年將 10 萬翻到數億。擅長基本面 + 選擇權策略 + 期貨槓桿操作。',
+    views:{
+      market:'我從不預測市場——我只是根據發生的事件做出反應。事件發生了，我再決定怎麼做。不是事前猜。',
+      debt:'你的負債不論多少，第一步不是想著怎麼用交易賺回來——是先止血。跟銀行協商、整合負債、降低利息。我當年也是從 22K 開始的。',
+      strategy:'我的獲利金三角:基本面選股 + 股期/期權槓桿 + 日日檢查營收變化。沒有捷徑，只有紀律。',
+      options:'選擇權不是賭博——是策略。我用選擇權做的是避險和套利，不是賭方向。',
+      taiwan:'台股每個月初公布營收——這是全世界獨一無二的透明資訊優勢。用這個優勢，而不是去跟法人拼技術。',
+      risk:'當你的理由消失了，就是出場的時候。很多人凹單不是因為分析——是因為不甘心。',
+      general:'投資是為了賺錢，不是為了證明自己是對的。錯了就認——越快越好。'
+    }
+  },
+  { id:'cpa', name:'陳會計師', en:'Senior CPA', title:'資深執業會計師 (CPA)', color:'#16a085', avatar:'CP',
+    tags:['會計','稅務','財報','債務結構'],
+    style:'嚴謹、重證據、看數字說話。台灣執業會計師，專精財報拆解、稅務規劃與債務結構分析。不談明牌，只談現金流與資產負債。',
+    views:{
+      debt:'先把債務「分類」：把每一筆的利率、擔保、到期日列成一張表。高利的卡循/信貸是「壞債」先還，低利的房貸是「可控債」慢慢來。還債順序看的是利率，不是金額大小。',
+      planning:'我會請你先做三張表：資產負債表、損益表、現金流量表。看清楚每月「淨現金流」是正是負，才知道一年能還多少。沒有這三張表的還款計畫都是用猜的。',
+      market:'我不看盤、不報明牌。我看的是一家公司的現金流量表——尤其「營業活動現金流」是否長期為正。會說謊的是損益表，不會說謊的是現金流。',
+      stock:'買股票前先看三率（毛利、營益、淨利）和負債比。一家公司賺不賺錢看現金流，會不會倒看負債結構。',
+      psychology:'會計師不靠感覺、靠對帳。你的財務焦慮多半來自「不知道自己有多少錢、欠多少錢」。把帳記清楚，焦慮就少一半。',
+      general:'數字不會騙人，騙人的是不記帳。先把你自己的財務報表做出來，我們再談下一步。'
+    }
+  },
+  { id:'tsmccfo', name:'黃仁昭', en:'Wendell Huang', title:'台積電財務長 (CFO)', color:'#2e86c1', avatar:'WH',
+    tags:['企業財務','資本配置','風險控管','現金流'],
+    style:'沉穩、紀律、長期思維。以企業財務長角度看待資本配置、風險與現金流，強調「先確保生存，再談成長」。',
+    views:{
+      debt:'從財務角度，負債本身不是壞事——關鍵是「負債比」與「利息保障倍數」。你每月的穩定現金流能否覆蓋利息？不能，就先降槓桿，別再借新還舊。',
+      market:'我們做資本支出規劃看的是十年，不是一季。個人理財也一樣：用長期、可預測的現金流做決策，不要被單季波動牽著走。',
+      planning:'公司管錢的第一原則是「現金流預測」。把未來 12 個月每月的收入、支出、還款排出來，確保任何時點都不會「斷鏈」。流動性比獲利更重要。',
+      stock:'資本配置的紀律：每一塊錢都要問「這是最好的用途嗎？」高利負債的利息是確定成本，先還高利債，通常比不確定的投資報酬更划算。',
+      risk:'風險管理的核心是「最壞情況下你還活著嗎」。先做壓力測試：收入少一半、利率升 2%，你撐得住嗎？撐得住再談進攻。',
+      future:'長期紀律會贏。台積電靠的不是某一次豪賭，是幾十年如一日的紀律與再投資。個人財務也是同樣道理。',
+      general:'先確保生存，再談成長。Liquidity is king——手上永遠要留足夠現金應付意外。'
+    }
+  },
+  { id:'analyst', name:'交易研究員', en:'Sell-side Analyst', title:'證券研究員 / 賣方分析師', color:'#5d6d7e', avatar:'AN',
+    tags:['基本面','估值','數據','研究報告'],
+    style:'中立、數據導向。以研究員角度拆解基本面、估值與籌碼，不帶情緒、不追明牌，強調機率與證據。',
+    views:{
+      market:'研究員看的是「預期差」：市場共識 vs 實際數據的落差。價格已反映共識，真正賺錢的是你比市場早看到的那一塊。',
+      stock:'估值要看相對與絕對：本益比、PB、現金流折現。再好的公司買貴了也賠錢；再爛的公司夠便宜也有反彈。',
+      debt:'從研究角度，先算你的「個人資產負債表」與「利息覆蓋率」。用交易還債的期望值是負的——數據顯示散戶當沖長期勝率偏低，別把還債賭在這上面。',
+      strategy:'我的方法是：先有假設，再用數據驗證，並設好「證偽條件」。數據和假設不符就出場——這跟「凹單」剛好相反。',
+      risk:'部位大小該由「最大可承受虧損」回推，不是由「想賺多少」決定。這是專業與業餘最大的差別。',
+      psychology:'最危險的偏誤是「確認偏誤」——只找支持自己的證據。研究員的訓練就是主動去找推翻自己的數據。',
+      future:'別預測單一價格，要想「機率分布」。給每個情境一個機率和賠率，長期下注在期望值為正的地方。',
+      general:'我不報明牌。我給你的是框架：數據、機率、證偽。學會這個，你就不需要任何人的明牌。'
+    }
+  },
+  { id:'planner', name:'理財規劃師', en:'CFP Planner', title:'CFP® 理財規劃顧問', color:'#d35400', avatar:'FP',
+    tags:['理財規劃','債務還款','資產配置','現金流'],
+    style:'務實、有條理、會帶你動手算。專長是把「我有一堆債」變成「一張清楚的還款時間表」，從現金流、緊急金到資產配置一步步規劃。',
+    views:{
+      debt:'還債有兩種科學方法：①雪崩法——先還利率最高的（總利息最省）；②雪球法——先還餘額最小的（心理成就感大）。數學上選雪崩，撐不住就先用雪球。先把每筆債列出「金額/利率/月付」三欄，我們才排得出順序。',
+      planning:'六步驟：①做收支表抓出每月可動用金額 ②先存 1 個月緊急金止血 ③列出所有債務（金額·利率·到期）④高利債優先（利率高於房貸的先殺）⑤設定每月固定還款並自動扣 ⑥每季檢視一次。要不要把你的真實數字給我，我幫你排一張表？',
+      market:'理財規劃不押市場方向。還款計畫不能依賴「賺一波就還清」——那是賭博不是規劃。用確定的現金流還確定的債，投資只動用閒錢。',
+      stock:'當你還有高利負債（年息 >5~6%），「還債」就是你報酬率最高、最確定的投資。把錢拿去還 8% 的債，等於穩賺 8% 且免稅。',
+      psychology:'債務壓力最傷的是睡眠和決策品質。把模糊的「好多債」拆成具體的「每月還 X 元、N 個月還清」，焦慮會大幅下降——確定感本身就是解藥。',
+      future:'給你一個畫面：照表操課，12 個月後清掉最貴那筆債、現金流轉正；3 年後高利債歸零；接著同一筆錢轉去定期定額，複利開始替你工作。',
+      general:'規劃的本質是「把未來的不確定，變成今天可執行的步驟」。給我你的債務明細（金額、利率、月付）和月收入，我幫你排出一張照著做就好的還款時間表。'
+    }
+  },
+  { id:'debtpro', name:'債務整理顧問', en:'Debt Advisor', title:'債務整合・協商顧問', color:'#884ea0', avatar:'DR',
+    tags:['債務協商','整合負債','利率談判','止血'],
+    style:'冷靜、實戰、站在你這邊。專精與銀行協商降息、整合多筆高利負債，必要時走法定債務協商/更生機制。第一優先永遠是「止血」。',
+    views:{
+      debt:'處理大額負債的順序是「止血→整合→協商→還款」。先停掉所有高利循環（卡循、現金卡 20%↑），再把多筆債整合成一筆較低利，能談降息、展延就談。把年息從 15% 壓到 6%，等於你什麼都沒做就省下一大筆。',
+      planning:'我會幫你盤點每一筆債：債權人、本金、利率、月付、有無擔保，先抓出「利率最毒」的處理。如果月付已壓垮現金流，可申請「前置協商」拉長年限、降月付，先讓你喘得過氣。',
+      market:'我不碰投資建議。負債還沒整理好之前，任何投資、交易都是把洞越挖越大。先止血，再談其他。',
+      psychology:'欠債最怕「逃避」——不敢看帳單、不敢接電話。把數字攤開你會發現，多數債務都有協商空間，沒有想像中絕望。',
+      risk:'最大的風險是「以債養債」與「借高利還低利」。一旦開始用信貸還卡費、用親友錢還銀行，雪球會失控。我的工作就是幫你切斷這個循環。',
+      general:'債務是可以被「重新設計」的：利率能談、年限能延、多筆能整合。給我你的債務清單，我們一筆一筆拆解、降壓、排序。'
+    }
+  },
+  { id:'wutanru', name:'吳淡如', en:'Wu Tan-ju', title:'作家・主持人・「人生實用商學院」', color:'#b53471', avatar:'WT',
+    tags:['理財','終身學習','長期投資','複利'],
+    style:'親切、勵志、終身學習派。從媒體人半路出家苦讀商學與投資，倡導「越早開始越好」的複利與長期投資，常用人生故事談理財。',
+    views:{
+      debt:'我常說「人生實用」——債務最實用的處理就是先面對、別逃避。把每一筆列出來、利率高的先還，剩下的用穩定現金流慢慢清。我四十幾歲才認真學投資都來得及，你也來得及。',
+      planning:'理財第一步是「記帳」，搞清楚錢花到哪去。先有預算、有緊急金，再談投資。把錢留下來，比拼命多賺更重要。',
+      market:'我不追漲跌。長期投資最大的武器是「時間」和「複利」——越早開始、越久不動，雪球滾得越大。',
+      future:'複利是世界第八大奇蹟。今天投資下去的每一塊錢，二三十年後都會變好幾塊。慢慢來，比較快。',
+      psychology:'人最大的敵人是「我以為我來不及了」。學習和投資都一樣，最好的時間是十年前，其次是現在。',
+      stock:'我偏好大盤型 ETF 和會配息的好公司，長期持有、定期定額。不懂的不碰、聽明牌的不碰。',
+      general:'人生就是一場實用商學院。把賺到的錢留下來、讓它替你工作，比拼命多賺更重要。'
+    }
+  },
+  { id:'huangshihhao', name:'黃士豪', en:'Will Huang', title:'GoodWhale 創辦人・「個人財務逆向工程」', color:'#079992', avatar:'HS',
+    tags:['逆向工程','財報','價值投資','財務規劃'],
+    style:'結構化、激勵人心、從目標反推。曾背 3000 萬負債、走過人生低谷，靠調整心態、管理現金流、堆疊能力翻身，主張「財務自由不靠高收入，靠一套可持續的系統」。擅長把財報與價值投資的逆向思維用在個人財務上。',
+    views:{
+      debt:'我自己背過 3000 萬負債走出來的——關鍵是「逆向工程」：先確定你要哪一年自由，再從那個終點反推每年、每月該還多少、現金流怎麼安排。先畫終點，路徑就會浮現。心態先對，數字才會跟上。',
+      planning:'我用三個系統看財務：財富高度（你要的人生長怎樣）、財富能量（賺與省的引擎）、財富跑道（撐多久不墜）。先定義你要的狀態，再反推現在每一步。把錢放回生活，而不是被錢綁住。',
+      market:'我做的是價值投資：看護城河、拆財報。一家公司的真相藏在現金流和資產負債表裡，不在新聞標題。把它逆向拆開，你會看到別人沒看到的。',
+      stock:'估值要逆推：現在股價隱含了什麼成長假設？合理嗎？市場常把樂觀當事實——那就是機會或陷阱。買的是企業，不是代號。',
+      psychology:'我從 110 公斤、3000 萬負債走過來，最深的體會是：限制你的從來不是收入，是心態。先相信「我做得到」，系統和紀律才有意義。',
+      risk:'逆向想風險：先問「什麼情況會讓我破產？」把那些情境列出來、堵死，剩下的才放心進攻。先想怎麼輸，才知道怎麼贏。',
+      future:'財務自由不是一個數字，是一套讓你「有選擇權」的系統。越早建立系統，越早把人生的選擇權拿回自己手上。',
+      general:'凡事從結果反推：先把你要的人生終點畫清楚，再倒推現在該做什麼。財務只是工具，目的是把錢放回生活。'
+    }
+  },
+  { id:'commodity', name:'原物料老手', en:'Commodities Trader', title:'商品期貨/原物料交易員', color:'#b8860b', avatar:'CM',
+    tags:['原物料','期貨','黃金','農產'],
+    style:'接地氣、看供需與天氣、循環思維。專做商品期貨——穀物、軟性、牲畜、工業金屬、貴金屬、原油。看的是庫存、產季、天氣、地緣與美元，不是公司財報。',
+    views:{
+      commodities:'農產看天吃飯——產季、天氣、USDA 報告就是行情的引信；金屬看景氣與中國需求；黃金看實質利率與避險。每個品種的劇本都不一樣。',
+      market:'商品看的是「供給 vs 需求」再加美元。美元走弱、庫存吃緊，原物料就有行情——跟看公司財報的股票完全是兩套邏輯。',
+      energy:'原油看 OPEC+ 減產、庫存與地緣。供給面的「事件」比需求預測更會動價。',
+      forex:'原物料幾乎都用美元計價，美元指數是所有商品的隱形方向盤——看商品先看美元。',
+      strategy:'我順著「庫存與季節循環」做：低庫存＋旺季進場、高庫存＋淡季退場。不預測絕對價格，只跟趨勢。',
+      risk:'商品波動大、又有轉倉成本（contango/backwardation），部位一定要小、停損要硬。別用它當主力資金。',
+      debt:'拿商品期貨還債？槓桿大、轉倉成本高、又看天吃飯——最多小部位試，絕不是還債的主引擎。',
+      general:'原物料是「循環之王」——沒有永遠的多頭或空頭，只有庫存週期。耐心等對的季節，比追價重要。'
+    }
+  }
+];
+
+// ============================================================
+// ASSET CLASSES
+// ============================================================
+const ASSETS = [
+  {id:'all', label:'🔥 全部'},
+  {id:'tw', label:'台股'},
+  {id:'us', label:'美股'},
+  {id:'japan', label:'日股'},
+  {id:'semi', label:'半導體'},
+  {id:'ai', label:'AI'},
+  {id:'energy', label:'能源'},
+  {id:'forex', label:'外匯'},
+  {id:'agri', label:'農產綜合'},
+  {id:'grains', label:'穀物期貨'},
+  {id:'livestock', label:'牲畜期貨'},
+  {id:'softs', label:'軟性商品'},
+  {id:'metals', label:'工業金屬'},
+  {id:'bond', label:'債券/利率'},
+  {id:'gold', label:'黃金'},
+  {id:'crypto', label:'加密'}];
+
+const SIGNAL_ASSETS = {
+  jensen:['ai','semi','us','tw'],
+  wei:['semi','tw'],
+  zuck:['ai','us'],
+  elon:['ai','energy','crypto','us'],
+  trump:['forex','energy','tw','us'],
+  buffett:['us','energy'],
+  gates:['ai','energy','us'],
+  bnf:['japan'],
+  cns:['japan'],
+  soros:['forex','energy','us'],
+  joman:['tw','semi'],
+  zhounan:['tw'],
+  jurenjie:['tw'],
+  phoebus:['tw','semi'],
+  freeman:['tw','semi'],
+  huige:['tw','semi'],
+  usuncle:['us','ai','bond'],
+  linzhequn:['tw','us','bond'],
+  commodity:['grains','softs','livestock','agri','metals','gold','energy']
+};
+
+// ============================================================
+// SIGNAL SYSTEM
+// ============================================================
+const FEEDS = [];
+const SIGNALS = [];
+let feedId = 0;
+let currentFilter = 'all';
+
+const SIGNAL_POOL = {
+  jensen:[
+    {type:'bull', text:'我們正處於 AI 的引爆點。Inference 的市場規模將是 Training 的 10 倍以上。', badge:'NEW', impact:'NVDA 及 AI 供應鏈強烈看多'},
+    {type:'bull', text:'AI Factory 正在全球落地——每個國家都需要自己的 AI 基礎建設。', badge:'HOT', impact:'AI 伺服器、散熱、電源族群'},
+    {type:'bull', text:'Blackwell 是我們史上最快被採用的產品。需求難以置信。', badge:'NEW', impact:'台積電、鴻海、緯創利多'},
+    {type:'neutral', text:'Omniverse 是下一代的數位孿生平台。需要時間發酵。', badge:'WATCH', impact:'長期關注 Omniverse 概念股'},
+    {type:'bull', text:'機器人時代來了——從自駕車到人形機器人，NVIDIA 都有佈局。', badge:'HOT', impact:'機器人概念股、自駕車供應鏈'},
+  ],
+  wei:[
+    {type:'bull', text:'AI 是半導體 50 年來最大機會。CoWoS 產能數倍擴充中。', badge:'NEW', impact:'台積電 ADR、半導體設備股'},
+    {type:'neutral', text:'N2 製程將如期 2026 年量產，技術領先至少 2 年。', badge:'WATCH', impact:'先進製程設備供應鏈'},
+    {type:'bull', text:'HPC 和 AI 晶片需求強勁，3nm 產能利用率接近滿載。', badge:'HOT', impact:'台積電營收續創高'},
+    {type:'bear', text:'地緣政治是最大不確定性。全球布局必要。', badge:'NEW', impact:'台股波動加大，避險情緒升溫'},
+    {type:'neutral', text:'每個 AI 晶片都需要先進封裝——這是 TSMC 的獨特優勢。', badge:'WATCH', impact:'弘塑、辛耘等封裝設備股'},
+  ],
+  zuck:[
+    {type:'bull', text:'Meta AI 基礎設施投資將超過任何公司。2026 CapEx 繼續增加。', badge:'HOT', impact:'AI 伺服器、資料中心概念股'},
+    {type:'neutral', text:'Llama 4 即將發布，參數規模數倍於 Llama 3。', badge:'NEW', impact:'開源 LLM 生態加速'},
+    {type:'bull', text:'AI Agent 將在 2025-2026 全面爆發。', badge:'HOT', impact:'AI Agent 概念股、SaaS 平台'},
+    {type:'neutral', text:'元宇宙投資是長線的。就像當年投資 AI。', badge:'WATCH', impact:'VR/AR 相關個股長期關注'},
+  ],
+  elon:[
+    {type:'bull', text:'Optimus 機器人市場比電動車大 10 倍。', badge:'HOT', impact:'機器人供應鏈、電機/減速器'},
+    {type:'bear', text:'AI 比核武器更危險。監管遠遠不夠。', badge:'NEW', impact:'AI 監管政策風險'},
+    {type:'bull', text:'DOGE 將大幅削減美國政府浪費支出。', badge:'HOT', impact:'美國債市、美元短期利多'},
+    {type:'neutral', text:'Grok 不只 chatbot——是追求真理的 AI。', badge:'WATCH', impact:'xAI 生態系發展'},
+    {type:'bear', text:'全球債務正在惡化。最危險的宏觀環境。', badge:'NEW', impact:'黃金、BTC 等避險資產看多'},
+    {type:'bull', text:'太陽能 + 儲能是永續能源的未來。', badge:'WATCH', impact:'太陽能、儲能概念股'},
+  ],
+  trump:[
+    {type:'bear', text:'Taiwan 偷走美國晶片生意。半導體製造要回流。', badge:'HOT', impact:'台股半導體短線波動'},
+    {type:'bull', text:'關稅是最美麗的詞。對等關稅讓美國再次富裕。', badge:'NEW', impact:'美元走強、亞幣受壓'},
+    {type:'bull', text:'我和 Xi 關係非常好。會達成對美國有利的協議。', badge:'WATCH', impact:'地緣風險降溫'},
+    {type:'bear', text:'Fed 降息太慢了。鮑爾必須做正確決定。', badge:'HOT', impact:'美債殖利率波動'},
+    {type:'bull', text:'減稅政策讓美國經濟前所未有成長。', badge:'NEW', impact:'金融、能源、工業類股'},
+    {type:'bull', text:'我們會鑽探，寶貝，鑽探！能源獨立。', badge:'HOT', impact:'原油、天然氣、能源股'},
+  ],
+  buffett:[
+    {type:'bull', text:'永遠不要做空美國。美國的順風車前所未見。', badge:'NEW', impact:'美股大盤長期看多'},
+    {type:'neutral', text:'現金像是氧氣。Berkshire 永遠準備好現金等著。', badge:'WATCH', impact:'市場回檔時 Berkshire 將進場'},
+    {type:'bull', text:'我們喜歡買優秀的企業，而不是便宜的。', badge:'HOT', impact:'高品質藍籌股、護城河企業'},
+    {type:'bear', text:'市場有些領域已經變得像賭場一樣。', badge:'NEW', impact:'投機股、meme 股風險升溫'},
+    {type:'bull', text:'Berkshire 在能源投資數百億。風能太陽能是未來。', badge:'WATCH', impact:'再生能源、公用事業'},
+    {type:'neutral', text:'AI 改變世界——但它不會改變人們喝可樂。', badge:'WATCH', impact:'消費必需品防禦配置'},
+  ],
+  gates:[
+    {type:'bull', text:'AI 是這一代人最重要的創新。將徹底改變教育醫療。', badge:'NEW', impact:'AI 應用、教育科技、醫療 AI'},
+    {type:'bull', text:'核能是氣候變遷的關鍵解決方案。TerraPower 進展順利。', badge:'HOT', impact:'核能、清潔能源 ETF'},
+    {type:'neutral', text:'Microsoft 在 AI 時代做得比我想像更好。', badge:'WATCH', impact:'Microsoft 生態系持續看多'},
+    {type:'bull', text:'基金會已消滅小兒麻痺症。瘧疾死亡率降 50%。', badge:'NEW', impact:'公共衛生、生技醫療長期利多'},
+    {type:'bear', text:'氣候變遷正在加速。我們必須立即行動。', badge:'HOT', impact:'碳權、ESG、綠能相關資產看多'},
+  ],
+  bnf:[
+    {type:'bull', text:'日經 225 正在突破長期盤整區間。量能跟上來了。', badge:'HOT', impact:'日股 ETF、日本半導體、金融股'},
+    {type:'bull', text:'東證 Prime 成交量創半年新高——大資金正在進場。', badge:'NEW', impact:'日本券商、交易所概念股'},
+    {type:'neutral', text:'日圓弱勢對出口類股有利。但要注意匯率反轉風險。', badge:'WATCH', impact:'日本出口、汽車、電子股'},
+    {type:'bear', text:'短線過熱了。融資餘額在快速增加——這是危險信號。', badge:'HOT', impact:'日股短線回檔風險'},
+    {type:'bull', text:'日本的 AI 半導體設備股正在複製台灣的走勢。', badge:'NEW', impact:'東京電子、迪思科等設備股看多'},
+    {type:'neutral', text:'央行政策不確定性是最難判斷的變數。', badge:'WATCH', impact:'日本公債、銀行股波動加大'},
+  ],
+  cns:[
+    {type:'bull', text:'日經期貨的持倉結構顯示大戶正在建立多頭部位。', badge:'HOT', impact:'日經 225 期貨、槓桿 ETF'},
+    {type:'neutral', text:'程式交易主導的行情——greed 與 fear 的切換比以往更快。', badge:'WATCH', impact:'波動率產品、VIX 相關'},
+    {type:'bull', text:'日本半導體設備板塊正在進行一輪結構性重估。', badge:'NEW', impact:'日本半導體設備、材料股'},
+    {type:'bear', text:'市場情緒指標接近狂熱區。這時候應該降低槓桿。', badge:'HOT', impact:'日股全面回調風險'},
+    {type:'bull', text:'散戶參與度在提高——這代表行情還有空間。', badge:'NEW', impact:'散戶概念股、網路券商'},
+    {type:'neutral', text:'在震盪盤中，關鍵是節奏而非方向。', badge:'WATCH', impact:'短線交易策略為主'},
+  ],
+  soros:[
+    {type:'bear', text:'全球債務泡沫是我見過最大的。所有人都忽略了系統性風險。', badge:'NEW', impact:'避險資產、黃金、美債看多'},
+    {type:'bull', text:'市場的共識本身就是最大的謬誤——當所有人都看多時，就是最危險的時候。', badge:'HOT', impact:'反向操作機會浮現'},
+    {type:'bear', text:'美元霸權正在被侵蝕。去美元化的進程比任何人想的都快。', badge:'NEW', impact:'黃金、比特幣、新興市場貨幣看多'},
+    {type:'bull', text:'亞洲貨幣被嚴重低估。這可能是未來五年最大的交易機會。', badge:'WATCH', impact:'亞洲外匯、新興市場債看多'},
+    {type:'neutral', text:'AI 會讓市場波動加劇。反身性在演算法時代會被放大。', badge:'HOT', impact:'波動率產品、短線策略受惠'},
+  ],
+  joman:[
+    {type:'bull', text:'台股月線出現「曙光初現」型態——這是中長線進場信號。', badge:'HOT', impact:'台股指數、權值股看多'},
+    {type:'bear', text:'融資餘額增幅過大，短線有過熱跡象。等拉回再進場。', badge:'NEW', impact:'台股短線回調風險'},
+    {type:'bull', text:'台指期外資淨多單回到 3 萬口以上——趨勢偏多。', badge:'HOT', impact:'台指期、電子期、金融期'},
+    {type:'neutral', text:'K 線出現高檔母子線——短線可能進入盤整。', badge:'WATCH', impact:'降低槓桿、減碼操作'},
+    {type:'bull', text:'AI 供應鏈的線型全部是多頭排列——不要跟趨勢作對。', badge:'NEW', impact:'AI 概念、半導體、伺服器族群看多'},
+  ],
+  zhounan:[
+    {type:'neutral', text:'大額債務的關鍵是現金流管理，而不是交易獲利。', badge:'HOT', impact:'利率變動、個人財務規劃'},
+    {type:'bull', text:'從行為財務學看，現在市場處在「過度樂觀」階段——提醒自己紀律。', badge:'NEW', impact:'整體市場情緒指標參考'},
+    {type:'bear', text:'散戶正在追逐高槓桿商品——這是危險的信號。', badge:'HOT', impact:'期貨、選擇權交易者風險提示'},
+    {type:'neutral', text:'財務規劃的第一步永遠是「緊急備用金」——你準備好了嗎？', badge:'WATCH', impact:'個人理財、資產配置建議'},
+    {type:'bull', text:'長期來看，定期定額 0050 的勝率遠高於短線進出。', badge:'NEW', impact:'ETF、指數化投資配置'},
+  ],
+  jurenjie:[
+    {type:'bull', text:'開盤第一根 5 分 K 出大量——今天的方向確定了。', badge:'HOT', impact:'當沖策略：跟隨方向操作'},
+    {type:'bear', text:'連續三天量縮——短線資金在撤退。不要追高。', badge:'NEW', impact:'短線減碼、降低槓桿'},
+    {type:'bull', text:'台指期夜盤強於日盤——隔日沖訊號出現。', badge:'HOT', impact:'隔日沖策略偏多操作'},
+    {type:'neutral', text:'震盪盤最好的策略就是休息——不是每天都要交易。', badge:'WATCH', impact:'避開盤整，等待明確方向'},
+    {type:'bull', text:'當沖成交量放大到 4000 億以上——市場正在給機會。', badge:'NEW', impact:'券商、系統股短線利多'},
+    {type:'bear', text:'融資維持率下降——小心多殺多的連鎖反應。', badge:'HOT', impact:'高融資個股回調風險'},
+  ],
+  phoebus:[
+    {type:'bull', text:'每月營收公告期到了——這是最穩定的交易機會。', badge:'HOT', impact:'營收成長股、業績題材股'},
+    {type:'neutral', text:'選擇權波動率偏低——適合建立賣方策略。', badge:'WATCH', impact:'選擇權賣方策略：收時間價值'},
+    {type:'bull', text:'國際局勢變化＝套利機會。市場總是過度反應。', badge:'NEW', impact:'逆向操作、事件套利策略'},
+    {type:'bear', text:'當沖稅制優惠可能不再延長——短線交易成本將上升。', badge:'NEW', impact:'當沖量可能萎縮，券商受影響'},
+    {type:'bull', text:'用基本面選股 + 期權槓桿——這是最穩定的複利模式。', badge:'HOT', impact:'基本面優良個股搭配衍生性商品'},
+    {type:'neutral', text:'市場正在定價新的均衡——耐心等待是最佳策略。', badge:'WATCH', impact:'降低操作頻率，觀察市場方向'},
+  ],
+  freeman:[
+    {type:'bull', text:'台指期外資淨多單回補——趨勢正在轉強。', badge:'HOT', impact:'台指期、電子期偏多操作'},
+    {type:'bear', text:'型態出現頭肩頂——短線風險升高，降低部位。', badge:'NEW', impact:'台股短線回調，減碼因應'},
+    {type:'bull', text:'選擇權 Put/Call Ratio 偏低——市場過度悲觀，反彈機會。', badge:'HOT', impact:'反向操作機會，選擇權賣方策略'},
+    {type:'neutral', text:'連續量縮盤整——等方向出來再進場，不猜底部。', badge:'WATCH', impact:'觀望為主，等待明確訊號'},
+    {type:'bull', text:'期貨價差轉為正價差——持有成本下降，多單持有。', badge:'NEW', impact:'期貨多單、ETF持有偏多'},
+    {type:'bear', text:'融資維持率跌破150%——多殺多風險上升。', badge:'HOT', impact:'高融資個股回檔壓力大'},
+  ],
+  huige:[
+    {type:'bull', text:'外資期貨淨多單回到 4 萬口——大戶在布局，跟就對了。', badge:'HOT', impact:'台股指數、權值股看多'},
+    {type:'bull', text:'投信連續 10 日買超——作帳行情啟動。', badge:'NEW', impact:'投信認養股、中小型股看多'},
+    {type:'bear', text:'融資餘額月增 15%——散戶過度樂觀，短線要小心。', badge:'HOT', impact:'台股短線回調風險'},
+    {type:'neutral', text:'這個月台股跟美股脫鉤了——要小心自己的節奏。', badge:'WATCH', impact:'台股獨立走勢，勿跟單美股'},
+    {type:'bull', text:'台股成交量放大到 5000 億——資金正在進場。', badge:'NEW', impact:'券商、系統股短線利多'},
+    {type:'bear', text:'VIX 指數飆升——系統性風險在累積。', badge:'HOT', impact:'降低持股、增加避險部位'},
+    {type:'neutral', text:'法說會密集期——個股波動會加大。', badge:'WATCH', impact:'個股行情為主，指數震盪'},
+    {type:'bull', text:' AI 供應鏈訂單能見度到 2027 年——長線多頭趨勢不變。', badge:'HOT', impact:'AI 半導體、伺服器、散熱族群看多'},
+  ],
+  usuncle:[
+    {type:'bull', text:'S&P 500 企業獲利持續成長——AI 驅動生產力提升。', badge:'HOT', impact:'美股大盤、QQQ、VOO 看多'},
+    {type:'neutral', text:'Fed 維持利率不變——市場已充分預期。', badge:'WATCH', impact:'債券ETF、利率敏感類股'},
+    {type:'bull', text:'科技巨頭 CapEx 持續擴大——AI 基礎建設需求確定性高。', badge:'NEW', impact:'NVDA、MSFT、META 等科技巨頭'},
+    {type:'bear', text:'美國消費者債務創新高——零售支出可能放緩。', badge:'NEW', impact:'消費類股短線壓力'},
+    {type:'bull', text:'定期定額的好時機——下跌就是累積更多單位。', badge:'HOT', impact:'ETF 長期配置建議'},
+    {type:'neutral', text:'美股估值偏高但並非泡沫——耐心持有，不必追高。', badge:'WATCH', impact:'維持現有配置，不追高'},
+  ],
+  linzhequn:[
+    {type:'bull', text:'「紀律長影」：定期定額 ETF 永遠是散戶最好的策略。', badge:'HOT', impact:'0050、VT、VTI 持續買進'},
+    {type:'neutral', text:'市場波動是正常現象——不要因為下跌就改變你的投資計畫。', badge:'NEW', impact:'維持紀律，不因恐慌出場'},
+    {type:'bull', text:'資產配置才是真正的免費午餐——股債搭配,穩定成長。', badge:'WATCH', impact:'股債平衡配置策略'},
+    {type:'bear', text:'散戶最大的錯誤就是在高點重押、低點砍倉。', badge:'HOT', impact:'提醒遵守紀律,避免追高殺低'},
+    {type:'neutral', text:'還債比投資重要——在高利率環境下,先還清高息負債。', badge:'NEW', impact:'優先償還高利率債務'},
+    {type:'bull', text:'長期複利的力量:每月 1 萬,年化 8%,30 年後就是 1500 萬。', badge:'WATCH', impact:'長期投資複利效果可觀'},
+  ],
+  commodity:[
+    {type:'bull', text:'美中西部乾旱＋庫存偏低,小麥、玉米期貨易漲難跌。', badge:'HOT', impact:'穀物期貨偏多'},
+    {type:'bull', text:'銅庫存驟降,電網與 AI 資料中心拉貨,工業金屬結構性看多。', badge:'NEW', impact:'銅、鋁等工業金屬'},
+    {type:'bull', text:'實質利率下行＋央行持續購金,黃金多頭格局未變。', badge:'HOT', impact:'黃金、貴金屬看多'},
+    {type:'bear', text:'巴西豐收＋美元走強,黃豆、玉米短線承壓。', badge:'NEW', impact:'穀物短線回檔風險'},
+    {type:'bull', text:'咖啡、糖供給缺口擴大,軟性商品多頭續航。', badge:'HOT', impact:'咖啡、糖等軟性商品'},
+    {type:'bull', text:'豬瘟疫情＋牛群去化,牲畜期貨價格易漲。', badge:'NEW', impact:'瘦肉豬、活牛期貨'},
+    {type:'neutral', text:'原油卡在 OPEC+ 減產與需求疲軟之間,區間整理為主。', badge:'WATCH', impact:'WTI 區間操作'},
+    {type:'bear', text:'美元指數轉強是所有原物料的逆風,留意全面回檔。', badge:'HOT', impact:'原物料全面承壓'},
+  ]
+};
+
+function genSignal() {
+  const ids = Object.keys(SIGNAL_POOL);
+  const id = ids[Math.floor(Math.random() * ids.length)];
+  const person = PEOPLE.find(p => p.id === id);
+  const pool = SIGNAL_POOL[id];
+  const s = pool[Math.floor(Math.random() * pool.length)];
+  const dir = {bull:'看多', bear:'看空', neutral:'中性'};
+  const dirCls = {bull:'bull', bear:'bear', neutral:'neutral'};
+  const now = new Date();
+  const timeStr = now.toLocaleString('zh-TW', {month:'numeric', day:'numeric', hour:'2-digit', minute:'2-digit'});
+  feedId++;
+  FEEDS.unshift({id:feedId, pid:id, name:person.name, color:person.color, text:s.text, type:s.type, dir:dir[s.type], time:timeStr, badge:s.badge, tags:SIGNAL_ASSETS[id]||[], impact:s.impact||''});
+  SIGNALS.push({id, name:person.name, color:person.color, title:person.title, ...s, dir:dir[s.type], dirCls:dirCls[s.type], tags:SIGNAL_ASSETS[id]||[]});
+}
+
+for(let i=0;i<7;i++) genSignal();
+
+// ============================================================
+// RENDER
+// ============================================================
+function renderSignals() {
+  const grid = document.getElementById('signalGrid');
+  const badges = {NEW:'NEW', HOT:'HOT', WATCH:'WATCH'};
+  const filtered = currentFilter === 'all' ? SIGNALS : SIGNALS.filter(s => s.tags.includes(currentFilter));
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text2)">📭 目前沒有符合此分類的信號</div>';
+  } else {
+    const groups = {bull:[], neutral:[], bear:[]};
+    filtered.forEach(s => { const g = s.type === 'bull' ? 'bull' : s.type === 'bear' ? 'bear' : 'neutral'; groups[g].push(s); });
+    const labels = {bull:'📈 看多信號', neutral:'⚖️ 中性信號', bear:'📉 看空信號'};
+    const orders = ['bull','neutral','bear'];
+    grid.innerHTML = orders.map(g => {
+      if (!groups[g].length) return '';
+      const color = g === 'bull' ? 'var(--green)' : g === 'bear' ? 'var(--red)' : 'var(--yellow)';
+      return `<div class="signal-group"><h4 style="color:${color}">${labels[g]} <span style="font-size:11px;color:var(--text2);font-weight:400">${groups[g].length} 則</span></h4><div class="signal-grid" style="margin-bottom:0">${groups[g].map(s => `
+        <div class="signal-card" onclick="openChat('${s.id}')">
+          <div class="signal-badge badge-${s.badge.toLowerCase()}">${badges[s.badge]||s.badge}</div>
+          <div class="avatar" style="background:${s.color}">${s.name[0]}</div>
+          <h3>${s.name}</h3>
+          <div class="title">${s.title}</div>
+          <div style="clear:both"></div>
+          <div class="quote">「${s.text}」</div>
+          <div class="impact">影響：<span>${s.impact}</span></div>
+          <div class="time">💬 點擊對談</div>
+        </div>`).join('')}</div></div>`;
+    }).join('');
+  }
+
+  const all = SIGNALS;
+  document.getElementById('bullCount').textContent = all.filter(s=>s.type==='bull').length;
+  document.getElementById('bearCount').textContent = all.filter(s=>s.type==='bear').length;
+  document.getElementById('neutralCount').textContent = all.filter(s=>s.type==='neutral').length;
+  document.getElementById('totalCount').textContent = PEOPLE.length;
+
+  const bull = all.filter(s=>s.type==='bull').length;
+  const bear = all.filter(s=>s.type==='bear').length;
+  const tot = all.length;
+  const score = tot > 0 ? Math.round((bull/tot)*60 + ((tot-bear)/tot)*40) : 50;
+  const el = document.getElementById('aiScore');
+  el.textContent = score;
+  el.style.color = score >= 70 ? 'var(--green)' : score >= 45 ? 'var(--yellow)' : 'var(--red)';
+
+  const feed = document.getElementById('feedList');
+  const fFiltered = currentFilter === 'all' ? FEEDS : FEEDS.filter(f => f.tags.includes(currentFilter));
+  feed.innerHTML = fFiltered.slice(0,30).map(f => `
+    <div class="feed-item">
+      <div class="feed-dot ${f.type}"></div>
+      <div style="flex:1;min-width:0">
+        <div class="feed-text"><b onclick="openChat('${f.pid}')" style="color:${f.color};cursor:pointer">${f.name}</b> ${f.text}</div>
+        <div class="feed-source">
+          <span>${f.time}</span>
+          <span>·</span>
+          <span class="signal ${f.type}" style="font-size:9px;padding:0 5px">${f.dir}</span>
+          ${f.impact ? `<span>·</span><a onclick="openChat('${f.pid}')" title="點擊查看詳情">📎 ${f.impact}</a>` : ''}
+          <span>·</span>
+          <a onclick="openChat('${f.pid}')" style="color:var(--accent)">💬 對談求證</a>
+        </div>
+      </div>
+    </div>`).join('') || '<div style="color:var(--text2);padding:10px">無符合訊號</div>';
+
+  // Filter bar
+  const bar = document.getElementById('filterBar');
+  bar.innerHTML = ASSETS.map(a => {
+    const cnt = a.id==='all' ? 0 : SIGNALS.filter(s=>s.tags.includes(a.id)).length;
+    return `<button class="filter-pill ${currentFilter===a.id?'active':''}" onclick="setFilter('${a.id}')">${a.label}${a.id!=='all'?`<span class="cnt">${cnt}</span>`:''}</button>`;
+  }).join('');
+
+  renderNews();
+}
+
+function setFilter(id) {
+  currentFilter = id;
+  renderSignals();
+}
+
+function switchFnTab(tab, btn) {
+  document.querySelectorAll('.fn-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.fn-body .col').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(tab+'Col').classList.add('active');
+}
+
+// ============================================================
+// NEWS SYSTEM
+// ============================================================
+let cachedNews = [];
+
+function renderNews() {
+  const el = document.getElementById('newsList');
+  const filtered = currentFilter === 'all' ? cachedNews : cachedNews.filter(n => n.assets?.includes(currentFilter));
+  if (filtered.length === 0) {
+    el.innerHTML = '<div style="color:var(--text2);padding:20px;text-align:center">📭 無相關新聞<br><span style="font-size:11px">輸入 API Key 或切換分類</span></div>';
+    return;
+  }
+  el.innerHTML = filtered.slice(0,15).map(n => `
+    <div class="news-item">
+      <div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:2px">${(n.tags||[]).map(t=>`<span class="ntag">${t}</span>`).join('')}</div>
+      <div>${n.title}</div>
+      <div class="nsrc">${n.source} · ${n.time}</div>
+    </div>`).join('');
+  document.getElementById('newsCount').textContent = filtered.length;
+}
+
+function generateSimulatedNews() {
+  const now = new Date();
+  const t = (h,m) => { const d=new Date(now); d.setHours(h,m); return d.toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}); };
+  cachedNews = [
+    {title:'NVIDIA Blackwell 出貨量超出預期 30%，供應鏈全面動起來', source:'Reuters', time:t(14,32), assets:['ai','semi','tw','us'], tags:['半導體','AI']},
+    {title:'TSMC 2nm 試產良率達 90% 以上，2026 年量產進度提前', source:'Digitimes', time:t(14,15), assets:['semi','tw'], tags:['半導體','台積電']},
+    {title:'Meta Llama 4 參數規模達 2T，開源 AI 模型將改寫市場格局', source:'TechCrunch', time:t(13,50), assets:['ai','us'], tags:['AI','開源']},
+    {title:'川普暗示將對半導體進口課徵 25% 關稅，台股震盪', source:'Bloomberg', time:t(13,22), assets:['forex','semi','tw'], tags:['關稅','政策']},
+    {title:'Elon Musk：Optimus 將在 2027 年量產 100 萬台', source:'CNBC', time:t(12,55), assets:['ai','us'], tags:['機器人','Tesla']},
+    {title:'Buffett 連續 6 季淨賣出股票，現金儲備破 3500 億美元', source:'Reuters', time:t(12,30), assets:['us','ai'], tags:['巴菲特','現金']},
+    {title:'Bill Gates 投資的 TerraPower 核能電廠獲美國政府 15 億美元補助', source:'WSJ', time:t(11,45), assets:['energy','us'], tags:['核能','氣候']},
+    {title:'原油價格突破 85 美元，川普能源政策推動美國產量創紀錄', source:'Bloomberg', time:t(11,20), assets:['energy','forex'], tags:['原油','能源']},
+    {title:'AI Agent 框架在 Q2 吸引超過 50 萬開發者，企業採用率翻倍', source:'TechCrunch', time:t(10,50), assets:['ai','us'], tags:['AI Agent']},
+    {title:'台灣出口連 12 月正成長，AI 相關半導體出口年增 45%', source:'CNA', time:t(10,15), assets:['tw','semi'], tags:['台灣','出口']},
+    {title:'Fed 暗示下半年可能降息一次，市場反應正面', source:'WSJ', time:t(9,40), assets:['forex','us'], tags:['Fed','利率']},
+    {title:'加密貨幣總市值突破 4 兆美元，BTC 挑戰 12 萬美元', source:'CoinDesk', time:t(9,5), assets:['crypto','forex'], tags:['BTC','加密']},
+    {title:'Berkshire Hathaway 增持西方石油持股至 30%', source:'Reuters', time:t(8,30), assets:['energy','us'], tags:['巴菲特','能源']},
+    {title:'黃仁勳：AI Factory 將成為國家級基礎建設，市場規模 3 兆美元', source:'Bloomberg', time:t(8,0), assets:['ai','semi','us','tw'], tags:['黃仁勳','AI']},
+    {title:'美中貿易緊張升溫，人民幣貶值逼近 7.5 關卡', source:'Reuters', time:t(7,30), assets:['forex','tw','agri'], tags:['人民幣','貿易']},
+    {title:'Gates Foundation 投入 10 億美元研究 AI 在醫療診斷的應用', source:'BBC', time:t(7,0), assets:['ai','us'], tags:['蓋茲','醫療 AI']},
+    {title:'TSMC Arizona 廠開始量產 4nm，良率與台灣廠相當', source:'Nikkei', time:t(6,30), assets:['semi','tw','us'], tags:['TSMC','美國']},
+    {title:'極端氣候影響全球農作物產量，小麥價格創 10 年新高', source:'Reuters', time:t(6,0), assets:['agri','energy'], tags:['農產','氣候']},
+    {title:'黃金現貨突破 2800 美元，央行持續增持', source:'Bloomberg', time:t(5,30), assets:['gold','forex'], tags:['黃金','避險']},
+    {title:'Meta 宣布 AI 資料中心投資再加碼 200 億美元', source:'CNBC', time:t(5,0), assets:['ai','us'], tags:['Meta','資料中心']},
+    {title:'DOGE 部門提交首份報告：發現 5000 億美元政府浪費支出', source:'Fox Business', time:t(4,30), assets:['us','forex'], tags:['DOGE','政府']},
+    {title:'日圓兌美元升至 138，分析師預期 BOJ 將進一步升息', source:'Bloomberg', time:t(4,0), assets:['forex','tw'], tags:['日圓','外匯']},
+    {title:'全球半導體設備出貨金額創單季新高，年增 22%', source:'SEMI', time:t(3,30), assets:['semi','tw'], tags:['設備','半導體']},
+    {title:'小麥、玉米期貨價格因氣候異常同步大漲，食品通膨風險升溫', source:'Reuters', time:t(3,0), assets:['agri','gold'], tags:['農產','通膨']},
+    {title:'微軟 Copilot 企業客戶突破 100 萬，年化營收 200 億美元', source:'CNBC', time:t(2,30), assets:['ai','us'], tags:['微軟','AI']},
+    {title:'魏哲家：今年 TSMC 資本支出維持 320-360 億美元高檔', source:'Digitimes', time:t(2,0), assets:['semi','tw'], tags:['台積電','資本支出']},
+    {title:'波克夏 Q2 買進 500 萬股亞馬遜，新增科技持股', source:'WSJ', time:t(1,30), assets:['us','ai'], tags:['巴菲特','科技']},
+    {title:'美國原油庫存下降 800 萬桶，能源價格持續走高', source:'EIA', time:t(1,0), assets:['energy','forex'], tags:['原油','庫存']},
+    {title:'川普：上任 100 天內將重新協商美元匯率政策', source:'Reuters', time:t(0,30), assets:['forex','energy','agri'], tags:['川普','美元']},
+    {title:'AI 晶片市場 2026 年預計達 5000 億美元，年複合成長率 40%', source:'IDC', time:t(0,0), assets:['ai','semi','us','tw'], tags:['AI','半導體']},
+    {title:'巨人傑：累計當沖交易量逾 5000 億，台股年輕散戶積極參與', source:'今周刊', time:t(23,50), assets:['tw'], tags:['巨人傑','當沖']},
+    {title:'菲比斯「菲式思考」熱銷 10 萬冊，散戶必讀的投資哲學書', source:'商業周刊', time:t(23,20), assets:['tw'], tags:['菲比斯','投資']},
+    {title:'日經 225 突破 42000 點創歷史新高，成交量大增', source:'Nikkei', time:t(23,45), assets:['japan','semi'], tags:['日股','新高']},
+    {title:'BNF 傳奇再現？日本散戶交易量佔比升至 40%', source:'Bloomberg', time:t(23,15), assets:['japan'], tags:['日本','散戶']},
+    {title:'日本央行維持利率不變，日圓貶至 152 兌一美元', source:'Reuters', time:t(22,30), assets:['japan','forex'], tags:['日圓','BOJ']},
+    {title:'東京電子財報優於預期，AI 半導體設備訂單倍增', source:'Nikkei', time:t(21,50), assets:['japan','semi'], tags:['日本半導體','設備']},
+    {title:'USDA 月報：黃豆庫存低於預期，期貨價格跳漲 3%', source:'Bloomberg', time:t(21,0), assets:['grains','agri'], tags:['黃豆','USDA']},
+    {title:'美國中西部乾旱加劇，小麥期貨創 8 個月新高', source:'Reuters', time:t(20,30), assets:['grains','agri'], tags:['小麥','乾旱']},
+    {title:'巴西玉米豐收壓抑國際價格，出口競爭激烈', source:'AgriCensus', time:t(20,0), assets:['grains'], tags:['玉米','豐收']},
+    {title:'全球豬瘟疫情升溫，瘦肉豬期貨大漲 5%', source:'CME Group', time:t(19,30), assets:['livestock'], tags:['豬肉','疫情']},
+    {title:'美國牛肉庫存創 10 年新低，活牛期貨持續走高', source:'USDA', time:t(19,0), assets:['livestock'], tags:['牛肉','庫存']},
+    {title:'國際咖啡組織：全球咖啡產量缺口擴大至 800 萬袋', source:'ICO', time:t(18,30), assets:['softs','agri'], tags:['咖啡','供需']},
+    {title:'糖價受印度出口限制影響，創 4 年新高', source:'Reuters', time:t(18,0), assets:['softs'], tags:['糖','出口限制']},
+    {title:' LME 銅庫存驟降，供應緊張推升銅價突破 10,000 美元', source:'LME', time:t(17,30), assets:['metals'], tags:['銅','庫存']},
+    {title:'鋁價受中國減產影響供應趨緊，下游客戶搶貨', source:'Reuters', time:t(17,0), assets:['metals'], tags:['鋁','減產']},
+    {title:'美國 10 年期公債殖利率跌破 4%，市場押注 Fed 降息', source:'Bloomberg', time:t(16,30), assets:['bond'], tags:['美債','殖利率']},
+    {title:'投資級公司債發行量創紀錄，企業趁低利率鎖定融資成本', source:'WSJ', time:t(16,0), assets:['bond'], tags:['公司債','融資']},
+    {title:'自由人：2026 下半年台指期將出現方向性突破', source:'經濟日報', time:t(15,30), assets:['tw'], tags:['自由人','期貨']},
+    {title:'林哲群新書「紀律長影」蟬聯暢銷排行，倡導 ETF 長期持有', source:'博客來', time:t(15,0), assets:['tw','us'], tags:['林哲群','理財']},
+  ];
+  document.getElementById('newsCount').textContent = cachedNews.length;
+  renderNews();
+}
+
+function fetchRealNews() {
+  const key = document.getElementById('newsApiKey').value.trim();
+  if (!key) { generateSimulatedNews(); return; }
+  const el = document.getElementById('newsList');
+  el.innerHTML = '<div style="color:var(--text2);padding:20px;text-align:center">⏳ 載入中...</div>';
+  const topics = ['AI','semiconductor','Taiwan stock market','Federal Reserve','commodities','forex','agriculture','gold','crypto'];
+  Promise.all(topics.map(t =>
+    fetch(`https://newsapi.org/v2/everything?q=${encodeURIComponent(t)}&language=en&pageSize=3&sortBy=publishedAt&apiKey=${key}`)
+      .then(r => r.json()).then(d => d.articles||[]).catch(()=>[])
+  )).then(results => {
+    const flat = results.flat().filter(a => a.title);
+    const seen = new Set();
+    cachedNews = flat.filter(a => { if (seen.has(a.title)) return false; seen.add(a.title); return true; }).slice(0,25).map(a => ({
+      title: a.title.replace(/[^a-zA-Z0-9\u4e00-\u9fff\s\-–—,.'"!?$%&()]/g,''),
+      source: a.source?.name || 'NewsAPI',
+      time: new Date(a.publishedAt).toLocaleString('zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}),
+      assets: ['all'],
+      tags: ['NewsAPI']
+    }));
+    renderNews();
+  }).catch(() => { generateSimulatedNews(); });
+}
+
+// ============================================================
+// CHAT SYSTEM — 一對一 + 圓桌會議
+// ============================================================
+let currentPersona = null;
+let chatHistory = [];
+let isTyping = false;
+let roundMode = false;
+let selectedPersonas = [];
+
+function initChat() {
+  const list = document.getElementById('personaList');
+  list.innerHTML = PEOPLE.map(p => `
+    <button class="persona-btn" onclick="${roundMode ? `toggleRoundPersona('${p.id}')` : `selectPersona('${p.id}')`}" data-pid="${p.id}">
+      <div class="mini-av" style="background:${p.color}">${p.avatar}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;font-size:12px">${p.name}</div>
+        <div style="font-size:9px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.tags.slice(0,2).map(t=>'#'+t).join(' ')}</div>
+      </div>
+      <div class="tag" style="margin-left:auto;display:${roundMode?'block':'none'};width:14px;height:14px;border-radius:3px;border:1.5px solid var(--border);font-size:9px;text-align:center;line-height:14px;color:transparent">✓</div>
+    </button>`).join('');
+}
+
+function setRoundMode(mode) {
+  roundMode = (mode === 'round');
+  document.querySelectorAll('.round-toggle button').forEach(b => b.classList.toggle('active', b.dataset.rmode === mode));
+  document.getElementById('roundPills').style.display = roundMode ? 'flex' : 'none';
+  if (roundMode) {
+    selectedPersonas = [];
+    updateRoundPills();
+    document.getElementById('chatHeader').innerHTML = `
+      <div class="ch-av" style="background:var(--yellow)">👥</div>
+      <div><h2 id="chatTitle">圓桌會議</h2><div class="tag" id="chatTag">點選左側人物加入討論（可多選）</div></div>`;
+    document.getElementById('chatInput').disabled = false;
+    document.getElementById('chatInput').placeholder = '輸入問題，邀請所有選中人物回答...';
+    document.getElementById('chatSend').disabled = false;
+    document.getElementById('suggestions').innerHTML = `
+      <button onclick="inviteVerifyPanel()">🔍 找會計師+CFO+研究員查證</button>
+      <button onclick="invitePlanners()">📋 找理財顧問排還款</button>
+      <button onclick="sendMessage('我背了一筆不小的負債，想聽聽大家的建議')">💬 負債建議</button>
+      <button onclick="sendMessage('對目前市場的看法？')">📊 市場看法</button>
+      <button onclick="sendMessage('期貨/美股哪個適合我？')">🎯 交易建議</button>`;
+  } else {
+    selectedPersonas = [];
+    if (currentPersona) {
+      selectPersona(currentPersona.id);
+    } else {
+      document.getElementById('chatHeader').innerHTML = `
+        <div class="ch-av" style="background:var(--accent)">AI</div>
+        <div><h2 id="chatTitle">AI 戰隊</h2><div class="tag" id="chatTag">選擇一位開始對談</div></div>`;
+      document.getElementById('chatInput').disabled = true;
+      document.getElementById('chatSend').disabled = true;
+    }
+  }
+  initChat();
+}
+
+function toggleRoundPersona(id) {
+  const idx = selectedPersonas.indexOf(id);
+  if (idx >= 0) {
+    selectedPersonas.splice(idx, 1);
+  } else {
+    selectedPersonas.push(id);
+  }
+  updateRoundPills();
+  document.querySelectorAll('.persona-btn').forEach(b => {
+    const pid = b.dataset.pid;
+    const sel = selectedPersonas.includes(pid);
+    b.classList.toggle('active', sel);
+    const tg = b.querySelector('.tag');
+    if (tg) { tg.style.borderColor = sel ? 'var(--accent)' : 'var(--border)'; tg.style.background = sel ? 'var(--accent)' : 'transparent'; tg.style.color = sel ? '#111' : 'transparent'; tg.textContent = sel ? '✓' : ''; }
+  });
+  const tag = document.getElementById('chatTag');
+  if (tag) tag.textContent = selectedPersonas.length ? `已邀請 ${selectedPersonas.length} 位人物` : '點選左側人物加入討論（可多選）';
+}
+
+function updateRoundPills() {
+  const el = document.getElementById('roundPills');
+  el.style.display = selectedPersonas.length ? 'flex' : 'none';
+  el.innerHTML = selectedPersonas.map(id => {
+    const p = PEOPLE.find(x => x.id === id);
+    return p ? `<span style="color:${p.color};border:1px solid ${p.color}">${p.name}</span>` : '';
+  }).join('');
+}
+
+function inviteRound(ids, autoAsk) {
+  if (!roundMode) setRoundMode('round');
+  ids.forEach(id => { if (!selectedPersonas.includes(id)) toggleRoundPersona(id); });
+  if (autoAsk) sendMessage(autoAsk);
+}
+function inviteVerifyPanel() {
+  // 查證團：會計師 + 台積電財務長 + 交易研究員，交叉檢視交易員觀點
+  inviteRound(['cpa','tsmccfo','analyst']);
+}
+function invitePlanners() {
+  // 理財/債務規劃團：CFP 規劃師 + 債務整理顧問 + 行為財務學教授
+  inviteRound(['planner','debtpro','zhounan']);
+}
+
+function selectPersona(id) {
+  currentPersona = PEOPLE.find(p => p.id === id);
+  document.querySelectorAll('.persona-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`.persona-btn[data-pid="${id}"]`).classList.add('active');
+  chatHistory = [];
+  document.getElementById('chatMessages').innerHTML = `<div class="msg system">👋 你已連接上 <strong>${currentPersona.name}</strong>。可以問他對市場的看法。</div>`;
+  document.getElementById('chatHeader').innerHTML = `
+    <div class="ch-av" style="background:${currentPersona.color}">${currentPersona.avatar}</div>
+    <div><h2 id="chatTitle">${currentPersona.name}</h2><div class="tag" id="chatTag">${currentPersona.title}</div></div>`;
+  document.getElementById('chatInput').disabled = false;
+  document.getElementById('chatInput').placeholder = `問 ${currentPersona.name} 一個問題...`;
+  document.getElementById('chatInput').focus();
+  document.getElementById('chatSend').disabled = false;
+  updateSuggestions();
+}
+
+function updateSuggestions() {
+  const el = document.getElementById('suggestions');
+  if (roundMode) {
+    el.innerHTML = `
+      <button onclick="inviteVerifyPanel()">🔍 找會計師+CFO+研究員查證</button>
+      <button onclick="invitePlanners()">📋 找理財顧問排還款</button>
+      <button onclick="sendMessage('我背了一筆不小的負債，想聽聽大家的建議')">💬 負債建議</button>
+      <button onclick="sendMessage('對目前市場的看法？')">📊 市場看法</button>
+      <button onclick="sendMessage('期貨/美股哪個適合我？')">🎯 交易建議</button>`;
+    return;
+  }
+  const qs = {
+    jensen:['AI 未來？','競爭優勢？','台灣角色？','Blackwell 需求？'],
+    wei:['AI 影響？','N2 進度？','全球布局？','先進封裝？'],
+    zuck:['AI 策略？','開源意義？','元宇宙？','AI Agent？'],
+    elon:['AI 危險？','Optimus？','加密貨幣？','DOGE？'],
+    trump:['經濟成就？','關稅目標？','Taiwan？','股市？'],
+    buffett:['市場看法？','現金水位？','投資心法？','AI 看法？'],
+    gates:['AI 影響？','氣候方案？','基金會工作？','未來科技？'],
+    bnf:['交易心法？','日股機會？','風險管理？','怎麼開始的？'],
+    cns:['交易策略？','日經期貨？','風險控制？','市場心理？'],
+    soros:['反身性理論？','如何看待負債？','外匯策略？','市場謬誤？'],
+    joman:['技術分析心法？','停損紀律？','期貨操作？','對負債的看法？'],
+    zhounan:['債務規劃？','交易心理？','行為偏誤？','長期配置？'],
+    jurenjie:['當沖心法？','風險控制？','如何開始的？','台股機會？'],
+    phoebus:['投資哲學？','選擇權策略？','如何面對虧損？','對負債的看法？'],
+    freeman:['交易心法？','資金管理？','期貨風險？','對負債的看法？'],
+    huige:['台股策略？','籌碼分析？','法人動向？','對負債的看法？'],
+    usuncle:['美股配置？','ETF推薦？','債務規劃？','長期投資？'],
+    linzhequn:['紀律長影？','ETF策略？','負債處理？','資產配置？'],
+    cpa:['債務怎麼分類？','怎麼看財報？','現金流重要嗎？','要記帳嗎？'],
+    tsmccfo:['資本配置紀律？','該降槓桿嗎？','現金流怎麼管？','風險怎麼控？'],
+    analyst:['怎麼估值？','散戶當沖會贏嗎？','研究方法？','怎麼避免偏誤？'],
+    planner:['幫我排還款計畫','雪崩法vs雪球法？','緊急金要多少？','先還債還是先投資？'],
+    debtpro:['債務怎麼整合？','能跟銀行協商嗎？','利率太高怎麼辦？','什麼是前置協商？'],
+    wutanru:['理財怎麼開始？','複利的威力？','現在學會太晚嗎？','長期投資？'],
+    huangshihhao:['什麼是逆向工程？','怎麼拆財報？','負債怎麼還？','財務自由的系統？'],
+    commodity:['原物料怎麼看？','黃金還能買嗎？','穀物行情？','美元的影響？']
+  };
+  el.innerHTML = (qs[currentPersona?.id] || ['聊聊？']).map(q =>
+    `<button onclick="sendMessage('${q.replace(/'/g,"\\'")}')">${q}</button>`).join('');
+}
+
+function sendMessage(text) {
+  const input = document.getElementById('chatInput');
+  if (!text) text = input.value.trim();
+  if (!text || isTyping) return;
+  input.value = '';
+
+  if (roundMode) {
+    sendRoundTable(text);
+    return;
+  }
+  if (!currentPersona) return;
+
+  addMessage(text, 'user');
+  if (aiEnabled()) { aiSingle(currentPersona, text); return; }
+  isTyping = true;
+  const msgs = document.getElementById('chatMessages');
+  const td = document.createElement('div');
+  td.className = 'msg bot'; td.id='typingIndicator';
+  td.innerHTML = '<div class="sender" style="color:'+currentPersona.color+'">'+currentPersona.name+'</div><div class="typing"><span></span><span></span><span></span></div>';
+  msgs.appendChild(td);
+  msgs.scrollTop = msgs.scrollHeight;
+  setTimeout(() => {
+    const resp = genResp(currentPersona, text);
+    document.getElementById('typingIndicator')?.remove();
+    addMessage(resp, 'bot');
+    isTyping = false;
+  }, Math.min(Math.max(text.length*15, 600), 2000));
+}
+
+function sendRoundTable(text) {
+  if (selectedPersonas.length === 0) {
+    addMessageSystem('請先點選左側人物加入圓桌會議');
+    return;
+  }
+  addMessage(text, 'user');
+  if (aiEnabled()) { aiRoundTable(text); return; }
+  isTyping = true;
+  const msgs = document.getElementById('chatMessages');
+  const td = document.createElement('div');
+  td.className = 'msg bot'; td.id='typingIndicator';
+  td.innerHTML = '<div style="padding:6px 0"><div class="typing"><span></span><span></span><span></span></div></div>';
+  msgs.appendChild(td);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  const delay = Math.min(Math.max(text.length*15 + selectedPersonas.length*300, 800), 3000);
+  setTimeout(() => {
+    document.getElementById('typingIndicator')?.remove();
+    selectedPersonas.forEach((id, i) => {
+      setTimeout(() => {
+        const p = PEOPLE.find(x => x.id === id);
+        if (!p) return;
+        const resp = genRoundResp(p, text);
+        const div = document.createElement('div');
+        div.className = 'round-msg';
+        div.innerHTML = '<div class="r-header"><div class="r-dot" style="background:'+p.color+'"></div><span style="color:'+p.color+'">'+p.name+'</span><span style="font-size:10px;color:var(--text2)">· '+p.title+'</span></div>'+resp;
+        document.getElementById('chatMessages').appendChild(div);
+        document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+      }, i * 500);
+    });
+    setTimeout(() => {
+      const wrap = document.createElement('div');
+      wrap.innerHTML = roundModerator(text);
+      if (wrap.firstElementChild) document.getElementById('chatMessages').appendChild(wrap.firstElementChild);
+      document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+      isTyping = false;
+    }, selectedPersonas.length * 500 + 150);
+  }, delay);
+}
+
+function addMessageSystem(text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msg system';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function addMessage(text, role) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  if (role === 'bot' && currentPersona) div.innerHTML = '<div class="sender" style="color:'+currentPersona.color+'">'+currentPersona.name+'</div>'+text;
+  else div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  chatHistory.push({role,text});
+}
+
+function genResp(persona, q) {
+  const ql = q.toLowerCase();
+  const kw = {
+    ai:['ai','人工智慧','chatgpt','gpt','llm','nvidia','gpu','算力','訓練','inference','deep learning','machine learning','llama'],
+    energy:['能源','核能','石油','原油','太陽能','風能','儲能','天然氣','鈾','綠能','solar'],
+    climate:['氣候','climate','暖化','碳','環保','esg'],
+    taiwan:['台灣','taiwan','台積電','tsmc','半導體','晶片','foundry','chip'],
+    japan:['日本','japan','日經','nikkei','日股','東京','東證','yen','日圓'],
+    us:['美股','美國股票','s&p','spy','qqq','voo','vti','nasdaq','道瓊','us stock','美國市場'],
+    crypto:['bitcoin','btc','crypto','加密','狗狗','dogecoin','eth','區塊鏈','幣'],
+    forex:['外匯','匯率','美元','日圓','人民幣','貶值','升值','forex','usd'],
+    futures:['期貨','台指期','期指','futures','大台','小台'],
+    options:['選擇權','期權','put','call','權證','賣方','買方'],
+    etf:['etf','0050','vt','vti','bnd','被動投資','定期定額','指數化'],
+    debt:['還款','還債','負債','債務','欠','貸款','利息','信貸','卡債','槓桿過高'],
+    planning:['財務規劃','理財','規劃','預算','現金流','存錢','資產配置','退休','緊急金','備用金','協商','整合','記帳'],
+    risk:['風險','停損','資金管理','部位','風控','保證金','drawdown','槓桿'],
+    strategy:['策略','心法','操作','怎麼做','怎麼賺','選股','方法','做法'],
+    psychology:['心理','情緒','恐懼','貪婪','紀律','耐心','fear','greed','行為','偏誤'],
+    commodities:['農產','黃豆','玉米','小麥','咖啡','糖','可可','豬','牛','牲畜','原物料','commodity','usda','農作物','穀物','軟性商品','黃金','白銀','銅','鋁','金屬','貴金屬'],
+    trade:['關稅','tariff','trade','貿易','china','中國','deal','協議','談判'],
+    gov:['政府','政策','regulation','監管','法律','safety','fed','聯準會'],
+    health:['健康','醫療','疫苗','疾病','公共衛生','基金會','foundation'],
+    cash:['現金','cash','berkshire','波克夏','儲備','持有現金'],
+    metaverse:['元宇宙','metaverse','虛擬','vr','ar'],
+    competition:['競爭','對手','vs','apple','amd','intel','google','領先','優勢','護城河'],
+    market:['市場','股市','股票','投資','stock','market','股價','盤','漲','跌','指數'],
+    stock:['買','賣','持有','估值','本益比','便宜','貴'],
+    future:['未來','十年','預測','trend','趨勢','下一步','展望','長期','五年']
+  };
+  const alias = {debt:'planning', planning:'debt', energy:'climate', climate:'energy'};
+  for (const [topic, kws] of Object.entries(kw)) {
+    if (kws.some(k => ql.includes(k))) {
+      if (persona.views[topic]) return persona.views[topic];
+      if (alias[topic] && persona.views[alias[topic]]) return persona.views[alias[topic]];
+    }
+  }
+  if (ql.includes('你好')||ql.includes('hello')||ql.includes('hi')||ql.includes('嗨')) {
+    const g = {jensen:'Hello! 歡迎來到 AI 時代！有什麼問題？', wei:'你好，歡迎提出半導體問題。', zuck:'Hey! 聊聊 AI 或元宇宙？', elon:'希望你準備好聽一些 truth。', trump:'Nobody answers better than me. Ask!', buffett:'哈囉！想聊投資還是可樂？', gates:'你好！有什麼我可以分享的？', bnf:'…專注。市场价格在变，但人性不变。', cns:'…問吧。市場會告訴你答案，只要你會聽。', soros:'市場永遠有錯誤定價——你有發現嗎？', joman:'K 線會說話。你聽懂了嗎？', zhounan:'你好，我們來理性談談你的財務規劃。', jurenjie:'…我不是天才。我只是比你更努力。', phoebus:'事件發生了，再反應。不要猜。', freeman:'風險第一，獲利第二。你準備好了嗎？', huige:'台股看的是資金流向——錢往哪裡去，行情就往哪裡去。', usuncle:'美股長期投資，時間是你的好朋友。', linzhequn:'紀律是財務自由的影子。你準備好練習了嗎？', cpa:'你好。先別急著問明牌——我們先把你的數字攤開來看。', tsmccfo:'你好。財務的第一課：先確保活下來，再談成長。', analyst:'你好。我不報明牌，但我可以給你看數據怎麼說。', planner:'你好！把債務交給我，我們一起排一張你做得到的還款表。', debtpro:'你好。深呼吸——債務是可以重新設計的，我們一筆一筆來。', wutanru:'你好呀！人生就是一場實用商學院，我們邊聊邊學。', huangshihhao:'你好。先別問怎麼賺——先告訴我，你想要的人生終點長什麼樣？', commodity:'原物料看的是供需和天氣，不是財報。想聊穀物、金屬還是黃金？'};
+    return g[persona.id]||'你好！';
+  }
+  if (ql.includes('謝謝')||ql.includes('thank')) return '不客氣，有任何問題隨時再來！';
+  if (ql.includes('年齡')||ql.includes('幾歲')) {
+    const a = {jensen:'63 歲了，但感覺才剛開始。', wei:'72 歲。半導體是我一生的熱情。', zuck:'42 歲。還有很長的路要走。', elon:'54 歲。時間不多了，要做的事太多。', trump:'快 80了——但我比任何 30 歲的人精力都好。', buffett:'95 歲了。我還在跳踢踏舞上班。', gates:'70 歲。基金會的工作讓我保持年輕。', bnf:'40 歲左右吧。交易佔了我人生大半。', cns:'年齡不重要。市場才是永恆的。', soros:'95 歲了。我還在寫書、思考市場。', joman:'60 多歲了。畫了 20 年的 K 線，從不間斷。', zhounan:'50 多歲。教了 20 多年的行為財務學。', jurenjie:'30 出頭。交易已經佔了我一半的人生。', phoebus:'40 出頭。從 22K 走到現在，10 年。', freeman:'40 多歲。期貨市場教會我的比學校多得多。', huige:'50 多歲。做了 20 年的商品期貨交易。', usuncle:'快 60 了。美股投資 30 年，最深的體會是「時間比 timing 重要」。', linzhequn:'40 多歲。寫「紀律長影」是希望用一本書改變台灣人的理財觀念。', cpa:'執業 20 多年的會計師——比起年齡，我更在意你的「帳齡」。', tsmccfo:'我把心思都放在公司的財報年度上，年齡反而其次。', analyst:'看了十幾年的財報，比起年齡，我更在意數據怎麼說。', planner:'陪客戶規劃人生財務十多年了，看過很多由黑翻紅的故事。', debtpro:'處理債務案件十多年，再大的洞我都看過怎麼補起來。', wutanru:'我四十幾歲才開始認真學投資——證明什麼時候開始都不嫌晚。', huangshihhao:'年齡是逆向工程的起點之一——但決定終點的是你的系統，不是你的歲數。', commodity:'做了二十幾年原物料，看過太多次景氣與庫存循環。'};
+    return a[persona.id]||'年齡只是一個數字。';
+  }
+  return persona.views.general || '這是個好問題。關鍵在於長期創造價值。市場短期是投票機，長期是秤重機。';
+}
+
+// 圓桌會議：更立體的回答(主要觀點 + 一個延伸角度)
+function genRoundResp(persona, q) {
+  const primary = genResp(persona, q);
+  const order = ['strategy', 'risk', 'psychology', 'planning', 'future', 'general'];
+  let extra = '';
+  for (const t of order) {
+    const v = persona.views[t];
+    if (v && v !== primary) { extra = v; break; }
+  }
+  return extra
+    ? primary + '<br><span style="color:var(--text2);font-size:11px">↳ 延伸：' + extra + '</span>'
+    : primary;
+}
+
+function detectTopic(q) {
+  const ql = q.toLowerCase();
+  const map = [
+    ['debt', ['負債', '還債', '還款', '債務', '欠錢', '貸款', '利息']],
+    ['planning', ['理財', '規劃', '現金流', '預算', '緊急金', '配置', '記帳']],
+    ['risk', ['風險', '停損', '資金管理', '部位', '槓桿', '風控']],
+    ['options', ['選擇權', '期權', 'put', 'call', '權證']],
+    ['futures', ['期貨', '台指', '期指', '大台', '小台']],
+    ['etf', ['etf', '定期定額', '被動', '0050', '指數化']],
+    ['us', ['美股', 's&p', 'voo', 'qqq', 'vti', '道瓊', 'nasdaq']],
+    ['ai', ['ai', '人工智慧', 'nvidia', '晶片', '半導體', '算力']],
+    ['commodities', ['原物料', '黃金', '穀物', '商品', '金屬', '農產', '原油', '咖啡', '小麥']],
+    ['strategy', ['策略', '心法', '怎麼做', '選股', '方法', '做法']],
+    ['market', ['市場', '股市', '投資', '行情', '看法', '大盤', '漲', '跌']]
+  ];
+  for (const [t, ks] of map) { if (ks.some(k => ql.includes(k))) return t; }
+  return 'default';
+}
+
+const ROUND_SUM = {
+  debt: '<b>共識</b>：先<b>止血 → 協商降息 → 別把交易當還債主力</b>。<br><b>分歧</b>：保守派(先建緊急金、靠穩定現金流還) vs 積極派(可用小部位資金加速，但嚴設停損)。<br>👉 <b>下一步</b>：①列出每筆債利率，先殺最高利 ②跟銀行談降息/展延 ③只用「賠得起」的錢碰高風險。',
+  planning: '<b>共識</b>：先做<b>現金流表 → 緊急金 → 還高利債 → 再投資</b>，把目標數字化、反推每月該做的事。<br>👉 <b>下一步</b>：先抓出每月「淨現金流」，再決定能投多少。',
+  risk: '<b>共識</b>：部位由<b>「最大可承受虧損」回推</b>，不是由想賺多少決定；停損是鐵律。<br>👉 <b>下一步</b>：設單筆 ≤2%、連虧就停、總曝險設上限。',
+  options: '<b>共識</b>：選擇權要做<b>有限風險策略(價差單)、絕不裸賣</b>，只用閒錢。<br>👉 <b>下一步</b>：先用小部位、先定義好「最大虧損」再進場。',
+  futures: '<b>共識</b>：<b>槓桿是雙面刃</b>——順勢 + 嚴格停損，部位要小。<br>👉 <b>下一步</b>：先用最小口數練紀律，連虧就停。',
+  etf: '<b>共識</b>：<b>長期、低成本、分散</b>，時間與複利是最大武器。<br>👉 <b>下一步</b>：選 1–2 檔大盤型 ETF 定期定額，不擇時。',
+  us: '<b>共識</b>：美股<b>長期向上</b>，跟著大盤、別追單一明牌。<br>👉 <b>下一步</b>：VOO/VTI 為核心、長期持有。',
+  ai: '<b>共識</b>：AI 是長期主軸，但<b>CEO 的話要打折</b>(都在講自家的書)，跟趨勢別賭單一個股。<br>👉 <b>下一步</b>：用 ETF 或一籃子佈局供應鏈，控制單一持股比重。',
+  commodities: '<b>共識</b>：商品看<b>供需、庫存、天氣、美元</b>，波動大、要小部位嚴停損。<br>👉 <b>下一步</b>：當分散配置的一小塊，別當主力資金。',
+  strategy: '<b>共識</b>：<b>有紀律、可重複、設好出場(證偽)條件</b>比預測準更重要。<br>👉 <b>下一步</b>：選一套你做得到的方法，寫成規則、重複執行、記錄複盤。',
+  market: '<b>共識</b>：短期難測、長期向上；<b>管理風險與部位</b>比猜方向重要。<br>👉 <b>下一步</b>：資金分「核心(長期) + 衛星(機動)」，核心別亂動。',
+  default: '<b>共識</b>：立場各有不同，但大家都回到<b>紀律、風險控制、長期視角</b>這三件事。<br>👉 <b>下一步</b>：先確認你的目標與可承受風險，再選對應策略。'
+};
+
+function roundModerator(text) {
+  const topic = detectTopic(text);
+  const names = selectedPersonas.map(id => { const p = PEOPLE.find(x => x.id === id); return p ? p.name : ''; }).filter(Boolean).join('、');
+  const sum = ROUND_SUM[topic] || ROUND_SUM.default;
+  return '<div class="round-msg" style="border-color:var(--yellow);background:rgba(245,200,66,.06)">'
+    + '<div class="r-header"><div class="r-dot" style="background:var(--yellow)"></div><span style="color:var(--yellow);font-weight:700">🎤 圓桌總結（主持人）</span></div>'
+    + '<div style="font-size:11px;color:var(--text2);margin-bottom:6px">出席：' + names + '</div>'
+    + sum + '</div>';
+}
+
+// ============================================================
+// AI 即時模式（直連 Claude API；沒填 key 就走離線腳本）
+// ============================================================
+function getAiCfg(){ try { return JSON.parse(localStorage.getItem('aiCfg')) || {}; } catch(e){ return {}; } }
+function saveAiCfg(){
+  localStorage.setItem('aiCfg', JSON.stringify({
+    on: document.getElementById('aiMode').checked,
+    key: document.getElementById('aiKey').value.trim(),
+    model: document.getElementById('aiModel').value
+  }));
+  updateAiStatus();
+}
+function loadAiCfg(){
+  const c = getAiCfg();
+  const m = document.getElementById('aiMode'), k = document.getElementById('aiKey'), md = document.getElementById('aiModel');
+  if (!m) return;
+  m.checked = !!c.on; k.value = c.key || ''; if (c.model) md.value = c.model;
+  updateAiStatus();
+}
+function aiEnabled(){ const c = getAiCfg(); return !!(c.on && c.key); }
+function updateAiStatus(){
+  const el = document.getElementById('aiStatus'); if (!el) return;
+  el.textContent = aiEnabled() ? '⚡ AI 即時模式' : '離線腳本模式';
+  el.style.color = aiEnabled() ? 'var(--green)' : 'var(--text2)';
+}
+function escapeHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+async function callClaude(system, userContent, maxTokens){
+  const c = getAiCfg();
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method:'POST',
+    headers:{ 'content-type':'application/json', 'x-api-key':c.key, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' },
+    body: JSON.stringify({ model: c.model || 'claude-haiku-4-5-20251001', max_tokens: maxTokens || 360, system, messages:[{ role:'user', content:userContent }] })
+  });
+  if (!r.ok) throw new Error('API ' + r.status + '：' + (await r.text()).slice(0,160));
+  const d = await r.json();
+  return (d.content || []).map(x => x.text || '').join('').trim();
+}
+function personaSystemPrompt(p){
+  const stance = Object.values(p.views).slice(0,7).join('｜');
+  return `你是「${p.name}」（${p.title}）。你的風格：${p.style}\n你的核心觀點（請延續這些立場）：${stance}\n規則：\n- 完全以「${p.name}」第一人稱、人設與立場回答，語氣符合你的風格。\n- 繁體中文，2–4 句，精煉、有觀點、可操作；不要場面話、不要自我介紹、不要說自己是 AI。\n- 這是教育性質的模擬討論、不是真人、不構成投資建議；遇到高風險(槓桿/選擇權/借錢投資)務必提醒風險。`;
+}
+async function aiSingle(persona, text){
+  isTyping = true;
+  const msgs = document.getElementById('chatMessages');
+  const td = document.createElement('div'); td.className = 'msg bot'; td.id = 'typingIndicator';
+  td.innerHTML = '<div class="sender" style="color:'+persona.color+'">'+persona.name+'</div><div class="typing"><span></span><span></span><span></span></div>';
+  msgs.appendChild(td); msgs.scrollTop = msgs.scrollHeight;
+  try {
+    const resp = await callClaude(personaSystemPrompt(persona), '使用者問：' + text, 380);
+    document.getElementById('typingIndicator')?.remove();
+    addMessage(escapeHtml(resp || '(無回應)').replace(/\n/g,'<br>'), 'bot');
+  } catch(e){
+    document.getElementById('typingIndicator')?.remove();
+    addMessageSystem('⚠️ AI 連線失敗：' + e.message + '　先用離線回答。');
+    addMessage(genResp(persona, text), 'bot');
+  }
+  isTyping = false;
+}
+async function aiRoundTable(text){
+  isTyping = true;
+  const msgs = document.getElementById('chatMessages');
+  const td = document.createElement('div'); td.className = 'msg bot'; td.id = 'typingIndicator';
+  td.innerHTML = '<div style="padding:6px 0"><div class="typing"><span></span><span></span><span></span></div></div>';
+  msgs.appendChild(td); msgs.scrollTop = msgs.scrollHeight;
+  const place = el => { const ref = document.getElementById('typingIndicator'); if (ref) ref.parentNode.insertBefore(el, ref); else msgs.appendChild(el); msgs.scrollTop = msgs.scrollHeight; };
+  let transcript = '圓桌討論題目：' + text + '\n';
+  try {
+    for (const id of selectedPersonas){
+      const p = PEOPLE.find(x => x.id === id); if (!p) continue;
+      const sys = personaSystemPrompt(p) + '\n你正在一場圓桌討論中。前面的人已經發言（如下），你可以同意或反駁他們，但一定要講出自己的獨到角度，不要重複別人說過的。';
+      const resp = await callClaude(sys, transcript + '\n輪到你（' + p.name + '）發言：', 300);
+      const div = document.createElement('div'); div.className = 'round-msg';
+      div.innerHTML = '<div class="r-header"><div class="r-dot" style="background:'+p.color+'"></div><span style="color:'+p.color+'">'+p.name+'</span><span style="font-size:10px;color:var(--text2)">· '+p.title+'</span></div>' + escapeHtml(resp).replace(/\n/g,'<br>');
+      place(div);
+      transcript += '\n' + p.name + '：' + resp;
+    }
+    const modResp = await callClaude('你是圓桌會議主持人，中立、精煉、務實。', transcript + '\n\n請用繁體中文做總結，分三段並用粗體標題：【共識】【分歧】【給提問者的下一步】，每段 1–2 句。這是教育性模擬、非投資建議。', 420);
+    const mdiv = document.createElement('div'); mdiv.className = 'round-msg';
+    mdiv.style.borderColor = 'var(--yellow)'; mdiv.style.background = 'rgba(245,200,66,.06)';
+    mdiv.innerHTML = '<div class="r-header"><div class="r-dot" style="background:var(--yellow)"></div><span style="color:var(--yellow);font-weight:700">🎤 圓桌總結（主持人）</span></div>' + escapeHtml(modResp).replace(/\n/g,'<br>');
+    place(mdiv);
+  } catch(e){
+    addMessageSystem('⚠️ AI 連線失敗：' + e.message);
+  } finally {
+    document.getElementById('typingIndicator')?.remove();
+    isTyping = false;
+  }
+}
+
+function openChat(id) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelector('[data-tab="chat"]').classList.add('active');
+  document.getElementById('page-chat').classList.add('active');
+  if (roundMode) setRoundMode('single');
+  selectPersona(id);
+}
+
+// ============================================================
+// 財務工程試算 (純前端,資料存 localStorage,不上傳)
+// ============================================================
+const FIN_KEY = 'aiSquadFinData_v1';
+function finDefaults(){ return {
+  incomes:[{name:'薪資',amount:'',freq:'month'},{name:'獎金/不定期(全年)',amount:'',freq:'year'}],
+  expense:'', targetYears:'',
+  debts:[{name:'信用卡循環',balance:'',rate:'15',minpay:''}],
+  capital:'', reserve:'',
+  allocs:[{name:'台股ETF(0050/006208)',amount:'',ret:'7'},{name:'美股ETF(VOO/VTI)',amount:'',ret:'8'},{name:'債券/現金',amount:'',ret:'3'},{name:'美股選擇權(高風險)',amount:'',ret:''}]
+}; }
+function initFinance(){
+  let d; try{ d = JSON.parse(localStorage.getItem(FIN_KEY)) || finDefaults(); }catch(e){ d = finDefaults(); }
+  let incomes = d.incomes;
+  if (!incomes || !incomes.length) incomes = d.income ? [{name:'收入', amount:d.income}] : finDefaults().incomes; // 舊資料相容
+  document.getElementById('finExpense').value = d.expense || '';
+  document.getElementById('finTargetYears').value = d.targetYears || '';
+  document.getElementById('incomeRows').innerHTML = '';
+  incomes.forEach(addIncomeRow);
+  document.getElementById('debtRows').innerHTML = '';
+  (d.debts && d.debts.length ? d.debts : finDefaults().debts).forEach(addDebtRow);
+  document.getElementById('finCapital').value = d.capital || '';
+  document.getElementById('finReserve').value = d.reserve || '';
+  document.getElementById('allocRows').innerHTML = '';
+  (d.allocs && d.allocs.length ? d.allocs : finDefaults().allocs).forEach(addAllocRow);
+  document.getElementById('posCapital').value = d.tradeCapital || 6000000;
+  document.getElementById('posRisk').value = d.riskPct || 2;
+}
+function addAllocRow(d){
+  d = (d && typeof d === 'object' && !('target' in d)) ? d : {name:'',amount:'',ret:''};
+  const div = document.createElement('div');
+  div.className = 'fin-alloc';
+  div.innerHTML = `
+    <label>標的<input class="a-name" value="${d.name||''}" placeholder="如 台股ETF/選擇權/電商啟動金"></label>
+    <label>配置金額(元)<input class="a-amt" type="number" min="0" value="${d.amount||''}" placeholder="300000"></label>
+    <label>預估年報酬(%)<input class="a-ret" type="number" step="0.1" value="${(d.ret===0||d.ret)?d.ret:''}" placeholder="7"></label>
+    <button class="fin-del" onclick="this.parentNode.remove()">✕</button>`;
+  document.getElementById('allocRows').appendChild(div);
+}
+function addIncomeRow(d){
+  d = (d && typeof d === 'object' && !('target' in d)) ? d : {name:'',amount:'',freq:'month'};
+  const isMonth = (d.freq || 'month') === 'month';
+  const div = document.createElement('div');
+  div.className = 'fin-income';
+  div.innerHTML = `
+    <label>來源<input class="i-name" value="${d.name||''}" placeholder="如 薪資/獎金/股息"></label>
+    <label>金額(元)<input class="i-amt" type="number" min="0" value="${d.amount||''}" placeholder="80000"></label>
+    <label>頻率<select class="i-freq"><option value="month"${isMonth?' selected':''}>每月固定</option><option value="year"${isMonth?'':' selected'}>全年預估</option></select></label>
+    <button class="fin-del" onclick="this.parentNode.remove()">✕</button>`;
+  document.getElementById('incomeRows').appendChild(div);
+}
+function addDebtRow(d){
+  d = (d && typeof d === 'object' && !('target' in d)) ? d : {name:'',balance:'',rate:'',minpay:''};
+  const div = document.createElement('div');
+  div.className = 'fin-debt';
+  div.innerHTML = `
+    <label>名稱<input class="d-name" value="${d.name||''}" placeholder="如 房貸/信貸"></label>
+    <label>餘額(元)<input class="d-bal" type="number" min="0" value="${d.balance||''}" placeholder="500000"></label>
+    <label>年利率(%)<input class="d-rate" type="number" min="0" step="0.01" value="${d.rate||''}" placeholder="6"></label>
+    <label>最低月付(元)<input class="d-min" type="number" min="0" value="${d.minpay||''}" placeholder="8000"></label>
+    <button class="fin-del" onclick="this.parentNode.remove()">✕</button>`;
+  document.getElementById('debtRows').appendChild(div);
+}
+function readFin(){
+  const num = v => { const n = parseFloat(v); return isFinite(n) && n > 0 ? n : 0; };
+  const incomes = [...document.querySelectorAll('#incomeRows .fin-income')].map(r => ({
+    name: (r.querySelector('.i-name').value || '收入').trim(),
+    amount: num(r.querySelector('.i-amt').value),
+    freq: r.querySelector('.i-freq').value
+  })).filter(x => x.amount > 0);
+  const incomeStable = incomes.filter(i => i.freq === 'month').reduce((s,i) => s + i.amount, 0);
+  const incomeVarAnnual = incomes.filter(i => i.freq === 'year').reduce((s,i) => s + i.amount, 0);
+  const incomeVarMonthly = incomeVarAnnual / 12;
+  const debts = [...document.querySelectorAll('#debtRows .fin-debt')].map(r => ({
+    name: (r.querySelector('.d-name').value || '某筆債').trim(),
+    balance: num(r.querySelector('.d-bal').value),
+    rate: num(r.querySelector('.d-rate').value),
+    minpay: num(r.querySelector('.d-min').value)
+  })).filter(x => x.balance > 0);
+  const allocs = [...document.querySelectorAll('#allocRows .fin-alloc')].map(r => {
+    const rv = parseFloat(r.querySelector('.a-ret').value);
+    return {
+      name: (r.querySelector('.a-name').value || '標的').trim(),
+      amount: num(r.querySelector('.a-amt').value),
+      ret: isFinite(rv) ? rv : null
+    };
+  }).filter(x => x.amount > 0);
+  return {
+    incomes,
+    income: incomeStable + incomeVarMonthly,
+    incomeStable, incomeVarAnnual, incomeVarMonthly,
+    expense: num(document.getElementById('finExpense').value),
+    targetYears: parseFloat(document.getElementById('finTargetYears').value) || 0,
+    debts,
+    capital: num(document.getElementById('finCapital').value),
+    reserve: num(document.getElementById('finReserve').value),
+    allocs
+  };
+}
+function saveFin(){
+  const f = readFin();
+  localStorage.setItem(FIN_KEY, JSON.stringify({incomes:f.incomes, expense:f.expense, targetYears:f.targetYears, debts:f.debts, capital:f.capital, reserve:f.reserve, allocs:f.allocs}));
+}
+function resetFin(){ localStorage.removeItem(FIN_KEY); initFinance(); document.getElementById('finResult').innerHTML = ''; }
+
+// 月複利模擬:每筆付最低,剩餘預算依策略集中攻打 (avalanche=高利率優先, snowball=小餘額優先)
+function simulateBudget(debts, totalBudget, strategy){
+  let ds = debts.map(d => ({name:d.name, bal:d.balance, rate:d.rate, minpay:d.minpay}));
+  let totalInterest = 0, month = 0; const MAX = 1200; const order = [];
+  while (ds.some(d => d.bal > 0.5)) {
+    if (month >= MAX) return {converged:false, months:MAX, totalInterest, order};
+    month++;
+    ds.forEach(d => { if (d.bal > 0) { const it = d.bal * (d.rate/1200); d.bal += it; totalInterest += it; } });
+    let avail = totalBudget;
+    ds.forEach(d => { if (d.bal > 0) { const p = Math.min(d.minpay, d.bal, avail); d.bal -= p; avail -= p; } });
+    let guard = 0;
+    while (avail > 0.5 && ds.some(d => d.bal > 0.5) && guard++ < 300) {
+      const act = ds.filter(d => d.bal > 0.5).sort((a,b) => strategy === 'avalanche' ? b.rate - a.rate : a.bal - b.bal);
+      const t = act[0]; const p = Math.min(avail, t.bal); t.bal -= p; avail -= p;
+    }
+    ds.forEach(d => { if (d.bal <= 0.5 && order.indexOf(d.name) < 0) order.push(d.name); });
+  }
+  return {converged:true, months:month, totalInterest, order};
+}
+// 逆向工程:二分搜尋「想在 targetMonths 內還清」所需的每月總還款
+function requiredBudget(debts, targetMonths){
+  let lo = debts.reduce((s,d) => s + d.minpay, 0);
+  let hi = lo + debts.reduce((s,d) => s + d.balance, 0) * 1.1 + 1000;
+  if (!simulateBudget(debts, hi, 'avalanche').converged) return null;
+  for (let i = 0; i < 60; i++) {
+    const mid = (lo + hi) / 2;
+    const r = simulateBudget(debts, mid, 'avalanche');
+    if (r.converged && r.months <= targetMonths) hi = mid; else lo = mid;
+  }
+  return hi;
+}
+const fM = n => (n < 0 ? '-$' : '$') + Math.round(Math.abs(n)).toLocaleString();
+const fMon = m => { if (m >= 1200) return '永遠還不完'; const y = Math.floor(m/12), mm = m % 12; return (y ? y + ' 年 ' : '') + (mm ? mm + ' 個月' : (y ? '' : '0 個月')); };
+
+function calcFinance(){
+  saveFin();
+  const f = readFin();
+  const el = document.getElementById('finResult');
+  if (!f.debts.length) { el.innerHTML = '<div class="jr-section" style="color:var(--yellow)">⚠️ 請至少填一筆「餘額 > 0」的債務。</div>'; return; }
+
+  const totalDebt = f.debts.reduce((s,d) => s + d.balance, 0);
+  const totalMin = f.debts.reduce((s,d) => s + d.minpay, 0);
+  const wRate = totalDebt ? f.debts.reduce((s,d) => s + d.balance * d.rate, 0) / totalDebt : 0;
+  const netFlow = f.income - f.expense - totalMin;
+  const extra = Math.max(netFlow, 0);
+  const budget = totalMin + extra;
+
+  const ava = simulateBudget(f.debts, budget, 'avalanche');
+  const sno = simulateBudget(f.debts, budget, 'snowball');
+
+  let gapHtml = '';
+  if (f.income || f.expense) {
+    gapHtml = netFlow < 0
+      ? `<div class="jr-quote" style="border-color:var(--red)">🚨 <b>現金流缺口 ${fM(-netFlow)}/月</b>：收入扣掉生活費後，連債務「最低月付」都不夠付。這是最危險的訊號——優先<b>增加收入、或跟銀行協商降月付/前置協商</b>，否則債務會越滾越大。</div>`
+      : `<div class="jr-quote" style="border-color:var(--green)">✅ 付完最低月付後，每月還能擠出 <b>${fM(netFlow)}</b> 加速還款，下面用這筆錢試算。</div>`;
+  }
+
+  let revHtml = '';
+  if (f.targetYears > 0) {
+    const tm = Math.round(f.targetYears * 12);
+    const need = requiredBudget(f.debts, tm);
+    if (need) {
+      const needExtra = Math.max(need - totalMin, 0);
+      const gap = need - budget;
+      revHtml = `<div class="jr-section">
+        <h3>🎯 逆向工程：${f.targetYears} 年內還清</h3>
+        <div class="fin-res-grid">
+          <div class="summary-card"><div class="num" style="color:var(--accent)">${fM(need)}</div><div class="label">每月需總還款</div></div>
+          <div class="summary-card"><div class="num" style="color:var(--orange)">${fM(needExtra)}</div><div class="label">其中需額外擠出</div></div>
+          <div class="summary-card"><div class="num ${gap > 0 ? 'red' : 'green'}">${gap > 0 ? '+' + fM(gap) : '已達標'}</div><div class="label">${gap > 0 ? '每月還差' : '現金流足夠'}</div></div>
+        </div>
+        <p style="font-size:12px;color:var(--text2);margin-top:8px">先把終點（${f.targetYears} 年）定下來，再反推每月該還 ${fM(need)}。${gap > 0 ? `目前每月只能還 ${fM(budget)}，<b>缺口 ${fM(gap)}/月</b>——靠增加收入、降息、或拉長年限其中之一補上。` : '你目前的現金流就能達成，照著還即可。'}</p>
+      </div>`;
+    } else {
+      revHtml = `<div class="jr-section" style="color:var(--yellow)">⚠️ ${f.targetYears} 年內還清在現有利率下難以達成，請拉長年限或先降息。</div>`;
+    }
+  }
+
+  const order = ava.converged ? ava.order : f.debts.slice().sort((a,b) => b.rate - a.rate).map(d => d.name);
+  const orderHtml = order.map((n,i) => `<div style="padding:6px 0;border-bottom:1px solid var(--border);font-size:13px">${i+1}. <b>${n}</b></div>`).join('');
+  const saved = (sno.converged && ava.converged) ? sno.totalInterest - ava.totalInterest : 0;
+
+  // 資產配置
+  let allocHtml = '';
+  if (f.capital > 0 || f.allocs.length) {
+    const investable = Math.max(f.capital - f.reserve, 0);
+    const allocated = f.allocs.reduce((s,a) => s + a.amount, 0);
+    const remaining = f.capital - f.reserve - allocated;
+    const retSum = f.allocs.reduce((s,a) => s + a.amount * ((a.ret == null ? 0 : a.ret) / 100), 0);
+    const wRet = allocated ? retSum / allocated * 100 : 0;
+    const maxDebtRate = f.debts.length ? Math.max(...f.debts.map(d => d.rate)) : 0;
+    const isOpt = a => /選擇權|期權|option|權證/i.test(a.name);
+    const rows = f.allocs.map(a => `<div style="display:flex;justify-content:space-between;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px"><span>${isOpt(a) ? '🎲 ' : ''}${a.name}</span><span style="white-space:nowrap;color:var(--text2)">${fM(a.amount)} · ${a.ret == null ? '未填報酬' : a.ret + '%/年'}${allocated ? ' · ' + (a.amount/allocated*100).toFixed(0) + '%' : ''}</span></div>`).join('');
+    allocHtml = `<div class="jr-section">
+      <h3>💼 資產配置試算</h3>
+      <div class="fin-res-grid">
+        <div class="summary-card"><div class="num" style="color:var(--accent)">${fM(investable)}</div><div class="label">可投資資金</div></div>
+        <div class="summary-card"><div class="num" style="color:var(--green)">${wRet.toFixed(1)}%</div><div class="label">加權預期年報酬</div></div>
+        <div class="summary-card"><div class="num" style="color:var(--green)">${fM(retSum)}</div><div class="label">預估一年獲利</div></div>
+        <div class="summary-card"><div class="num ${remaining < -0.5 ? 'red' : ''}">${fM(remaining)}</div><div class="label">${remaining < -0.5 ? '超出可投資' : '未配置餘額'}</div></div>
+      </div>
+      ${remaining < -0.5 ? `<div class="jr-quote" style="border-color:var(--red);margin-top:10px">🚨 你配置的金額超過「可投資資金」${fM(-remaining)}——等於要動用緊急金或借錢投資，非常危險。請把配置降到 ${fM(investable)} 以內。</div>` : ''}
+      ${maxDebtRate > 0 && wRet < maxDebtRate ? `<div class="jr-quote" style="border-color:var(--red);margin-top:10px">🚨 你最高的債務年息 <b>${maxDebtRate}%</b> 高於這套配置的預期報酬 <b>${wRet.toFixed(1)}%</b>。把這筆錢拿去還那筆債 = <b>穩賺 ${maxDebtRate}% 且零風險</b>，數學上比投資更划算。<b>建議先還高利債，再投資。</b></div>` : ''}
+      ${maxDebtRate > 0 && wRet >= maxDebtRate ? `<div class="jr-quote" style="border-color:var(--yellow);margin-top:10px">⚠️ 預期報酬高於最高債息只是「期望值」、不保證實現；還債的 ${maxDebtRate}% 卻是確定的。穩健做法仍建議先清掉高利債（尤其 >10% 的卡循），再用閒錢投資。</div>` : ''}
+      ${f.allocs.some(isOpt) ? `<div class="jr-quote" style="border-color:var(--orange);margin-top:10px">🎲 選擇權是高槓桿、可能歸零的工具。專家共識：投機性部位最多放可投資資金的 <b>10%</b>，且要是「賠光也不影響生活」的錢。電商啟動金也請當風險資本看待。</div>` : ''}
+      <div style="margin-top:10px">${rows}</div>
+      <p style="font-size:11px;color:var(--text2);margin-top:8px">⚠️ 報酬率為你輸入的假設值、非保證；實際投資有風險，可能虧損。</p>
+    </div>`;
+  }
+
+  el.innerHTML = `
+    ${gapHtml}
+    <div class="jr-section">
+      <h3>📊 財務體檢</h3>
+      <div class="fin-res-grid">
+        <div class="summary-card"><div class="num" style="color:var(--green)">${fM(f.income)}</div><div class="label">每月總收入(平均)</div></div>
+        <div class="summary-card"><div class="num" style="color:var(--red)">${fM(totalDebt)}</div><div class="label">總負債</div></div>
+        <div class="summary-card"><div class="num" style="color:var(--orange)">${wRate.toFixed(2)}%</div><div class="label">加權平均年利率</div></div>
+        <div class="summary-card"><div class="num" style="color:var(--accent)">${fM(totalMin)}</div><div class="label">每月最低月付</div></div>
+        <div class="summary-card"><div class="num ${netFlow < 0 ? 'red' : 'green'}">${fM(netFlow)}</div><div class="label">每月可加速金額</div></div>
+      </div>
+      ${f.incomeVarAnnual > 0 ? `<p style="font-size:11px;color:var(--text2);margin-top:8px">💡 其中<b>穩定月收入(薪資) ${fM(f.incomeStable)}</b>；不定期收入全年約 ${fM(f.incomeVarAnnual)}（平均 ${fM(f.incomeVarMonthly)}/月，已攤入上面平均）。<b>建議</b>：每月「固定承諾」的還款以穩定薪資為準；獎金/不定期收入到帳時，整筆直接丟去還利率最高的債，加速效果最好——這樣不必每月重打。</p>` : ''}
+      ${f.expense ? `<p style="font-size:11px;color:var(--text2);margin-top:6px">🛟 建議先備妥緊急預備金 ${fM(f.expense*3)} ～ ${fM(f.expense*6)}（3–6 個月支出）再全力加速還款。</p>` : ''}
+    </div>
+    ${revHtml}
+    <div class="jr-section">
+      <h3>⚖️ 雪崩法 vs 雪球法（每月還 ${fM(budget)}）</h3>
+      <div class="jr-twocol">
+        <div class="summary-card" style="text-align:left;padding:14px">
+          <div style="font-weight:700;color:var(--green);margin-bottom:6px">🏔️ 雪崩法（先還高利率）</div>
+          <div style="font-size:13px">還清時間：<b>${fMon(ava.months)}</b></div>
+          <div style="font-size:13px">總利息支出：<b>${ava.converged ? fM(ava.totalInterest) : '—'}</b></div>
+          <div style="font-size:11px;color:var(--text2);margin-top:4px">數學上最省利息，推薦。</div>
+        </div>
+        <div class="summary-card" style="text-align:left;padding:14px">
+          <div style="font-weight:700;color:var(--accent);margin-bottom:6px">❄️ 雪球法（先還小餘額）</div>
+          <div style="font-size:13px">還清時間：<b>${fMon(sno.months)}</b></div>
+          <div style="font-size:13px">總利息支出：<b>${sno.converged ? fM(sno.totalInterest) : '—'}</b></div>
+          <div style="font-size:11px;color:var(--text2);margin-top:4px">先清小筆，成就感大、好堅持。</div>
+        </div>
+      </div>
+      ${saved > 100 ? `<div class="jr-quote" style="border-color:var(--green);margin-top:10px">💡 選<b>雪崩法</b>比雪球法大約省下 <b>${fM(saved)}</b> 利息；若你需要心理動力，雪球法也很好。</div>` : ''}
+      ${!ava.converged ? '<div class="jr-quote" style="border-color:var(--red);margin-top:10px">🚨 以目前每月還款額，債務無法在合理時間內還清——代表月付不足以覆蓋利息。請先增加可還款金額或降息。</div>' : ''}
+    </div>
+    <div class="jr-section">
+      <h3>📋 建議還款順序（雪崩法）</h3>
+      ${orderHtml}
+      <p style="font-size:11px;color:var(--text2);margin-top:8px">做法：每筆都付最低，多出來的錢全部集中攻打第 1 名；它清掉後，火力全轉向第 2 名，依此類推（債務雪球滾動法）。</p>
+    </div>
+    ${allocHtml}
+    <div class="jr-section" style="font-size:11px;color:var(--text2)">
+      ⚠️ 本試算為教學用簡化模型（固定利率、月複利，不含手續費/提前清償違約金），實際以銀行條件為準。可把結果拿到「對談室 → 圓桌 → 📋 找理財顧問排還款」跟黃士豪、CFP 顧問討論。
+    </div>`;
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// 部位試算機(交易風控)
+function posCard(title, headline, sub){
+  return `<div class="summary-card" style="text-align:left;padding:12px;margin-bottom:8px"><div style="font-weight:700;margin-bottom:4px">${title}</div><div style="font-size:13px">${headline}</div><div style="font-size:11px;color:var(--text2);margin-top:3px">${sub}</div></div>`;
+}
+function calcPosition(){
+  const num = v => { const n = parseFloat(v); return isFinite(n) && n > 0 ? n : 0; };
+  const cap = num(document.getElementById('posCapital').value) || 6000000;
+  const riskPct = num(document.getElementById('posRisk').value) || 2;
+  const maxRisk = cap * riskPct / 100;
+  let blocks = '';
+  const txStop = num(document.getElementById('posTxStop').value);
+  if (txStop > 0) {
+    const pv = document.getElementById('posTxType').value === 'big' ? 200 : 50;
+    const per = txStop * pv, lots = Math.floor(maxRisk / per), loss = lots * per;
+    blocks += posCard('📈 台指期', lots > 0 ? `可下 <b>${lots}</b> 口（停損 ${txStop} 點）` : '停損太寬，1 口就超過單筆上限，請縮小停損或換小台', `每口風險 ${fM(per)}；${lots} 口最大虧 ${fM(loss)}`);
+  }
+  const px = num(document.getElementById('posStkPrice').value), sp = num(document.getElementById('posStkStop').value);
+  if (px > 0 && sp > 0) {
+    const perShare = px * sp / 100, per = perShare * 2000, lots = Math.floor(maxRisk / per), loss = lots * per;
+    blocks += posCard('📊 個股期貨', lots > 0 ? `可下 <b>${lots}</b> 口（停損 ${sp}% = 每股 ${fM(perShare)}）` : '單口風險已超過上限，請縮小停損%', `每口風險 ${fM(per)}；${lots} 口最大虧 ${fM(loss)}`);
+  }
+  const twPts = num(document.getElementById('posTwOptPts').value);
+  if (twPts > 0) {
+    const per = twPts * 50, n = Math.floor(maxRisk / per), loss = n * per;
+    blocks += posCard('🎲 台指選擇權 TXO', n > 0 ? `可開 <b>${n}</b> 組價差單（單組最大虧 ${twPts} 點 = ${fM(per)}）` : '單組最大虧已超過上限，請縮小價差', `每點 50 元；${n} 組最大虧 ${fM(loss)}　⚠️ 只做有限風險價差單、絕不裸賣`);
+  }
+  const optUSD = num(document.getElementById('posOptUSD').value), fx = num(document.getElementById('posFx').value) || 31.5;
+  if (optUSD > 0) {
+    const maxUSD = maxRisk / fx, n = Math.floor(maxUSD / optUSD), lossUSD = n * optUSD;
+    blocks += posCard('🎲 美股選擇權', n > 0 ? `可開 <b>${n}</b> 組價差單（單組最大虧 US$${optUSD}）` : '單組最大虧已超過上限，請縮小價差或降風險%', `單筆上限 US$${Math.round(maxUSD).toLocaleString()}；${n} 組最大虧 US$${Math.round(lossUSD).toLocaleString()}　⚠️ 只做有限風險價差單、絕不裸賣`);
+  }
+  if (!blocks) blocks = '<div style="color:var(--yellow);font-size:12px">⚠️ 至少填一種工具的停損條件（台指停損點數／個股股價+停損%／選擇權單組最大虧）。</div>';
+  const el = document.getElementById('posResult');
+  el.innerHTML = `
+    <div class="jr-section">
+      <h3>🎯 部位試算結果</h3>
+      <div class="fin-res-grid" style="margin-bottom:12px">
+        <div class="summary-card"><div class="num" style="color:var(--accent)">${fM(maxRisk)}</div><div class="label">單筆最大虧損（${riskPct}%）</div></div>
+        <div class="summary-card"><div class="num" style="color:var(--yellow)">${fM(cap*0.08)}</div><div class="label">一週停手線 −8%</div></div>
+        <div class="summary-card"><div class="num" style="color:var(--orange)">${fM(cap*0.15)}</div><div class="label">一月停手線 −15%</div></div>
+        <div class="summary-card"><div class="num red">${fM(cap*0.30)}</div><div class="label">🛑 全停線 −30%</div></div>
+      </div>
+      ${blocks}
+      <p style="font-size:11px;color:var(--text2);margin-top:8px">規則出自你的「交易計畫書 v1」：同時最多開 3 個部位（總風險 ≤6%）、保證金佔用 ≤40%、賺到每季抽 50% 還本金。碰到 −30%（剩 ${fM(cap*0.7)}）就全停、切回主引擎。</p>
+    </div>`;
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('page-'+tab.dataset.tab).classList.add('active');
+  });
+});
+document.getElementById('chatInput').addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
+document.getElementById('chatSend').addEventListener('click', () => sendMessage());
+document.getElementById('newsApiKey').addEventListener('keydown', e => { if (e.key === 'Enter') fetchRealNews(); });
+
+function updateClock() {
+  document.getElementById('clock').textContent = new Date().toLocaleString('zh-TW',{timeZone:'Asia/Taipei'})+' (台北)';
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+renderSignals();
+initChat();
+initFinance();
+loadAiCfg();
+generateSimulatedNews();
+setInterval(() => { genSignal(); renderSignals(); countdown = 60; }, 60000);
+
+// 倒數計時器
+let countdown = 60;
+setInterval(() => {
+  const el = document.getElementById('signalCountdown');
+  if (el) { countdown--; if (countdown <= 0) countdown = 60; el.textContent = '⏱ 下次更新 ' + countdown + 's'; }
+}, 1000);
+
+console.log('🧠 AI 戰隊指揮中心 v2 已啟動');
+console.log('👤 26 位巨頭與財經專家 · 📰 新聞聚合 · 🏷️ 商品濾鏡 · 💬 對談室 · 🔄 圓桌查證');
+</script>
+</body>
+</html>
