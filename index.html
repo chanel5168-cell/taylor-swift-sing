@@ -53,6 +53,18 @@ padding:5px 9px;font-size:16px;cursor:pointer;flex-shrink:0}
 .spd{background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:20px;padding:7px 13px;font-size:15px;cursor:pointer}
 .spd.on{background:linear-gradient(135deg,var(--pink),var(--lav));color:#1a0f22;font-weight:800;border-color:transparent}
 .chorus{background:var(--card2);border-left:3px solid var(--pink);border-radius:0 8px 8px 0;padding:8px 12px}
+.lyrbox{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:6px 0;margin:10px 0;max-height:500px;overflow-y:auto}
+.lyrline{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border-bottom:1px dashed #3a2546;font-size:17px;line-height:1.7}
+.lyrline:last-child{border:0}
+.lyrplay{background:none;border:0;color:var(--lav);font-size:18px;cursor:pointer;padding:2px 4px;flex-shrink:0;margin-top:2px}
+.lyren{flex:1}.lyrw{display:inline-block;cursor:pointer;border-radius:4px;padding:0 2px;transition:background .15s}
+.lyrw:hover{background:var(--border)}.lyrw.show{border-radius:4px}
+.lyrtip{position:absolute;background:#1a0f22;border:1px solid var(--pink);color:var(--text);font-size:15px;padding:6px 12px;border-radius:8px;white-space:nowrap;z-index:9;pointer-events:none;margin-top:0}
+.lyrcn{color:var(--dim);font-size:16px;flex:0 0 auto;max-width:45%;text-align:right;margin-left:12px;line-height:1.7;padding-top:1px}
+.fulllyr{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;margin:10px 0;max-height:600px;overflow-y:auto;font-size:15px;line-height:1.6}
+.fulllyrln{padding:3px 0;border-bottom:1px dashed #2a1a35}.fulllyrln:last-child{border:0}
+.fb{width:100%;margin-top:8px;background:var(--card2);border:1px solid var(--border);color:var(--text);font-weight:700;font-size:15px;padding:9px;border-radius:10px;cursor:pointer}
+.fb.on{background:linear-gradient(135deg,var(--pink),var(--lav));color:#1a0f22}
 .markbtn{width:100%;margin-top:10px;background:linear-gradient(135deg,var(--pink),var(--lav));
 border:none;color:#1a0f22;font-weight:800;font-size:16px;padding:11px;border-radius:11px;cursor:pointer}
 .song.done .markbtn{background:var(--card2);color:var(--mint);border:1px solid var(--mint)}
@@ -120,132 +132,136 @@ const TAYLOR=[
 story:"把自己和愛人比作羅密歐與茱麗葉,但改寫成 Happy Ending —— 爸爸反對、兩人偷偷相愛,最後王子來求婚。甜炸的初戀神曲。",
 chorus:"副歌她對著 Romeo 呼喊「帶我走、去一個只有我們的地方」,情緒一路往上衝,是全場最大合唱。先抓這段旋律+情緒,字會自然跟上。",
 voc:[["Romeo & Juliet","羅密歐與茱麗葉(經典悲劇戀人)"],["alone","單獨、兩人獨處"],["scarlet letter","紅字(禁忌之愛的象徵)"],["prince / princess","王子 / 公主"],["faith","信念、相信"],["true love","真愛"],["close your eyes","閉上眼睛"],["wait for me","等我"]],
-pron:"Romeo=「ROH-mee-oh」;「take me」t 很輕、連成「tay-mi」;somewhere=「SUM-where」。"},
+pron:"Romeo=「ROH-mee-oh」;「take me」t 很輕、連成「tay-mi」;somewhere=「SUM-where」。",
+lines:[["We were both young when I first saw you","我們都還年輕 當我第一次遇見你"],["Romeo take me somewhere we can be alone","羅密歐帶我去一個只有我們的地方"],["I'll be waiting all there's left to do is run","我會等待 現在只能逃跑"],["You'll be the prince and I'll be the princess","你會是王子 我會是公主"],["It's a love story baby just say yes","這是個愛情故事 寶貝只要說好"]]},
 {n:2,en:"You Belong With Me",zh:"你屬於我",era:"2008 · Fearless",
 story:"暗戀身邊的好朋友,覺得自己比他的女友更懂他、更適合他 —— 經典的「好朋友變心動」校園情歌。",
 chorus:"副歌一直唱「你其實該和我在一起」,直白又上頭,跟著喊 belong with me 就對了。",
 voc:[["belong","屬於"],["cheer captain","啦啦隊隊長"],["bleachers","露天看台"],["sneakers","球鞋"],["dreaming","做夢、幻想"],["belong with me","該和我在一起"],["all this time","這麼久以來"],["the one","那個對的人"]],
-pron:"belong=「bee-LONG」;「with me」連音 wɪð-mi。"},
+pron:"belong=「bee-LONG」;「with me」連音 wɪð-mi。",
+lines:[["I'm in the bleachers at the game","我在比賽的看臺上"],["You're on the field I'm on the bleachers","你在場上 我在看臺"],["And you belong with me","你該和我在一起"],["If you could see that I'm the one who understands you","如果你能看出我是懂你的人"],["Been here all along so why can't you see","一直都在這裡 為什麼你看不見"],["You belong with me","你屬於我"]]},
 {n:3,en:"Fearless",zh:"無所畏懼",era:"2008 · Fearless",
 story:"無懼地墜入愛河 —— 在暴風雨、停車場裡也想牽手跳舞的那種勇敢心動。",
 chorus:"副歌講「在這最棒的夜晚、毫無畏懼地和你跳舞」,輕盈又甜。",
 voc:[["fearless","無所畏懼"],["storm","暴風雨"],["dance","跳舞"],["first kiss","初吻"],["brave","勇敢"],["in the rain","在雨中"],["pull me close","把我拉近"],["best night","最棒的夜晚"]],
-pron:"fearless=「FEER-less」;dance 美式=「dæns」。"},
+pron:"fearless=「FEER-less」;dance 美式=「dæns」。",
+lines:[["I don't know how it gets better than this","我不知道有什麼比這更好的了"],["You take my hand and drag me headfirst","你牽起我的手 拉著我向前衝"],["And I don't know why but with you I'd dance","我不知道為什麼 但跟你在一起我就想跳舞"],["In a storm in my best dress fearless","在暴風雨中穿著最美的洋裝 無所畏懼"]]},
 {n:4,en:"Enchanted",zh:"著迷",era:"2010 · Speak Now",
 story:"第一次見面就被對方迷住,整晚滿腦子都是他,既緊張又期待會不會再相見。少女心爆棚。",
 chorus:"副歌反覆唱「能遇見你,我整個人都著迷了」,旋律夢幻,適合慢慢拉長音唱。",
 voc:[["enchanted","著迷、陶醉"],["wonderstruck","驚艷、看呆"],["blushing","臉紅"],["restless","坐立難安、睡不著"],["all night","整晚"],["to meet you","能遇見你"],["wishing","許願、盼望"],["pacing","來回踱步(緊張)"]],
-pron:"enchanted=「en-CHAN-tid」;wonderstruck=「WUN-der-struck」。"},
+pron:"enchanted=「en-CHAN-tid」;wonderstruck=「WUN-der-struck」。",
+lines:[["I was enchanted to meet you","能遇見你 我整個人都著迷了"],["All I can say is I was enchanted to meet you","我只能說 能遇見你我好著迷"],["This night is sparkling don't you let it go","今夜閃閃發光 別讓它溜走"],["I'm wonderstruck blushing all the way home","驚豔不已 一路臉紅回家"],["Please don't be in love with someone else","拜託別愛上別人"],["Please don't have somebody waiting on you","拜託別讓別人在等你"]]},
 {n:5,en:"22",zh:"22歲",era:"2012 · Red",
 story:"22 歲的自由與混亂 —— 和朋友徹夜狂歡,又快樂又困惑又孤單,獻給青春的派對神曲。",
 chorus:"副歌大喊「今晚我們要像 22 歲一樣!」全場最歡樂的合唱段。",
 voc:[["carefree","無憂無慮"],["happy, free, confused","快樂、自由、困惑"],["lonely","孤單"],["miserable","悲慘"],["pretend","假裝"],["feel like","感覺像"],["make fun of","取笑"],["fall in love","墜入愛河"]],
-pron:"twenty-two 口語唱「TWEN-ee-two」;confused=「kən-FYOOZD」。"},
+pron:"twenty-two 口語唱「TWEN-ee-two」;confused=「kən-FYOOZD」。",lines:[["I don't know about you but I'm feeling 22","我不知道你 但我覺得22歲真好"],["Everything will be alright if you keep me next to you","只要你在身邊一切都會很好"],["We're happy free confused and lonely at the same time","我們快樂自由困惑又孤單"]]},
 {n:6,en:"We Are Never Ever Getting Back Together",zh:"我們再也不會復合",era:"2012 · Red",
 story:"分手後對前任放話「我們永遠、永遠不會再復合」,輕快又解氣的甩前任神曲。",
 chorus:"副歌一連串「we are never ever ever...」越疊越長,跟著唱超紓壓。",
 voc:[["never ever","絕對不、永遠不"],["get back together","(情侶)復合"],["exhausting","累人的"],["forever","永遠"],["talk","談、聊"],["we are done","我們結束了"],["for good","永久地、徹底地"],["over","結束了、過去了"]],
-pron:"never=「NEV-er」;getting 口語=「GEH-din」;ever 連著唱很順。"},
+pron:"never=「NEV-er」;getting 口語=「GEH-din」;ever 連著唱很順。",lines:[["We are never ever ever getting back together","我們永遠永遠永遠不會復合"],["You go talk to your friends talk to my friends talk to me","你去跟你的朋友說 跟我的朋友說 跟我說"],["But we are never ever ever ever getting back together","但我們永遠永遠永遠永遠不會復合"]]},
 {n:7,en:"I Knew You Were Trouble",zh:"我早知道你是麻煩",era:"2012 · Red",
 story:"明知對方是麻煩、是壞男孩,還是淪陷了,最後受傷又後悔。情緒從心動到崩潰。",
 chorus:"副歌唱「我一開始就知道你是麻煩」,帶點懊悔,記住 trouble 這個字就抓得到。",
 voc:[["trouble","麻煩、危險人物"],["the moment","那一刻"],["cold ground","冰冷的地上(意象)"],["shame","羞愧"],["mistake","錯誤"],["walked in","走了進來"],["fall apart","崩潰、瓦解"],["blame","責怪"]],
-pron:"trouble=「TRUH-bul」;knew=「nyoo」。"},
+pron:"trouble=「TRUH-bul」;knew=「nyoo」。",lines:[["I knew you were trouble when you walked in","你走進來那刻我就知道你是麻煩"],["Flew me to places I'd never been","帶我飛去從未去過的地方"],["Now I'm lying on the cold hard ground","現在我躺在冰冷的地上"]]},
 {n:8,en:"All Too Well (10 Minute Version)",zh:"記得太清楚",era:"2012/2021 · Red",
 story:"細數一段刻骨銘心又心碎的戀情 —— 從圍巾、秋天的甜蜜回憶,到被辜負的痛。公認她最會說故事的情歌。",
 chorus:"重複「我記得太清楚了 (all too well)」,情緒堆疊,適合投入感情慢慢唱。",
 voc:[["all too well","記得太清楚(忘不掉)"],["scarf","圍巾"],["autumn","秋天"],["remember","記得"],["broke","弄碎、心碎"],["leaves falling","落葉紛飛"],["used to","以前(曾經會)"],["keep","留著、保存"]],
-pron:"autumn 的 n 不發音=「AW-tum」;all too well 連著「awl-too-wel」。"},
+pron:"autumn 的 n 不發音=「AW-tum」;all too well 連著「awl-too-wel」。",lines:[["I walked through the door with you the air was cold","我和你走過那扇門 空氣是冷的"],["I left my scarf there at your sister's house","我把圍巾忘在你姊姊家"],["Time won't fly it's like I'm paralyzed by it","時間不會飛逝 我像被麻痺了"],["But I'm still trying to find it","但我還在努力找尋"]]},
 {n:9,en:"Shake It Off",zh:"甩開",era:"2014 · 1989",
 story:"別管別人怎麼批評,跳起來把負能量通通甩掉 —— 超洗腦的正能量神曲,演唱會必跳。",
 chorus:"副歌一直唱「shake it off」,配手勢甩一甩,最好記、最好跟。",
 voc:[["shake it off","甩開、別放心上"],["haters","酸民、討厭你的人"],["fake","假的"],["gonna","going to 的口語"],["play","玩、耍"],["liars","騙子"],["beat","節拍、拍子"],["never miss","從不錯過"]],
-pron:"gonna=「GAH-na」;shake it off 連音「shay-kit-off」。"},
+pron:"gonna=「GAH-na」;shake it off 連音「shay-kit-off」。",lines:[["The players gonna play play play play play","愛玩的人就是會玩"],["And the haters gonna hate hate hate hate hate","愛酸的人就是會酸"],["Baby I'm just gonna shake shake shake shake shake","寶貝我就是要甩甩甩"],["Shake it off I shake it off","甩開 甩開"]]},
 {n:10,en:"Blank Space",zh:"空白",era:"2014 · 1989",
 story:"自嘲媒體把她寫成「戀愛瘋女」,乾脆演給你看 ——「我這正好有個空位,下一個就寫你」,又酷又幽默。",
 chorus:"副歌唱「我有一張空白名單,寫上你的名字」,節奏分明很好跟。",
 voc:[["blank space","空白處"],["nightmare","惡夢"],["darling","親愛的"],["game","遊戲、把戲"],["insane","瘋狂"],["magic","魔法"],["mad love","瘋狂的愛"],["last name","姓氏"]],
-pron:"常被聽錯:Starbucks lovers 其實是「long list of ex-lovers」;blank=「blæŋk」。"},
+pron:"常被聽錯:Starbucks lovers 其實是「long list of ex-lovers」;blank=「blæŋk」。",lines:[["Nice to meet you where you been","很高興認識你 你去了哪"],["I could show you incredible things","我可以讓你看見不可思議的事"],["Oh my God look at that face you look like my next mistake","天哪 看看那張臉 你長得像我的下個錯誤"],["So it's gonna be forever or it's gonna go down in flames","要嘛永遠 要嘛燒成灰燼"]]},
 {n:11,en:"Style",zh:"經典 · 永不退流行",era:"2014 · 1989",
 story:"一段分分合合、戒不掉的戀情,比喻成「像永不退流行的經典」—— 紅唇、白T、午夜開車那種復古酷。",
 chorus:"副歌唱「我們永遠不會退流行 (never go out of style)」,慵懶又帶勁。",
 voc:[["style","風格、經典"],["go out of style","退流行"],["classic","經典的"],["red lip","紅唇"],["midnight","午夜"],["good girl","乖女孩"],["bad boy","壞男孩"],["drive","開車兜風"]],
-pron:"style=「stahyl」;out of 連音「ou-də」。"},
+pron:"style=「stahyl」;out of 連音「ou-də」。",lines:[["You got that James Dean daydream look in your eye","你眼中有那種 James Dean 式的迷離眼神"],["And I got that red lip classic thing that you like","而我有你喜歡的紅唇經典風格"],["We never go out of style","我們永不退流行"]]},
 {n:12,en:"Bad Blood",zh:"心結",era:"2014 · 1989",
 story:"被好朋友背叛後的決裂宣言 ——「我們之間結下了梁子」,氣勢十足的戰歌。",
 chorus:"副歌大喊「我們之間有 bad blood」,短促有力,跟著喊超有氣勢。",
 voc:[["bad blood","不和、心結、仇"],["problem","問題、麻煩"],["scar","疤痕"],["mad","抓狂、生氣"],["enemies","敵人"],["band-aid","OK繃"],["bullet","子彈"],["take a look","看一看"]],
-pron:"bad blood=「bæd-blʌd」;重拍在 blood。"},
+pron:"bad blood=「bæd-blʌd」;重拍在 blood。",lines:[["Cause baby now we got bad blood","因為寶貝 我們現在有心結了"],["You know it used to be mad love","你知道以前曾是狂熱的愛"],["Now we got problems and I don't think we can solve them","我們有了問題 我想我們解決不了"]]},
 {n:13,en:"...Ready For It?",zh:"準備好了嗎",era:"2017 · reputation",
 story:"新戀情的開場,帶點危險與興奮 ——「你準備好了嗎?」前奏超有記憶點。",
 chorus:"副歌反問「你準備好了嗎」,前段念白(rap)、副歌放開唱,對比很爽。",
 voc:[["ready for it","準備好面對"],["robber / heist","強盜 / 搶案(比喻愛情冒險)"],["island","小島"],["younger","更年輕的"],["mine","我的"],["are you ready","你準備好了嗎"],["keep","把你留住"],["plays it cool","裝酷"]],
-pron:"ready=「REH-dee」;for it 連音「fə-rit」。"},
+pron:"ready=「REH-dee」;for it 連音「fə-rit」。",lines:[["Are you ready for it","你準備好了嗎"],["I see how this is gonna go","我看得出來這會怎麼發展"],["Touch me and you'll never be alone","碰我你就永遠不會孤單"]]},
 {n:14,en:"Look What You Made Me Do",zh:"看你逼我做了什麼",era:"2017 · reputation",
 story:"對撕破臉的對手反擊 ——「看看你逼我變成什麼樣子」,黑化復仇的宣言曲。",
 chorus:"副歌冷冷地唱「look what you made me do」,一字一頓,跟著念超有戲。",
 voc:[["made me do","逼我做"],["list","名單"],["revenge","報復"],["the old me","以前的我"],["karma","因果、報應"],["look what...","看看…(發生了什麼)"],["count up","清算、數一數"],["get smarter","變更精明"]],
-pron:"made me 連音「may-mi」;do 拉長。"},
+pron:"made me 連音「may-mi」;do 拉長。",lines:[["Look what you made me do","看你逼我做了什麼"],["I don't trust nobody and nobody trusts me","我不信任任何人 也沒有人信任我"],["I'll be the actress starring in your bad dreams","我會是你噩夢裡的主角"],["The old Taylor can't come to the phone right now","以前的泰勒絲現在不能接電話"],["Oh cause she's dead","因為她死了"]]},
 {n:15,en:"Delicate",zh:"脆弱微妙",era:"2017 · reputation",
 story:"新感情很美但很脆弱,小心翼翼怕嚇跑對方 ——「我名聲不好,但你還喜歡我嗎?」,柔軟誠實。",
 chorus:"副歌軟軟地反問「這樣會不會太…?」,輕聲唱出脆弱感。",
 voc:[["delicate","脆弱、微妙、要小心"],["reputation","名聲"],["dive in","投入、跳進去"],["isn't it","這樣不會…嗎"],["somebody","某個人"],["third drink","第三杯酒"],["is it cool","這樣可以嗎"],["look at you","看著你"]],
-pron:"delicate=「DEH-li-kit」(尾音輕);isn't=「IZ-ənt」。"},
+pron:"delicate=「DEH-li-kit」(尾音輕);isn't=「IZ-ənt」。",lines:[["Is it cool that I said all that","我說了那些話 這樣可以嗎"],["Is it chill that you're in my head","你一直在我腦海裡 這樣輕鬆嗎"],["My reputation's never been worse so you must like me for me","我名聲從沒這麼糟過 所以你喜歡的一定是真實的我"]]},
 {n:16,en:"Don't Blame Me",zh:"別怪我",era:"2017 · reputation",
 story:"愛到上癮、無法自拔 ——「別怪我,是愛讓我瘋」,福音風的大器情歌,副歌很過癮。",
 chorus:"副歌嘶吼「別怪我,是愛逼瘋了我」,放開嗓子唱最爽。",
 voc:[["blame","責怪"],["drug","毒品(比喻愛讓人上癮)"],["oh Lord","天哪(語氣)"],["crazy","瘋狂"],["addicted","上癮"],["don't blame me","別怪我"],["fall in love","墜入愛河"],["set me free","給我自由"]],
-pron:"blame=「bleym」;don't 口語省成「dohn」。"},
+pron:"blame=「bleym」;don't 口語省成「dohn」。",lines:[["Don't blame me love made me crazy","別怪我 愛讓我瘋狂"],["Don't blame me love made me crazy","別怪我 愛讓我瘋狂"],["I've been breaking hearts a long time","很久以前我就開始傷別人的心"],["I've been going crazy I'm addicted","我已經瘋狂 我上癮了"]]},
 {n:17,en:"Cruel Summer",zh:"殘酷的夏天",era:"2019 · Lover",
 story:"夏天裡偷偷又熱烈的愛,既心動又煎熬 —— 橋段那聲嘶吼是全場名場面,近年最夯合唱曲。",
 chorus:"橋段(bridge)突然爆發喊出「我愛你」那段,全場跟著嘶吼,超有感染力。",
 voc:[["cruel","殘酷的"],["summer","夏天"],["fever dream","發燒般的夢、迷亂"],["devils","魔鬼"],["snuck","偷偷溜(sneak 過去式)"],["I love you","我愛你"],["bad boy","壞男孩"],["hang my head","低下頭(難為情)"]],
-pron:"cruel=「KROO-əl」(兩音節);summer=「SUM-er」。"},
+pron:"cruel=「KROO-əl」(兩音節);summer=「SUM-er」。",lines:[["It's a cruel summer","這是個殘酷的夏天"],["I love you ain't that the worst thing you ever heard","我愛你 這不是最糟的事嗎"],["Hang your head low in the window like a piano","在窗口低下頭像一架鋼琴"]]},
 {n:18,en:"Lover",zh:"愛人",era:"2019 · Lover",
 story:"像婚禮般溫柔的情歌,把對方當成共度一生的人 —— 留著聖誕燈、慢舞、一輩子。甜而不膩。",
 chorus:"副歌輕唱「你能當我一生的愛人嗎」,適合搖擺慢慢唱。",
 voc:[["lover","愛人、情人"],["forever","永遠"],["Christmas lights","聖誕燈"],["overdramatic","太over、太戲劇化"],["settle down","安定下來"],["can I be","我可以當…嗎"],["forevermore","永永遠遠"],["sweet","甜蜜的"]],
-pron:"lover=「LUH-ver」;forever=「fə-REV-er」。"},
+pron:"lover=「LUH-ver」;forever=「fə-REV-er」。",lines:[["Can I go where you go","能不能你去哪我就去哪"],["Can we always be this close forever and ever","我們能不能永遠這麼近"],["Take me out and take me home","帶我出去再帶我回家"],["You're my my my lover","你是我的我的我的愛人"]]},
 {n:19,en:"The Man",zh:"如果我是男人",era:"2019 · Lover",
 story:"諷刺性別雙標 ——「如果我是男人,同樣的行為就會被稱讚」,聰明又帶刺的態度歌。",
 chorus:"副歌唱「如果我是個 man 就好了」,語氣帶反諷,跟著唱很有態度。",
 voc:[["the man","(這裡)大人物、被推崇的男人"],["if I was","如果我是…"],["boss","老闆"],["double standard","雙重標準"],["get away with","逃過懲罰/被原諒"],["powerful","有權勢的"],["respect","尊重"],["fast cars","跑車"]],
-pron:"man=「mæn」;get away 連音「geh-də-way」。"},
+pron:"man=「mæn」;get away 連音「geh-də-way」。",lines:[["I'd be the man","我會是大人物"],["I'd be the man I'd be the man","我會是大人物"],["They'd say I hustled put in the work","他們會說我很努力"],["They wouldn't shake their heads","他們不會搖頭"]]},
 {n:20,en:"cardigan",zh:"開襟毛衣",era:"2020 · folklore",
 story:"從中年回望少女時的初戀 ——「被全世界忽視時,你卻把我當成最愛的舊毛衣」。文學感很強的慢歌。",
 chorus:"副歌把自己比作一件「被珍惜的 cardigan」,情緒內斂,適合輕聲投入。",
 voc:[["cardigan","開襟毛衣"],["vintage","復古、老件"],["sidewalk","人行道"],["chase","追逐"],["favorite","最愛的"],["I knew you","我就知道你"],["high heels","高跟鞋"],["heartbeat","心跳"]],
-pron:"cardigan=「CAR-di-gun」;vintage=「VIN-tij」。"},
+pron:"cardigan=「CAR-di-gun」;vintage=「VIN-tij」。",lines:[["When you are young they assume you know nothing","當你年輕人們以為你什麼都不懂"],["And I knew you","而我早就知道你了"],["Playing hide and seek and giving me your weekends","玩捉迷藏 給我你的週末"]]},
 {n:21,en:"august",zh:"八月",era:"2020 · folklore",
 story:"夏末一段沒有名分的戀情,美好卻留不住 ——「他從來都不是我的」。淡淡的惆悵與不捨。",
 chorus:"副歌拉長唱「八月就這樣溜走了」,情緒像嘆息,適合慢慢拖音。",
 voc:[["august","八月"],["slipped away","悄悄溜走"],["never mine","從來不屬於我"],["back porch","後院門廊"],["wanting","渴望"],["living for","為…而活著"],["whisper","低語"],["the end","結束、尾聲"]],
-pron:"august=「AW-gust」;slipped=「slipt」。"},
+pron:"august=「AW-gust」;slipped=「slipt」。",lines:[["August slipped away into a moment in time","八月悄悄溜走 變成一瞬間"],["Cause you were never mine","因為你從來不屬於我"],["Back when I was living for the hope of it all","那時我為這一切希望而活"]]},
 {n:22,en:"willow",zh:"柳樹",era:"2020 · evermore",
 story:"像柳枝隨風(隨愛)擺動 —— 神祕、心甘情願地被對方牽引。輕盈魔幻的旋律。",
 chorus:"副歌唱「越是想抓你、越深陷」,輕飄飄的繞圈感,跟著哼很療癒。",
 voc:[["willow","柳樹"],["wreck","(口語)為某人著迷;殘骸"],["lost","迷失"],["magnetic","有磁性、吸引人"],["the more I","我越是…(句型)"],["follow you","跟隨你"],["show me","讓我看看"],["the wind","風"]],
-pron:"willow=「WIL-oh」;wreck=「rek」。"},
+pron:"willow=「WIL-oh」;wreck=「rek」。",lines:[["I'm like the water when your ship rolled in that night","我像水 當你的船在那晚駛入"],["Life was a willow and it bent right to your wind","生命像柳樹 順著你的風彎曲"],["The more that you give the more that I want","你給得越多 我要得越多"]]},
 {n:23,en:"Anti-Hero",zh:"反派英雄",era:"2022 · Midnights",
 story:"坦白自己的不安與毛病 ——「問題人物,其實就是我」。超有共鳴的自嘲金曲,人人都唱得出那句。",
 chorus:"副歌唱「問題就是我,嗨,是我」,自嘲又上頭,全場必合唱。",
 voc:[["anti-hero","反英雄(有缺點的主角)"],["problem","問題"],["it's me","是我"],["depression","沮喪、憂鬱"],["covert","隱密的"],["get older","變老"],["growing","成長、變大"],["nightmare","惡夢"]],
-pron:"anti-hero=「AN-tai-HEER-oh」;it's me, hi 連著「its-mi-hai」。"},
+pron:"anti-hero=「AN-tai-HEER-oh」;it's me, hi 連著「its-mi-hai」。",lines:[["It's me hi I'm the problem it's me","是我 嗨 我就是問題 是我"],["I'll stare directly at the sun but never in the mirror","我會直視太陽 卻從不看鏡子"],["I wake up screaming from dreaming","我從夢中尖叫醒來"]]},
 {n:24,en:"Karma",zh:"因果報應",era:"2022 · Midnights",
 story:"相信善惡終有報 ——「業力是我的好朋友,會替我把公道討回來」。輕鬆暢快、自信滿滿。",
 chorus:"副歌一連串「karma is my...」用各種比喻,輕快好記又好跟。",
 voc:[["karma","因果、報應"],["breeze","微風"],["coming back around","繞回來(報應上身)"],["cat","貓"],["relaxing","放鬆的"],["sweet","甜美的"],["coming for you","要來找你算帳"],["keep my side","站在我這邊"]],
-pron:"karma=「CAR-ma」;coming=「CUH-ming」。"},
+pron:"karma=「CAR-ma」;coming=「CUH-ming」。",lines:[["Karma is my boyfriend","業力是我的男朋友"],["Karma is a god","業力是神"],["Karma is the breeze in my hair on the weekend","業力是週末吹過我頭髮的微風"],["Sweet like honey karma is a cat","甜如蜜糖 業力是一隻貓"]]},
 {n:25,en:"Lavender Haze",zh:"薰衣草迷霧",era:"2022 · Midnights",
 story:"沉浸在戀愛那片迷濛的紫色氛圍裡,不理外界閒言碎語 ——「只想守住這份感覺」。慵懶迷幻。",
 chorus:"副歌反覆「lavender haze」,氛圍感重,適合放鬆搖擺著唱。",
 voc:[["lavender","薰衣草(色)"],["haze","霧氣、迷濛"],["chill","放鬆、冷靜"],["stay","停留、守住"],["talk","講閒話、議論"],["mood","心情、氛圍"],["surreal","超現實的、夢幻的"],["get out","走開、別管"]],
-pron:"lavender=「LAV-en-der」;haze=「heyz」。"},
+pron:"lavender=「LAV-en-der」;haze=「heyz」。",lines:[["I feel the lavender haze creeping up on me","我覺得薰衣草迷霧悄悄籠罩我"],["All they keep asking me is if I'm gonna be your bride","他們一直問我我會不會嫁給你"],["The only kind of girl they see is a one-night or a wife","他們眼中的女孩只有一夜情或妻子"]]},
 {n:26,en:"Fortnight (feat. Post Malone)",zh:"兩星期",era:"2024 · TTPD",
 story:"和 Post Malone 合唱,講一段短暫卻揮之不去的感情遺憾 ——「只愛了你兩星期,卻毀了我」。慵懶迷幻、新專輯開場曲。",
 chorus:"副歌淡淡地唱那段「fortnight」的遺憾,氣音很多,適合貼著旋律輕唱。",
 voc:[["fortnight","兩星期(14天)"],["ruined","毀了、糟蹋"],["lover","愛人"],["touch","碰觸"],["alright","還好、沒事(口語)"],["good morning","早安"],["pretend","假裝"],["across the way","在對街"]],
-pron:"fortnight=「FORT-nait」;ruined=「ROO-ind」。"}
+pron:"fortnight=「FORT-nait」;ruined=「ROO-ind」。",lines:[["I love you it's ruining my life","我愛你 這毀了我的人生"],["I touched you for only a fortnight","我只觸碰了你兩星期"],["I was supposed to be sent away but they forgot to come and get me","我本該被送走 但他們忘了來接我"]]}
 ];
 
 const JUSTIN=[
@@ -253,137 +269,137 @@ const JUSTIN=[
 story:"賈斯汀的成名爆紅曲。15 歲的他唱失戀心碎,苦苦哀求對方別走 ——「baby baby baby ohh」那句是全世界都會跟的洗腦合唱。",
 chorus:"副歌不停喊「baby baby baby ohh」,簡單到全場秒會,先把這句唱熟就贏一半。",
 voc:[["baby","寶貝(對情人的暱稱)"],["mine","我的"],["lose","失去"],["thought","以為(think 過去式)"],["go","離開、走"],["always","永遠、總是"],["my first love","我的初戀"],["no one","沒有人"]],
-pron:"baby=「BAY-bee」;「you know you love me」連著唱「yu-no-yu-luv-mi」。"},
+pron:"baby=「BAY-bee」;「you know you love me」連著唱「yu-no-yu-luv-mi」。",lines:[["You know you love me I know you care","你知道你愛我 我知道你在乎"],["Just shout whenever and I'll be there","只要喊一聲 我就會出現"],["You are my love you are my heart","你是我的愛 你是我的心"],["And we would never ever ever be apart","我們永遠永遠永遠不分離"],["Baby baby baby ohh","寶貝寶貝寶貝噢"]]},
 {n:2,en:"One Time",zh:"我的唯一",era:"2010 · 早期 (My World)",
 story:"他的出道單曲,青澀甜蜜的初戀宣言 ——「你是我的唯一、我的 one time」,滿滿少年感。",
 chorus:"副歌唱「你是我的 one and only」,輕快好跟,記住 one time / only 就抓得到。",
 voc:[["one time","我的唯一(此生唯一)"],["only","唯一"],["heart","心"],["shawty","俚語:寶貝、女孩"],["dance","跳舞"],["forever","永遠"],["be the one","成為那個對的人"],["till the end","直到最後"]],
-pron:"one=「wʌn」;only=「OHN-lee」;shawty=「SHOR-dee」。"},
+pron:"one=「wʌn」;only=「OHN-lee」;shawty=「SHOR-dee」。",lines:[["Me plus you that's a one time","我加你 這是一生一次"],["I'mma be your one time your only","我會是你的一生一次 你的唯一"],["Give me everything tonight","今晚給我你的一切"],["You'll be my one time my only","你會是我的此生唯一"]]},
 {n:3,en:"Never Say Never (feat. Jaden Smith)",zh:"永不放棄",era:"2010 · 早期 (My World)",
 story:"他同名電影的主題曲,熱血勵志 ——「永遠不要說不可能」,跌倒了再站起來。",
 chorus:"副歌大喊「never say never」,鼓舞人心,跟著吼超有力量。",
 voc:[["never say never","永不言敗、別說不可能"],["fight","戰鬥、努力"],["fall","跌倒"],["stronger","更強壯"],["give up","放棄"],["get back up","重新站起來"],["make it through","撐過去、熬過去"],["stand tall","抬頭挺胸"]],
-pron:"never=「NEV-er」;「say never」連著唱。"},
+pron:"never=「NEV-er」;「say never」連著唱。",lines:[["Never say never","永遠不說不可能"],["I will fight for my dreams","我會為夢想奮戰"],["If you believe in yourself","如果你相信自己"],["You can make it through","你就能撐過去"]]},
 {n:4,en:"Boyfriend",zh:"男朋友",era:"2012 · Believe",
 story:"轉大人的耳語式情歌 ——「如果我是你男朋友,絕不會放開你」,帥氣又撩。",
 chorus:"副歌輕聲唱「if I was your boyfriend」,氣音很多,貼著旋律輕唱最有味道。",
 voc:[["boyfriend","男朋友"],["never let you go","絕不放開你"],["swag","帥氣、有型(俚語)"],["hold","抱、握"],["treat","對待"],["if I was","如果我是…"],["show you off","把你秀出來"],["spend time","共度時光"]],
-pron:"boyfriend=「BOY-frend」;「if I was」連著「if-ai-wʌz」。"},
+pron:"boyfriend=「BOY-frend」;「if I was」連著「if-ai-wʌz」。",lines:[["If I was your boyfriend I'd never let you go","如果我是你男朋友 我絕不放開你"],["Keep you on my mind you never gotta know","讓你一直在我心裡 你永遠不用知道"],["Let me show you off","讓我炫耀你"],["I'd treat you better than I'd treat myself","我會對你比對我自己還好"]]},
 {n:5,en:"As Long As You Love Me (feat. Big Sean)",zh:"只要你愛我",era:"2012 · Believe",
 story:"無懼一切的深情告白 ——「就算沒錢、就算辛苦,只要你愛我,什麼都不重要」。",
 chorus:"副歌反覆唱「as long as you love me」,情緒飽滿,是全場大合唱段。",
 voc:[["as long as","只要…就"],["love","愛"],["fearless","無所畏懼"],["broke","沒錢、破產"],["matter","重要、有關係"],["nothing else matters","其他都不重要"],["hold on","撐住"],["right here","就在這裡"]],
-pron:"「as long as」連著「æz-long-æz」;love=「lʌv」。"},
+pron:"「as long as」連著「æz-long-æz」;love=「lʌv」。",lines:[["As long as you love me","只要你愛我"],["We could be starving we could be broke","我們可以挨餓 我們可以破產"],["Girl as long as you love me","女孩 只要你愛我"],["I'll be your platinum I'll be your gold","我會是你的白金 你的黃金"]]},
 {n:6,en:"Beauty and a Beat (feat. Nicki Minaj)",zh:"美麗與節拍",era:"2012 · Believe",
 story:"嗨翻全場的派對舞曲 ——「今晚把你秀出來,跟著節拍狂歡」,演唱會必跳。",
 chorus:"副歌唱「show you off tonight」配著強拍,跟著身體擺動就對了。",
 voc:[["beauty","美麗、美人"],["beat","節拍、節奏"],["tonight","今晚"],["show off","炫耀、秀出來"],["lights","燈光"],["blow your mind","讓你驚艷、嘆為觀止"],["let's go","走吧、開始"],["all night long","整個晚上"]],
-pron:"beauty=「BYOO-tee」;beat=「biit」;「show you off」連著唱。"},
+pron:"beauty=「BYOO-tee」;beat=「biit」;「show you off」連著唱。",lines:[["Show you off tonight","今晚把你秀出來"],["I could be your beauty and a beat","我可以是你的美麗與節拍"],["All night long let's get it on","整晚 讓我們盡情狂歡"]]},
 {n:7,en:"What Do You Mean?",zh:"你到底什麼意思",era:"2015 · Purpose",
 story:"感情裡的拉扯與困惑 ——「你說要又說不要,到底什麼意思?」熱帶浩室節奏超洗腦。",
 chorus:"副歌一直問「what do you mean?」,口氣又無奈又上頭,很好跟。",
 voc:[["what do you mean","你到底什麼意思"],["confused","困惑的"],["nod","點頭"],["overthink","想太多"],["time","時間"],["make up your mind","拿定主意、做決定"],["running out of time","時間快來不及了"],["yes or no","要還是不要"]],
-pron:"「what do you」口語連成「wuh-də-yu」;mean=「miin」。"},
+pron:"「what do you」口語連成「wuh-də-yu」;mean=「miin」。",lines:[["What do you mean","你到底什麼意思"],["When you nod your head yes but you wanna say no","當你點頭說好 但其實想說不"],["What do you mean","你到底什麼意思"],["Better make up your mind","最好拿定主意"]]},
 {n:8,en:"Sorry",zh:"對不起",era:"2015 · Purpose",
 story:"低頭認錯求原諒 ——「現在說對不起會不會太遲?」雷鬼舞曲節奏,百聽不膩。",
 chorus:"副歌唱「is it too late now to say sorry?」,跟著搖擺唱超紓壓。",
 voc:[["sorry","對不起"],["too late","太遲了"],["forgive","原諒"],["mistake","錯誤"],["chance","機會"],["second chance","第二次機會"],["make it right","彌補、改正"],["learn from","從…學到教訓"]],
-pron:"sorry=「SOR-ee」;「too late」連著「tu-leyt」。"},
+pron:"sorry=「SOR-ee」;「too late」連著「tu-leyt」。",lines:[["Is it too late now to say sorry","現在說對不起會不會太遲"],["I know that I let you down","我知道我讓你失望了"],["Is it too late to say I'm sorry now","現在說對不起會不會太遲"],["I'm not just trying to get you back on me","我不是只是想讓你回到我身邊"]]},
 {n:9,en:"Love Yourself",zh:"好好愛你自己",era:"2015 · Purpose",
 story:"和紅髮艾德合寫的酸甜分手歌 —— 表面說「你該好好愛自己」,其實是優雅地嗆前任。木吉他超好聽。",
 chorus:"副歌唱「you should go and love yourself」,看似祝福、實則白眼,唱出那點傲嬌最對味。",
 voc:[["love yourself","好好愛自己(此處帶反諷)"],["ego","自我、自負"],["waste","浪費"],["opinion","意見、看法"],["ought to","應該"],["go and...","去做某事"],["my time","我的時間"],["never there","從不在身邊"]],
-pron:"yourself=「yor-SELF」;「should go」連著唱。"},
+pron:"yourself=「yor-SELF」;「should go」連著唱。",lines:[["My mama don't like you and she likes everyone","我媽不喜歡你 而她喜歡每個人"],["And I don't like you","而我也不喜歡你"],["You should go and love yourself","你該好好愛你自己"]]},
 {n:10,en:"Company",zh:"作伴",era:"2015 · Purpose",
 story:"想找個伴卻不必有名分 ——「我們不用當朋友,但今晚能不能陪我?」輕快慵懶。",
 chorus:"副歌唱「can I be your company?」,旋律黏黏的,跟著哼很順。",
 voc:[["company","作伴、陪伴"],["friends","朋友"],["tonight","今晚"],["keep","保持、留住"],["secret","祕密"],["down for","願意、樂意一起"],["just tonight","就今晚"],["no strings","不牽絆、不認真"]],
-pron:"company=「CUM-pa-nee」;「can I」連著「kæn-ai」。"},
+pron:"company=「CUM-pa-nee」;「can I」連著「kæn-ai」。",lines:[["Can I be your company","我可以作伴嗎"],["Maybe I could be your company","也許我可以作伴"],["I just wanna be your company","我只想陪在你身邊"]]},
 {n:11,en:"Where Are Ü Now (with Skrillex & Diplo)",zh:"你現在在哪",era:"2015 · Purpose",
 story:"和電音雙人組合作 —— 對離開的人喊話「我需要你的時候,你到底在哪?」副歌那個變形音效是名場面。",
 chorus:"副歌唱「where are you now」反覆堆疊,接著電音 drop 全場爆嗨。",
 voc:[["where are you now","你現在在哪"],["need","需要"],["lost","迷失"],["save","拯救"],["alone","孤單"],["gave you everything","給了你一切"],["right here","就在這裡"],["wait on","等候、守候"]],
-pron:"「where are you」連著「wer-ə-yu」;now=「nau」。"},
+pron:"「where are you」連著「wer-ə-yu」;now=「nau」。",lines:[["Where are you now","你現在在哪"],["I'm waiting for you","我在等你"],["I need you to save me","我需要你拯救我"],["You were my everything","你曾是我的一切"]]},
 {n:12,en:"Cold Water (Major Lazer feat. Justin Bieber)",zh:"冷水",era:"2016–19 · 合作金曲",
 story:"承諾在對方最痛苦時撐住他 ——「當你快溺水,我會是你的那盆冷水把你拉回現實」。溫暖又有力。",
 chorus:"副歌唱「I'll be your cold water」,情緒往上衝,放開唱最過癮。",
 voc:[["cold water","冷水(此處比喻拉你回神的依靠)"],["drowning","溺水"],["reach","伸手搆、觸及"],["faith","信念"],["alone","孤單"],["I'll be there","我會在你身邊"],["under","沉下去、撐不住"],["find your way","找到出路"]],
-pron:"water 美式=「WAH-der」;drowning=「DROW-ning」。"},
+pron:"water 美式=「WAH-der」;drowning=「DROW-ning」。",lines:[["I'll be your cold water","我會是你的冷水"],["Come on come on","來吧 來吧"],["When you're drowning I'll be there for you","當你溺水 我會在你身邊"]]},
 {n:13,en:"Let Me Love You (DJ Snake feat. Justin Bieber)",zh:"讓我愛你",era:"2016–19 · 合作金曲",
 story:"挽救一段快熄滅的愛 ——「別放棄,讓我來愛你、把你修好」。副歌一 drop 全場跳起來。",
 chorus:"副歌唱「don't you give up, let me love you」,情緒高漲,是合唱+蹦跳段。",
 voc:[["let me love you","讓我愛你"],["give up","放棄"],["broken","破碎的"],["fix","修補"],["fight","奮戰"],["don't give up","別放棄"],["hold you tight","緊緊抱住你"],["the rest of my life","我的餘生"]],
-pron:"「let me」連著「leh-mi」;love=「lʌv」。"},
+pron:"「let me」連著「leh-mi」;love=「lʌv」。",lines:[["Don't you give up let me love you","別放棄 讓我愛你"],["I don't know where you're looking from","我不知道你從哪裡看"],["But I'mma fix you from the inside","但我會從內心修補你"]]},
 {n:14,en:"Despacito (Remix)",zh:"慢慢來",era:"2016–19 · 合作金曲",
 story:"史上最紅西語神曲的混音版,賈斯汀獻唱開場。「despacito」是西文「慢慢地」,熱情奔放的拉丁節奏。",
 chorus:"副歌那句「despacito」全世界都會跟,順便學一個西文字超有趣。",
 voc:[["despacito","(西文)慢慢地"],["slow","慢"],["sign","跡象、訊號"],["passion","熱情"],["body","身體"],["step by step","一步一步"],["little by little","一點一點地"],["favorite","最愛的"]],
-pron:"despacito=「des-pa-SEE-to」;這首多為西語,跟著音節唱就好。"},
+pron:"despacito=「des-pa-SEE-to」;這首多為西語,跟著音節唱就好。",lines:[["Quiero respirar tu cuello despacito","想輕輕在你頸邊呼吸 慢慢地"],["Deja que te diga cosas al oído","讓我在你耳邊輕聲細語"],["Despacito","慢慢地"]]},
 {n:15,en:"I Don't Care (with Ed Sheeran)",zh:"我不在乎",era:"2016–19 · 合作金曲",
 story:"和紅髮艾德合唱 —— 在派對裡渾身不自在,但「只要有你在身邊,我什麼都不在乎」。輕快療癒。",
 chorus:"副歌唱「I don't care, as long as you love me」,跟著拍手唱很開心。",
 voc:[["I don't care","我不在乎"],["party","派對"],["anxious","焦慮、不安"],["nobody","沒有人"],["beside","在…旁邊"],["by your side","在你身邊"],["feel at home","感到自在像在家"],["out of place","格格不入"]],
-pron:"「don't care」連著「dohn-ker」;anxious=「ANK-shəs」。"},
+pron:"「don't care」連著「dohn-ker」;anxious=「ANK-shəs」。",lines:[["I don't care when I'm with my baby yeah","我不在乎 當我跟寶貝在一起"],["I don't care as long as you love me","我不在乎 只要你愛我"],["I'm not a fan of loud parties","我不喜歡吵鬧的派對"]]},
 {n:16,en:"10,000 Hours (with Dan + Shay)",zh:"一萬個小時",era:"2016–19 · 合作金曲",
 story:"婚禮期的甜蜜情歌 ——「我願意花一萬個小時,好好認識你的全部」。鄉村流行、溫柔深情。",
 chorus:"副歌唱「I'd spend 10,000 hours and all the rest on you」,適合慢慢投入感情唱。",
 voc:[["ten thousand hours","一萬個小時"],["learn","了解、學會"],["heart","心"],["start","開始"],["the rest of my life","我的餘生"],["get to know","好好認識"],["from the start","從一開始"],["all of you","你的全部"]],
-pron:"thousand=「THOW-zənd」;hours 的 h 不發音=「OW-erz」。"},
+pron:"thousand=「THOW-zənd」;hours 的 h 不發音=「OW-erz」。",lines:[["I'd spend ten thousand hours and ten thousand more","我願意花一萬小時 再一萬小時"],["If that's what it takes to learn that sweet heart of yours","如果這是了解你那甜美的心所需要的"],["I'd spend ten thousand hours and all the rest on you","我願意花一萬小時和我的餘生在你身上"]]},
 {n:17,en:"Yummy",zh:"好迷人",era:"2020 · Changes",
 story:"婚後的俏皮情歌 ——「你就是那麼讓人著迷 (yummy)」,輕鬆放閃。",
 chorus:"副歌反覆唱「yeah you got that yummy」,輕快好記,跟著點頭唱。",
 voc:[["yummy","好吃的;(此處)迷人、誘人"],["flatter","奉承、討好"],["stay","留下"],["roll","滾、轉"],["all night","整晚"],["bouquet","一束花"],["keep on","繼續"],["right beside me","就在我身邊"]],
-pron:"yummy=「YUM-ee」;「got that」連著「gah-dæt」。"},
+pron:"yummy=「YUM-ee」;「got that」連著「gah-dæt」。",lines:[["Yeah you got that yummy yummy","你讓人著迷 著迷"],["Got that yummy yummy","讓人著迷 著迷"],["Say the word and I'll be right there","一句話 我就會在你身邊"],["Stay the night stay the night","留下過夜 留下過夜"]]},
 {n:18,en:"Intentions (feat. Quavo)",zh:"真心",era:"2020 · Changes",
 story:"大方稱讚另一半的暖心情歌 ——「我的出發點都是真心的,你值得世界上最好的」。甜而真誠。",
 chorus:"副歌唱「my intentions are good」,溫柔肯定,跟著輕唱很舒服。",
 voc:[["intentions","心意、出發點"],["heart of gold","金子般的心(善良)"],["picture","畫面、想像"],["goals","目標"],["honest","誠實的"],["stay the night","留下過夜"],["take care of","照顧"],["the one","那個對的人"]],
-pron:"intentions=「in-TEN-shənz」;honest 的 h 不發音=「ON-ist」。"},
+pron:"intentions=「in-TEN-shənz」;honest 的 h 不發音=「ON-ist」。",lines:[["Heart full of passion heart full of gold","滿腔熱情 金子般的心"],["You're the one that I've been waiting for","你是我一直在等的那個人"],["My intentions are good","我的出發點是真心的"]]},
 {n:19,en:"Lonely (with benny blanco)",zh:"孤獨",era:"2020 · Changes",
 story:"最赤裸的自白 ——「擁有了一切,卻沒有一個能打電話的人;全世界都知道我的名字,我卻好孤獨」。鋼琴清唱、超催淚。",
 chorus:"副歌輕輕唱「everybody knows my name now, but it's just lonely」,氣音很多,貼著旋律輕唱。",
 voc:[["lonely","孤獨的"],["nobody","沒有一個人"],["fame","名氣"],["everybody knows","大家都知道"],["alone","獨自一人"],["had it all","曾擁有一切"],["what if","如果…會怎樣"],["growing up","成長過程中"]],
-pron:"lonely=「LOHN-lee」;「knows my name」連著唱。"},
+pron:"lonely=「LOHN-lee」;「knows my name」連著唱。",lines:[["Everybody knows my name now but it's just lonely","現在大家都知道我的名字 但卻好孤獨"],["What if you had it all but nobody to call","如果擁有了一切卻沒人可以打給 會怎樣"]]},
 {n:20,en:"Holy (feat. Chance the Rapper)",zh:"神聖",era:"2021 · Justice",
 story:"把愛形容成「神聖 (holy)」般純粹 —— 帶福音色彩的告白,信仰與愛交織。",
 chorus:"副歌唱「the way you hold me feels so holy」,大器又溫暖,放聲唱很感動。",
 voc:[["holy","神聖的"],["running to","奔向"],["faith","信仰"],["promise","承諾"],["the way you","你…的樣子"],["hold me","抱著我"],["right beside you","就在你身邊"],["till the end","直到最後"]],
-pron:"holy=「HOH-lee」;「the way you」連著「də-wey-yu」。"},
+pron:"holy=「HOH-lee」;「the way you」連著「də-wey-yu」。",lines:[["The way you hold me feels so holy","你抱著我的方式如此神聖"],["Running to the altar like a track star","奔向聖壇像個田徑明星"]]},
 {n:21,en:"Peaches (feat. Daniel Caesar & Giveon)",zh:"蜜桃",era:"2021 · Justice",
 story:"近年最紅的慵懶情歌 ——「我的蜜桃來自喬治亞」,輕鬆愜意、滿滿夏日氛圍。",
 chorus:"副歌唱「I got my peaches out in Georgia」,慵懶搖擺,超好跟超洗腦。",
 voc:[["peaches","桃子(此處俏皮指最愛的人事物)"],["got","有、擁有"],["out in","在(某地)"],["need","需要"],["finest","最棒的"],["make the move","主動出擊"],["sweet","甜的"],["all the time","一直、總是"]],
-pron:"peaches=「PEE-chiz」;Georgia=「JOR-ja」。"},
+pron:"peaches=「PEE-chiz」;Georgia=「JOR-ja」。",lines:[["I got my peaches out in Georgia","我的蜜桃來自喬治亞"],["I get my weed from California","我的大麻來自加州"],["I got my peaches out in Georgia","我的蜜桃來自喬治亞"]]},
 {n:22,en:"Ghost",zh:"幽魂",era:"2021 · Justice",
 story:"思念逝去的人 ——「如果不能再靠近你,我寧願留著你的影子 (ghost)」。傷感又動聽,MV 超催淚。",
 chorus:"副歌唱「I'll settle for the ghost of you」,情緒滿溢,適合投入感情唱。",
 voc:[["ghost","幽靈、(此處)殘影、思念"],["miss","想念"],["settle for","退而求其次、將就"],["close","靠近"],["memory","回憶"],["hold on to","緊抓著不放"],["let go","放手"],["the ghost of you","你的殘影"]],
-pron:"ghost=「gohst」;「settle for」連著「seh-tl-fər」。"},
+pron:"ghost=「gohst」;「settle for」連著「seh-tl-fər」。",lines:[["I'll settle for the ghost of you","我將就於你的殘影"],["I miss you more than life","我想你勝過生命"],["If I can't be close to you","如果我不能靠近你"]]},
 {n:23,en:"Hold On",zh:"撐住",era:"2021 · Justice",
 story:"給陷入低潮的人打氣 ——「撐住,我絕不會放開你」。溫暖有力的鼓勵歌。",
 chorus:"副歌唱「just hold on」,堅定又溫柔,跟著唱很有力量。",
 voc:[["hold on","撐住、堅持住"],["give up","放棄"],["too late","太遲"],["fight","奮鬥"],["reason","理由"],["count on","依靠、指望"],["it's not too late","還不算太遲"],["stay alive","活下去、撐住"]],
-pron:"「hold on」連著「hohl-don」;give up=「giv-ʌp」。"},
+pron:"「hold on」連著「hohl-don」;give up=「giv-ʌp」。",lines:[["You know you can call me if you need someone","你知道你需要時可以打給我"],["I'll be there for you","我會在你身邊"],["Hold on I'll be there","撐住 我會在"]]},
 {n:24,en:"Anyone",zh:"非你不可",era:"2021 · Justice",
 story:"堅定的深情宣言 ——「如果不是你,那就誰都不是」。副歌氣勢磅礴,常當演唱會開場。",
 chorus:"副歌唱「if it's not you, it's not anyone」,放聲高唱超有感染力。",
 voc:[["anyone","任何人"],["only","唯一"],["swear","發誓"],["forever","永遠"],["believe","相信"],["look back","回頭看"],["right now","此刻、現在"],["no one else","沒有別人"]],
-pron:"anyone=「EN-ee-wʌn」;「it's not」連著「its-nat」。"},
+pron:"anyone=「EN-ee-wʌn」;「it's not」連著「its-nat」。",lines:[["If it's not you it's not anyone","如果不是你 那就誰都不是"],["I swear I'll never fall in love again","我發誓我再也不戀愛了"],["I'm looking for the one","我在找那個人"]]},
 {n:25,en:"Somebody",zh:"某個人",era:"2021 · Justice",
 story:"領悟到想成為某人生命中重要的人 ——「我想當對你有意義的那個人」。明亮輕快、好跳。",
 chorus:"副歌唱「I wanna be somebody to you」,正能量滿滿,跟著蹦蹦跳跳唱。",
 voc:[["somebody","某個重要的人"],["free","自由"],["alone","獨自"],["learn","學會"],["hold","擁抱、把握"],["figure out","弄清楚、想通"],["need somebody","需要一個人"],["be there","在身邊陪伴"]],
-pron:"somebody=「SUM-bah-dee」;wanna=「WAH-na」。"},
+pron:"somebody=「SUM-bah-dee」;wanna=「WAH-na」。",lines:[["I wanna be somebody to you","我想當對你有意義的那個人"],["Everybody needs somebody","每個人都需要某個人"],["I wanna be that somebody to you","我想當你的那個人"]]},
 {n:26,en:"Stay (with The Kid LAROI)",zh:"別走",era:"2021 · Justice",
 story:"2021 全球爆紅神曲 —— 明知自己一團糟,還是求對方「留下來,我需要你」。節奏超快、全場狂跟。",
 chorus:"副歌飛快唱「I need you to stay」,語速很快,先抓「I need you to stay」這句反覆練。",
 voc:[["stay","留下"],["need","需要"],["change","改變"],["mess","一團糟"],["every little thing","每一件小事"],["I need you to stay","我需要你留下"],["for a minute","就一下下"],["get through","撐過、度過"]],
-pron:"「need you」連著「nee-ju」;stay=「stey」。"}
+pron:"「need you」連著「nee-ju」;stay=「stey」。",lines:[["I need you to stay","我需要你留下"],["I can't change I can't change","我改不了"],["I get drunk wake up I'm wasted still","我喝醉醒來仍然爛醉"]]}
 ];
 
-const LADYGAGA=[{"n":1,"en":"Just Dance","zh":"盡情跳舞","era":"2008 · The Fame","story":"在派對喝到有點茫、暈頭轉向,還是告訴自己「沒事,跳就對了」。她的出道神曲,超嗨的舞池入門曲。","chorus":"副歌一直唱「just dance」,簡單到秒會,跟著節拍擺動就能融入全場。","pron":"just=「dʒʌst」;「just dance」連著唱「dʒʌs-dæns」。","voc":[["dance","跳舞"],["just dance","盡情跳就對了"],["party","派對"],["spin","旋轉、暈"],["tonight","今晚"],["music","音樂"],["lost","迷失、搞不清"],["alright","沒事、還好"],["dancefloor","舞池"],["girl","女孩"],["light","燈光"],["love","愛"]]},{"n":2,"en":"Poker Face","zh":"撲克臉","era":"2008 · The Fame","story":"談感情時不讓對方猜到自己真正的心思,像打牌一樣藏起表情。一首充滿心機與魅力的招牌舞曲。","chorus":"副歌跟著哼那段「p-p-poker face」的洗腦旋律,帶點神祕又自信的感覺。","pron":"poker=「POH-ker」;face=「feɪs」,別念成「飛斯」。","voc":[["poker face","撲克臉、面無表情"],["face","臉"],["game","遊戲、把戲"],["read","讀懂、看穿"],["heart","心"],["luck","運氣"],["bluff","虛張聲勢"],["love","愛"],["show","展現、表現"],["hold","握住、抓住"],["true","真的"],["play","玩、玩弄"]]},{"n":3,"en":"LoveGame","zh":"愛情遊戲","era":"2008 · The Fame","story":"把曖昧和追求當成一場好玩的遊戲,直白又大膽地表達想靠近對方的衝動。節奏強烈的電音舞曲。","chorus":"副歌邀對方一起玩這場愛情遊戲,語氣俏皮挑逗,跟著節拍唱就很有感。","pron":"love=「lʌv」短促;game=「ɡeɪm」尾音上揚像「給姆」。","voc":[["love","愛"],["game","遊戲"],["love game","愛情遊戲"],["kiss","親吻"],["dance","跳舞"],["want","想要"],["ride","兜風、共乘"],["hold on","抓緊"],["close","靠近"],["disco","迪斯可"],["stick","棒子、桿"],["fun","樂趣"]]},{"n":4,"en":"Paparazzi","zh":"狗仔隊","era":"2008 · The Fame","story":"像狗仔死命追拍明星一樣,癡心地緊跟著心愛的人不放。旋律華麗又帶點悲傷的流行曲。","chorus":"副歌唱出「我會一直跟著你」的執著,情緒飽滿,可以放開聲音拉長尾音。","pron":"paparazzi=「pa-pa-RAT-si」;chase=「tʃeɪs」像「翠斯」。","voc":[["follow","跟隨"],["chase","追逐"],["camera","相機"],["star","明星、星星"],["famous","有名的"],["love","愛"],["baby","寶貝"],["leave","離開"],["eyes","眼睛"],["shadow","影子"],["fame","名氣"],["keep","保持、繼續"]]},{"n":5,"en":"Bad Romance","zh":"壞愛情","era":"2009 · The Fame Monster","story":"明知道這段感情不健康、會受傷,卻偏偏深深著迷無法抽身。她最具代表性的暗黑流行神曲。","chorus":"副歌那串「oh-oh-oh」和「ra-ra」最好記,跟著吼出來最過癮,氣勢要足。","pron":"romance=「roh-MANS」重音在後;bad=「bæd」嘴張大。","voc":[["bad romance","糟糕的戀情"],["bad","壞的"],["romance","戀情"],["want","想要"],["love","愛"],["ugly","醜的"],["disease","病、毛病"],["free","自由"],["revenge","報復"],["friend","朋友"],["catch","抓住"],["caught","被抓住"]]},{"n":6,"en":"Telephone (feat. Beyoncé)","zh":"電話","era":"2009 · The Fame Monster","story":"在舞池玩得正開心,根本不想接那一直響的電話,叫對方別再打擾。和碧昂絲合唱的派對快歌。","chorus":"副歌唱出「別再打給我了」的不耐,語速快又俏皮,跟著節奏連珠炮地唱。","pron":"telephone=「TEL-eh-fone」三拍;call=「kɔːl」尾音帶 L。","voc":[["telephone","電話"],["call","打電話、呼叫"],["phone","手機"],["stop","停"],["dance","跳舞"],["busy","忙碌"],["club","夜店"],["leave","離開"],["head","頭、腦袋"],["sorry","抱歉"],["line","電話線、線路"],["away","離開、遠離"]]},{"n":7,"en":"Alejandro","zh":"亞歷山卓","era":"2009 · The Fame Monster","story":"想溫柔地和幾位舊情人說再見、放下過去的糾纏。帶有拉丁風情、旋律憂傷又好聽的舞曲。","chorus":"副歌反覆呼喊幾個男生的名字,旋律順口,跟著哼名字就能融入。","pron":"Alejandro=「a-le-HAN-dro」,j 發「h」音;name=「neɪm」。","voc":[["name","名字"],["say","說"],["goodbye","再見"],["heart","心"],["let go","放手"],["call","呼喊"],["love","愛"],["boy","男孩"],["please","拜託"],["fan","搧、迷"],["whisper","輕聲說"],["hold","抱住"]]},{"n":8,"en":"Monster","zh":"怪獸","era":"2009 · The Fame Monster","story":"愛上一個會傷人、像怪獸般危險的對象,明知會被吃掉心卻越陷越深。節奏抓耳的暗黑流行曲。","chorus":"副歌形容對方像怪獸般吃掉自己的心,語氣又怕又愛,跟著重拍唱很帶勁。","pron":"monster=「MON-ster」;ate=「eɪt」念「欸特」不是「阿特」。","voc":[["monster","怪獸"],["eat","吃"],["heart","心"],["boy","男孩"],["kiss","親吻"],["love","愛"],["scared","害怕的"],["want","想要"],["bad","壞的"],["brain","腦袋"],["dance","跳舞"],["night","夜晚"]]},{"n":9,"en":"Born This Way","zh":"天生完美","era":"2011 · Born This Way","story":"鼓勵每個人接受真實的自己,不管你是誰、來自哪裡,你天生就是這樣、就很美。一首勵志國歌級單曲。","chorus":"副歌大聲唱「我天生如此」,充滿自信與驕傲,把腰桿打直、放開唱出來。","pron":"born=「bɔːrn」;「born this way」連唱「bɔːrn-ðɪs-weɪ」。","voc":[["born","出生"],["born this way","天生如此"],["way","方式、樣子"],["yourself","你自己"],["beautiful","美麗的"],["right","正確、對的"],["love","愛"],["wrong","錯的"],["baby","寶貝"],["proud","驕傲的"],["track","軌道、正軌"],["same","一樣的"]]},{"n":10,"en":"Judas","zh":"猶大","era":"2011 · Born This Way","story":"明知對方會背叛自己,卻還是忍不住愛上那個傷害她的人。用聖經人物比喻危險戀情的勁爆舞曲。","chorus":"副歌反覆唱出那個名字,帶著矛盾又執迷的情緒,跟著強烈節拍喊出來。","pron":"Judas=「JOO-das」;love=「lʌv」嘴別咧太開。","voc":[["love","愛"],["betray","背叛"],["heart","心"],["hold","抓住"],["dark","黑暗"],["dance","跳舞"],["cry","哭"],["forgive","原諒"],["fall","墜落、愛上"],["king","王"],["beg","乞求"],["still","仍然"]]},{"n":11,"en":"The Edge of Glory","zh":"榮耀邊緣","era":"2011 · Born This Way","story":"站在人生最榮耀的那一刻邊緣,想和最重要的人一起把握當下、盡情燃燒。激昂感人的勵志舞曲。","chorus":"副歌唱出站在榮耀邊緣的澎湃,情緒要拉高、放開嗓子大聲唱。","pron":"edge=「edʒ」;glory=「GLOR-ee」重音在前。","voc":[["edge","邊緣"],["glory","榮耀"],["edge of glory","榮耀邊緣"],["moment","時刻"],["tonight","今晚"],["dance","跳舞"],["alive","活著的"],["hold","抱住"],["jump","跳"],["truth","真相"],["fight","奮鬥"],["fire","火"]]},{"n":12,"en":"You and I","zh":"你和我","era":"2011 · Born This Way","story":"想念遠方的舊情人,回憶兩人之間獨一無二的牽絆,只屬於你和我。帶搖滾味的深情慢歌。","chorus":"副歌溫柔唱出「就是你和我」,感情真摯,放慢速度、帶著思念去唱。","pron":"you and I=「ju-ən-aɪ」連音;I=「aɪ」。","voc":[["you and I","你和我"],["you","你"],["miss","想念"],["home","家"],["heart","心"],["man","男人"],["whiskey","威士忌"],["kiss","親吻"],["change","改變"],["love","愛"],["baby","寶貝"],["back","回來"]]},{"n":13,"en":"Marry the Night","zh":"嫁給黑夜","era":"2011 · Born This Way","story":"跌倒後決定振作,把整個夜晚當作伴侶,勇敢迎向屬於自己的新人生。充滿能量的重生舞曲。","chorus":"副歌唱出「我要嫁給這個夜晚」的決心,氣勢澎湃,跟著重拍奮力唱出來。","pron":"marry=「MA-ree」;night=「naɪt」尾音收住。","voc":[["marry","結婚、嫁給"],["night","夜晚"],["marry the night","嫁給黑夜"],["fight","奮鬥"],["fall","跌倒"],["new","新的"],["heart","心"],["run","奔跑"],["lost","迷失"],["dream","夢想"],["alright","沒事"],["dark","黑暗"]]},{"n":14,"en":"Applause","zh":"掌聲","era":"2013 · ARTPOP","story":"她坦白自己有多享受舞台上的掌聲與觀眾的喝采,那是讓她活著的能量。一首為表演而生的舞曲。","chorus":"副歌一直唱「掌聲、掌聲」,跟著拍手節奏唱,把現場氣氛炒熱最對味。","pron":"applause=「uh-PLAWZ」重音在後;clap=「klæp」。","voc":[["applause","掌聲"],["clap","拍手"],["hands","手"],["live","活著、現場"],["love","愛"],["stage","舞台"],["pop","流行"],["crowd","人群"],["give","給"],["way","方式"],["want","想要"],["art","藝術"]]},{"n":15,"en":"G.U.Y.","zh":"我的男孩","era":"2013 · ARTPOP","story":"在愛情裡她想掌握主導權、由自己決定一切。節奏華麗、態度自信的電音流行曲。","chorus":"副歌帶著俏皮自信的口吻反覆唱主題,跟著律動扭擺就很有戲。","pron":"guy=「ɡaɪ」一個音節;touch=「tʌtʃ」像「踏取」。","voc":[["guy","男生、傢伙"],["love","愛"],["touch","碰觸"],["top","頂端、在上位"],["girl","女孩"],["power","力量"],["want","想要"],["dance","跳舞"],["heart","心"],["star","星星"],["heaven","天堂"],["kiss","親吻"]]},{"n":16,"en":"Million Reasons","zh":"百萬個理由","era":"2016 · Joanne","story":"在一段快撐不下去的感情裡,有無數個離開的理由,卻只想為了那一個留下來。質樸動人的鄉村抒情曲。","chorus":"副歌唱出「有上百萬個理由想走,但我只需要一個留下」,放慢、帶著真情唱。","pron":"million=「MIL-yun」;reason=「REE-zun」。","voc":[["million","百萬"],["reason","理由"],["million reasons","百萬個理由"],["leave","離開"],["stay","留下"],["one","一個"],["love","愛"],["give","給"],["heart","心"],["need","需要"],["hold on","撐住"],["cry","哭"]]},{"n":17,"en":"Perfect Illusion","zh":"完美幻覺","era":"2016 · Joanne","story":"以為遇到了完美的愛情,後來才發現那只是一場美麗的幻覺。節奏強烈、情緒奔放的搖滾流行曲。","chorus":"副歌大聲唱出「原來只是場幻覺」的失落與釋放,情緒要飽滿、放開唱。","pron":"perfect=「PER-fekt」;illusion=「ih-LOO-zhun」。","voc":[["perfect","完美的"],["illusion","幻覺"],["perfect illusion","完美幻覺"],["love","愛"],["mistake","錯誤"],["real","真實的"],["mind","心、頭腦"],["lost","迷失"],["high","興奮、嗨"],["feel","感覺"],["fade","褪去"],["touch","碰觸"]]},{"n":18,"en":"Shallow","zh":"淺灘","era":"2018 · A Star Is Born","story":"問對方願不願意一起跳進深處、面對真實的自己,不再停留在膚淺的表面。電影《一個巨星的誕生》的招牌對唱情歌。","chorus":"副歌那段拉到最高的「ahh」最震撼,放開胸口大聲唱,情緒一次釋放。","pron":"shallow=「SHA-loh」;dive=「daɪv」像「呆夫」。","voc":[["shallow","淺的"],["deep","深的"],["dive","跳水、潛入"],["love","愛"],["change","改變"],["fall","墜落"],["far","遙遠"],["off","離開"],["ground","地面"],["water","水"],["meet","遇見"],["pain","痛"]]},{"n":19,"en":"Always Remember Us This Way","zh":"記得我們的模樣","era":"2018 · A Star Is Born","story":"希望無論未來如何改變,對方都能永遠記得他們此刻相愛的美好模樣。溫柔深情的鋼琴抒情曲。","chorus":"副歌懇求對方永遠記得這一刻的彼此,放慢速度、帶著思念溫柔地唱。","pron":"always=「AWL-wayz」;remember=「rih-MEM-ber」。","voc":[["always","總是、永遠"],["remember","記得"],["us","我們"],["way","樣子、模樣"],["love","愛"],["lover","愛人"],["heart","心"],["hold","抱住"],["gold","金色的"],["forget","忘記"],["touch","碰觸"],["this way","這個樣子"]]},{"n":20,"en":"Stupid Love","zh":"傻氣的愛","era":"2020 · Chromatica","story":"在受過傷之後,她仍然渴望一份簡單純粹、不問理由的傻氣的愛。色彩繽紛、超嗨的回歸舞曲。","chorus":"副歌直接喊出「我就是想要你的愛」,情緒明亮歡快,跟著舞曲節拍盡情唱跳。","pron":"stupid=「STOO-pid」;love=「lʌv」短促。","voc":[["stupid","傻的"],["love","愛"],["stupid love","傻氣的愛"],["want","想要"],["freedom","自由"],["kindness","善意"],["heart","心"],["protect","保護"],["look","看"],["cry","哭"],["dance","跳舞"],["all","全部"]]},{"n":21,"en":"Rain on Me (with Ariana Grande)","zh":"讓雨落下","era":"2020 · Chromatica","story":"把眼淚比喻成大雨,就算痛也願意撐住、繼續活下去。和亞莉安娜合唱、充滿力量的療癒舞曲。","chorus":"副歌唱出「就讓雨落在我身上吧」的堅強,情緒高昂,跟著節拍放聲唱出來。","pron":"rain=「reɪn」;「rain on me」連唱「reɪ-non-mi」。","voc":[["rain","雨"],["rain on me","讓雨落在我身上"],["cry","哭"],["alive","活著的"],["water","水"],["dry","乾的"],["love","愛"],["dance","跳舞"],["tear","眼淚"],["feel","感覺"],["pain","痛"],["still","仍然"]]},{"n":22,"en":"911","zh":"求救專線","era":"2020 · Chromatica","story":"用緊急求救電話比喻自己撐住情緒、不讓自己崩潰的求助心情。節奏明快卻藏著脆弱的電音流行曲。","chorus":"副歌帶著急促又冷靜的口吻反覆唱主題,跟著快節奏連著唱很有感。","pron":"nine-one-one=「naɪn-wʌn-wʌn」;mind=「maɪnd」。","voc":[["mind","心、頭腦"],["help","幫助"],["call","呼叫"],["heart","心"],["pain","痛"],["save","拯救"],["myself","我自己"],["keep","保持"],["fall","墜落"],["truth","真相"],["alone","獨自"],["hold","撐住"]]},{"n":23,"en":"Die With a Smile (with Bruno Mars)","zh":"笑著離開","era":"2024–25 · 近期 (Mayhem)","story":"如果世界末日就在明天,她只想和最愛的人在一起,帶著微笑離開。和火星人合唱、溫暖深情的對唱情歌。","chorus":"副歌唱出「想和你一起笑著走」的深情,放慢速度、帶著滿滿的愛去唱。","pron":"die=「daɪ」;smile=「smaɪl」尾音帶 L。","voc":[["die","死去、離開"],["smile","微笑"],["world","世界"],["end","結束"],["love","愛"],["beside","在身邊"],["heart","心"],["night","夜晚"],["hold","抱住"],["last","最後"],["wherever","無論哪裡"],["go","去"]]},{"n":24,"en":"Abracadabra","zh":"魔法咒語","era":"2024–25 · 近期 (Mayhem)","story":"用一句神奇的魔法咒語,把愛情和命運像施法一樣召喚出來。節奏強烈、神祕又華麗的舞曲。","chorus":"副歌反覆唱那串像咒語般的洗腦音節,跟著節拍唸唱出來超有魔力。","pron":"abracadabra=「a-bra-ka-DA-bra」五拍;magic=「MA-dʒik」。","voc":[["magic","魔法"],["spell","咒語、施法"],["love","愛"],["dance","跳舞"],["dark","黑暗"],["word","字、話"],["fire","火"],["hand","手"],["fate","命運"],["night","夜晚"],["burn","燃燒"],["choose","選擇"]]},{"n":25,"en":"Disease","zh":"病","era":"2024–25 · 近期 (Mayhem)","story":"把對方的愛比喻成一種病,也是唯一能治好自己的解藥。黑暗強烈、充滿張力的流行搖滾曲。","chorus":"副歌帶著渴望又掙扎的情緒反覆唱主題,跟著沉重節拍唱出那份糾結。","pron":"disease=「dih-ZEEZ」重音在後;cure=「kjʊr」。","voc":[["disease","病"],["cure","治癒、解藥"],["fix","修補、治好"],["love","愛"],["heart","心"],["dark","黑暗"],["need","需要"],["pain","痛"],["sick","生病的"],["save","拯救"],["scream","尖叫"],["alone","獨自"]]},{"n":26,"en":"Hold My Hand","zh":"牽我的手","era":"2024–25 · 近期 (Mayhem)","story":"在困難與害怕的時刻,伸手對你說「牽著我的手,我們一起撐過去」。溫暖鼓舞人心的勵志主題曲。","chorus":"副歌溫柔又有力地唱出「牽著我的手」,情緒要暖,把手伸出去一起合唱。","pron":"hold=「hoʊld」;「hold my hand」連唱「hoʊl-maɪ-hænd」。","voc":[["hold","握住"],["hand","手"],["hold my hand","牽我的手"],["help","幫助"],["need","需要"],["heart","心"],["together","一起"],["fall","墜落"],["save","拯救"],["cry","哭"],["strong","堅強的"],["near","靠近"]]}];
+const LADYGAGA=[{"n":1,"en":"Just Dance","zh":"盡情跳舞","era":"2008 · The Fame","story":"在派對喝到有點茫、暈頭轉向,還是告訴自己「沒事,跳就對了」。她的出道神曲,超嗨的舞池入門曲。","chorus":"副歌一直唱「just dance」,簡單到秒會,跟著節拍擺動就能融入全場。","pron":"just=「dʒʌst」;「just dance」連著唱「dʒʌs-dæns」。",lines:[["Just dance gonna be okay","盡情跳舞 一切都會沒事的"],["Gonna be okay","一切都會沒事的"]],"voc":[["dance","跳舞"],["just dance","盡情跳就對了"],["party","派對"],["spin","旋轉、暈"],["tonight","今晚"],["music","音樂"],["lost","迷失、搞不清"],["alright","沒事、還好"],["dancefloor","舞池"],["girl","女孩"],["light","燈光"],["love","愛"]]},{"n":2,"en":"Poker Face","zh":"撲克臉","era":"2008 · The Fame","story":"談感情時不讓對方猜到自己真正的心思,像打牌一樣藏起表情。一首充滿心機與魅力的招牌舞曲。","chorus":"副歌跟著哼那段「p-p-poker face」的洗腦旋律,帶點神祕又自信的感覺。","pron":"poker=「POH-ker」;face=「feɪs」,別念成「飛斯」。",lines:[["Can't read my can't read my poker face","猜不透我的撲克臉"],["P-p-poker face","撲克臉"]],"voc":[["poker face","撲克臉、面無表情"],["face","臉"],["game","遊戲、把戲"],["read","讀懂、看穿"],["heart","心"],["luck","運氣"],["bluff","虛張聲勢"],["love","愛"],["show","展現、表現"],["hold","握住、抓住"],["true","真的"],["play","玩、玩弄"]]},{"n":3,"en":"LoveGame","zh":"愛情遊戲","era":"2008 · The Fame","story":"把曖昧和追求當成一場好玩的遊戲,直白又大膽地表達想靠近對方的衝動。節奏強烈的電音舞曲。","chorus":"副歌邀對方一起玩這場愛情遊戲,語氣俏皮挑逗,跟著節拍唱就很有感。","pron":"love=「lʌv」短促;game=「ɡeɪm」尾音上揚像「給姆」。",lines:[["Let's have some fun this beat is sick","找點樂子這節奏太讚了"],["I wanna take a ride on your disco stick","想坐你的迪斯可棒兜風"]],"voc":[["love","愛"],["game","遊戲"],["love game","愛情遊戲"],["kiss","親吻"],["dance","跳舞"],["want","想要"],["ride","兜風、共乘"],["hold on","抓緊"],["close","靠近"],["disco","迪斯可"],["stick","棒子、桿"],["fun","樂趣"]]},{"n":4,"en":"Paparazzi","zh":"狗仔隊","era":"2008 · The Fame","story":"像狗仔死命追拍明星一樣,癡心地緊跟著心愛的人不放。旋律華麗又帶點悲傷的流行曲。","chorus":"副歌唱出「我會一直跟著你」的執著,情緒飽滿,可以放開聲音拉長尾音。","pron":"paparazzi=「pa-pa-RAT-si」;chase=「tʃeɪs」像「翠斯」。",lines:[["I'm your biggest fan I'll follow you","我是頭號粉絲我會跟著你"],["I'll be your papa-paparazzi","我是你的狗仔隊"]],"voc":[["follow","跟隨"],["chase","追逐"],["camera","相機"],["star","明星、星星"],["famous","有名的"],["love","愛"],["baby","寶貝"],["leave","離開"],["eyes","眼睛"],["shadow","影子"],["fame","名氣"],["keep","保持、繼續"]]},{"n":5,"en":"Bad Romance","zh":"壞愛情","era":"2009 · The Fame Monster","story":"明知道這段感情不健康、會受傷,卻偏偏深深著迷無法抽身。她最具代表性的暗黑流行神曲。","chorus":"副歌那串「oh-oh-oh」和「ra-ra」最好記,跟著吼出來最過癮,氣勢要足。","pron":"romance=「roh-MANS」重音在後;bad=「bæd」嘴張大。",lines:[["I want your ugly I want your disease","我要你的醜陋我要你的病態"],["I want your everything","我要你的一切"]],"voc":[["bad romance","糟糕的戀情"],["bad","壞的"],["romance","戀情"],["want","想要"],["love","愛"],["ugly","醜的"],["disease","病、毛病"],["free","自由"],["revenge","報復"],["friend","朋友"],["catch","抓住"],["caught","被抓住"]]},{"n":6,"en":"Telephone (feat. Beyoncé)","zh":"電話","era":"2009 · The Fame Monster","story":"在舞池玩得正開心,根本不想接那一直響的電話,叫對方別再打擾。和碧昂絲合唱的派對快歌。","chorus":"副歌唱出「別再打給我了」的不耐,語速快又俏皮,跟著節奏連珠炮地唱。","pron":"telephone=「TEL-eh-fone」三拍;call=「kɔːl」尾音帶 L。",lines:[["Stop calling stop calling I don't wanna talk anymore","別打了我不想再說了"],["Leave me alone","讓我一個人靜一靜"]],"voc":[["telephone","電話"],["call","打電話、呼叫"],["phone","手機"],["stop","停"],["dance","跳舞"],["busy","忙碌"],["club","夜店"],["leave","離開"],["head","頭、腦袋"],["sorry","抱歉"],["line","電話線、線路"],["away","離開、遠離"]]},{"n":7,"en":"Alejandro","zh":"亞歷山卓","era":"2009 · The Fame Monster","story":"想溫柔地和幾位舊情人說再見、放下過去的糾纏。帶有拉丁風情、旋律憂傷又好聽的舞曲。","chorus":"副歌反覆呼喊幾個男生的名字,旋律順口,跟著哼名字就能融入。","pron":"Alejandro=「a-le-HAN-dro」,j 發「h」音;name=「neɪm」。",lines:[["She's got both hands in her pockets","她雙手插在口袋"],["And she won't look at me","她不肯看我"]],"voc":[["name","名字"],["say","說"],["goodbye","再見"],["heart","心"],["let go","放手"],["call","呼喊"],["love","愛"],["boy","男孩"],["please","拜託"],["fan","搧、迷"],["whisper","輕聲說"],["hold","抱住"]]},{"n":8,"en":"Monster","zh":"怪獸","era":"2009 · The Fame Monster","story":"愛上一個會傷人、像怪獸般危險的對象,明知會被吃掉心卻越陷越深。節奏抓耳的暗黑流行曲。","chorus":"副歌形容對方像怪獸般吃掉自己的心,語氣又怕又愛,跟著重拍唱很帶勁。","pron":"monster=「MON-ster」;ate=「eɪt」念「欸特」不是「阿特」。",lines:[["He ate my heart he ate my brain","他吃掉我的心吃掉我的大腦"]],"voc":[["monster","怪獸"],["eat","吃"],["heart","心"],["boy","男孩"],["kiss","親吻"],["love","愛"],["scared","害怕的"],["want","想要"],["bad","壞的"],["brain","腦袋"],["dance","跳舞"],["night","夜晚"]]},{"n":9,"en":"Born This Way","zh":"天生完美","era":"2011 · Born This Way","story":"鼓勵每個人接受真實的自己,不管你是誰、來自哪裡,你天生就是這樣、就很美。一首勵志國歌級單曲。","chorus":"副歌大聲唱「我天生如此」,充滿自信與驕傲,把腰桿打直、放開唱出來。","pron":"born=「bɔːrn」;「born this way」連唱「bɔːrn-ðɪs-weɪ」。",lines:[["I'm beautiful in my way","我有我自己的美"],["I was born this way","我天生如此"]],"voc":[["born","出生"],["born this way","天生如此"],["way","方式、樣子"],["yourself","你自己"],["beautiful","美麗的"],["right","正確、對的"],["love","愛"],["wrong","錯的"],["baby","寶貝"],["proud","驕傲的"],["track","軌道、正軌"],["same","一樣的"]]},{"n":10,"en":"Judas","zh":"猶大","era":"2011 · Born This Way","story":"明知對方會背叛自己,卻還是忍不住愛上那個傷害她的人。用聖經人物比喻危險戀情的勁爆舞曲。","chorus":"副歌反覆唱出那個名字,帶著矛盾又執迷的情緒,跟著強烈節拍喊出來。","pron":"Judas=「JOO-das」;love=「lʌv」嘴別咧太開。",lines:[["I'm in love with Judas","我愛上了猶大"],["When he comes to me I am ready","當他靠近我已準備好"]],"voc":[["love","愛"],["betray","背叛"],["heart","心"],["hold","抓住"],["dark","黑暗"],["dance","跳舞"],["cry","哭"],["forgive","原諒"],["fall","墜落、愛上"],["king","王"],["beg","乞求"],["still","仍然"]]},{"n":11,"en":"The Edge of Glory","zh":"榮耀邊緣","era":"2011 · Born This Way","story":"站在人生最榮耀的那一刻邊緣,想和最重要的人一起把握當下、盡情燃燒。激昂感人的勵志舞曲。","chorus":"副歌唱出站在榮耀邊緣的澎湃,情緒要拉高、放開嗓子大聲唱。","pron":"edge=「edʒ」;glory=「GLOR-ee」重音在前。",lines:[["I'm on the edge of glory","我站在榮耀邊緣"],["And I'm hanging on a moment of truth","抓住真相的瞬間"]],"voc":[["edge","邊緣"],["glory","榮耀"],["edge of glory","榮耀邊緣"],["moment","時刻"],["tonight","今晚"],["dance","跳舞"],["alive","活著的"],["hold","抱住"],["jump","跳"],["truth","真相"],["fight","奮鬥"],["fire","火"]]},{"n":12,"en":"You and I","zh":"你和我","era":"2011 · Born This Way","story":"想念遠方的舊情人,回憶兩人之間獨一無二的牽絆,只屬於你和我。帶搖滾味的深情慢歌。","chorus":"副歌溫柔唱出「就是你和我」,感情真摯,放慢速度、帶著思念去唱。","pron":"you and I=「ju-ən-aɪ」連音;I=「aɪ」。",lines:[["It's been a long time since I came around","好久沒回來了"],["You and I","你和我"]],"voc":[["you and I","你和我"],["you","你"],["miss","想念"],["home","家"],["heart","心"],["man","男人"],["whiskey","威士忌"],["kiss","親吻"],["change","改變"],["love","愛"],["baby","寶貝"],["back","回來"]]},{"n":13,"en":"Marry the Night","zh":"嫁給黑夜","era":"2011 · Born This Way","story":"跌倒後決定振作,把整個夜晚當作伴侶,勇敢迎向屬於自己的新人生。充滿能量的重生舞曲。","chorus":"副歌唱出「我要嫁給這個夜晚」的決心,氣勢澎湃,跟著重拍奮力唱出來。","pron":"marry=「MA-ree」;night=「naɪt」尾音收住。",lines:[["I'm gonna marry the night","我要嫁給黑夜"],["I won't give up on my life","我絕不放棄人生"]],"voc":[["marry","結婚、嫁給"],["night","夜晚"],["marry the night","嫁給黑夜"],["fight","奮鬥"],["fall","跌倒"],["new","新的"],["heart","心"],["run","奔跑"],["lost","迷失"],["dream","夢想"],["alright","沒事"],["dark","黑暗"]]},{"n":14,"en":"Applause","zh":"掌聲","era":"2013 · ARTPOP","story":"她坦白自己有多享受舞台上的掌聲與觀眾的喝采,那是讓她活著的能量。一首為表演而生的舞曲。","chorus":"副歌一直唱「掌聲、掌聲」,跟著拍手節奏唱,把現場氣氛炒熱最對味。","pron":"applause=「uh-PLAWZ」重音在後;clap=「klæp」。",lines:[["Applause applause","掌聲掌聲"],["Give me the thing that I love","給我我愛的東西"]],"voc":[["applause","掌聲"],["clap","拍手"],["hands","手"],["live","活著、現場"],["love","愛"],["stage","舞台"],["pop","流行"],["crowd","人群"],["give","給"],["way","方式"],["want","想要"],["art","藝術"]]},{"n":15,"en":"G.U.Y.","zh":"我的男孩","era":"2013 · ARTPOP","story":"在愛情裡她想掌握主導權、由自己決定一切。節奏華麗、態度自信的電音流行曲。","chorus":"副歌帶著俏皮自信的口吻反覆唱主題,跟著律動扭擺就很有戲。","pron":"guy=「ɡaɪ」一個音節;touch=「tʌtʃ」像「踏取」。",lines:[["I wanna be the girl under you","想當你身下的女孩"],["Love love love love","愛愛愛愛"]],"voc":[["guy","男生、傢伙"],["love","愛"],["touch","碰觸"],["top","頂端、在上位"],["girl","女孩"],["power","力量"],["want","想要"],["dance","跳舞"],["heart","心"],["star","星星"],["heaven","天堂"],["kiss","親吻"]]},{"n":16,"en":"Million Reasons","zh":"百萬個理由","era":"2016 · Joanne","story":"在一段快撐不下去的感情裡,有無數個離開的理由,卻只想為了那一個留下來。質樸動人的鄉村抒情曲。","chorus":"副歌唱出「有上百萬個理由想走,但我只需要一個留下」,放慢、帶著真情唱。","pron":"million=「MIL-yun」;reason=「REE-zun」。",lines:[["I bow down to pray","我低頭祈禱"],["Even if it's a million reasons to leave","即使有百萬個離開的理由"]],"voc":[["million","百萬"],["reason","理由"],["million reasons","百萬個理由"],["leave","離開"],["stay","留下"],["one","一個"],["love","愛"],["give","給"],["heart","心"],["need","需要"],["hold on","撐住"],["cry","哭"]]},{"n":17,"en":"Perfect Illusion","zh":"完美幻覺","era":"2016 · Joanne","story":"以為遇到了完美的愛情,後來才發現那只是一場美麗的幻覺。節奏強烈、情緒奔放的搖滾流行曲。","chorus":"副歌大聲唱出「原來只是場幻覺」的失落與釋放,情緒要飽滿、放開唱。","pron":"perfect=「PER-fekt」;illusion=「ih-LOO-zhun」。",lines:[["It was a perfect illusion","那是完美的幻覺"],["You're right and I'm not naive","你是對的而我不天真"]],"voc":[["perfect","完美的"],["illusion","幻覺"],["perfect illusion","完美幻覺"],["love","愛"],["mistake","錯誤"],["real","真實的"],["mind","心、頭腦"],["lost","迷失"],["high","興奮、嗨"],["feel","感覺"],["fade","褪去"],["touch","碰觸"]]},{"n":18,"en":"Shallow","zh":"淺灘","era":"2018 · A Star Is Born","story":"問對方願不願意一起跳進深處、面對真實的自己,不再停留在膚淺的表面。電影《一個巨星的誕生》的招牌對唱情歌。","chorus":"副歌那段拉到最高的「ahh」最震撼,放開胸口大聲唱,情緒一次釋放。","pron":"shallow=「SHA-loh」;dive=「daɪv」像「呆夫」。",lines:[["I'm off the deep end watch as I dive in","脫離淺灘縱身一躍"],["In the shallow shallow","在這淺淺的淺淺的"]],"voc":[["shallow","淺的"],["deep","深的"],["dive","跳水、潛入"],["love","愛"],["change","改變"],["fall","墜落"],["far","遙遠"],["off","離開"],["ground","地面"],["water","水"],["meet","遇見"],["pain","痛"]]},{"n":19,"en":"Always Remember Us This Way","zh":"記得我們的模樣","era":"2018 · A Star Is Born","story":"希望無論未來如何改變,對方都能永遠記得他們此刻相愛的美好模樣。溫柔深情的鋼琴抒情曲。","chorus":"副歌懇求對方永遠記得這一刻的彼此,放慢速度、帶著思念溫柔地唱。","pron":"always=「AWL-wayz」;remember=「rih-MEM-ber」。",lines:[["That Arizona sky burning in your eyes","亞利桑那天空在你眼中燃燒"],["I'll always remember us this way","永遠記得我們這個樣子"]],"voc":[["always","總是、永遠"],["remember","記得"],["us","我們"],["way","樣子、模樣"],["love","愛"],["lover","愛人"],["heart","心"],["hold","抱住"],["gold","金色的"],["forget","忘記"],["touch","碰觸"],["this way","這個樣子"]]},{"n":20,"en":"Stupid Love","zh":"傻氣的愛","era":"2020 · Chromatica","story":"在受過傷之後,她仍然渴望一份簡單純粹、不問理由的傻氣的愛。色彩繽紛、超嗨的回歸舞曲。","chorus":"副歌直接喊出「我就是想要你的愛」,情緒明亮歡快,跟著舞曲節拍盡情唱跳。","pron":"stupid=「STOO-pid」;love=「lʌv」短促。",lines:[["I want your stupid love","我要你傻氣的愛"],["Let's be stupid love","讓我們傻氣地愛吧"]],"voc":[["stupid","傻的"],["love","愛"],["stupid love","傻氣的愛"],["want","想要"],["freedom","自由"],["kindness","善意"],["heart","心"],["protect","保護"],["look","看"],["cry","哭"],["dance","跳舞"],["all","全部"]]},{"n":21,"en":"Rain on Me (with Ariana Grande)","zh":"讓雨落下","era":"2020 · Chromatica","story":"把眼淚比喻成大雨,就算痛也願意撐住、繼續活下去。和亞莉安娜合唱、充滿力量的療癒舞曲。","chorus":"副歌唱出「就讓雨落在我身上吧」的堅強,情緒高昂,跟著節拍放聲唱出來。","pron":"rain=「reɪn」;「rain on me」連唱「reɪ-non-mi」。",lines:[["I'd rather be dry but at least I'm alive","寧可乾爽但至少我活著"],["Rain on me","讓雨淋在我身上"],["I'll live","我會活下去"]],"voc":[["rain","雨"],["rain on me","讓雨落在我身上"],["cry","哭"],["alive","活著的"],["water","水"],["dry","乾的"],["love","愛"],["dance","跳舞"],["tear","眼淚"],["feel","感覺"],["pain","痛"],["still","仍然"]]},{"n":22,"en":"911","zh":"求救專線","era":"2020 · Chromatica","story":"用緊急求救電話比喻自己撐住情緒、不讓自己崩潰的求助心情。節奏明快卻藏著脆弱的電音流行曲。","chorus":"副歌帶著急促又冷靜的口吻反覆唱主題,跟著快節奏連著唱很有感。","pron":"nine-one-one=「naɪn-wʌn-wʌn」;mind=「maɪnd」。",lines:[["My biggest enemy is me","我最大的敵人是自己"],["Pop a 911","打給911"]],"voc":[["mind","心、頭腦"],["help","幫助"],["call","呼叫"],["heart","心"],["pain","痛"],["save","拯救"],["myself","我自己"],["keep","保持"],["fall","墜落"],["truth","真相"],["alone","獨自"],["hold","撐住"]]},{"n":23,"en":"Die With a Smile (with Bruno Mars)","zh":"笑著離開","era":"2024–25 · 近期 (Mayhem)","story":"如果世界末日就在明天,她只想和最愛的人在一起,帶著微笑離開。和火星人合唱、溫暖深情的對唱情歌。","chorus":"副歌唱出「想和你一起笑著走」的深情,放慢速度、帶著滿滿的愛去唱。","pron":"die=「daɪ」;smile=「smaɪl」尾音帶 L。",lines:[["I just want to stay in this moment","只想待在這一刻"],["If the world was ending I wanna be next to you","世界末日我想在你身邊"]],"voc":[["die","死去、離開"],["smile","微笑"],["world","世界"],["end","結束"],["love","愛"],["beside","在身邊"],["heart","心"],["night","夜晚"],["hold","抱住"],["last","最後"],["wherever","無論哪裡"],["go","去"]]},{"n":24,"en":"Abracadabra","zh":"魔法咒語","era":"2024–25 · 近期 (Mayhem)","story":"用一句神奇的魔法咒語,把愛情和命運像施法一樣召喚出來。節奏強烈、神祕又華麗的舞曲。","chorus":"副歌反覆唱那串像咒語般的洗腦音節,跟著節拍唸唱出來超有魔力。","pron":"abracadabra=「a-bra-ka-DA-bra」五拍;magic=「MA-dʒik」。",lines:[["Abracadabra","咒語吧"],["In the heat of the night","夜晚的高溫中"]],"voc":[["magic","魔法"],["spell","咒語、施法"],["love","愛"],["dance","跳舞"],["dark","黑暗"],["word","字、話"],["fire","火"],["hand","手"],["fate","命運"],["night","夜晚"],["burn","燃燒"],["choose","選擇"]]},{"n":25,"en":"Disease","zh":"病","era":"2024–25 · 近期 (Mayhem)","story":"把對方的愛比喻成一種病,也是唯一能治好自己的解藥。黑暗強烈、充滿張力的流行搖滾曲。","chorus":"副歌帶著渴望又掙扎的情緒反覆唱主題,跟著沉重節拍唱出那份糾結。","pron":"disease=「dih-ZEEZ」重音在後;cure=「kjʊr」。",lines:[["I can't sleep when you're in my head","你在腦海我睡不著"],["I don't want this disease","我不想要這種病"]],"voc":[["disease","病"],["cure","治癒、解藥"],["fix","修補、治好"],["love","愛"],["heart","心"],["dark","黑暗"],["need","需要"],["pain","痛"],["sick","生病的"],["save","拯救"],["scream","尖叫"],["alone","獨自"]]},{"n":26,"en":"Hold My Hand","zh":"牽我的手","era":"2024–25 · 近期 (Mayhem)","story":"在困難與害怕的時刻,伸手對你說「牽著我的手,我們一起撐過去」。溫暖鼓舞人心的勵志主題曲。","chorus":"副歌溫柔又有力地唱出「牽著我的手」,情緒要暖,把手伸出去一起合唱。","pron":"hold=「hoʊld」;「hold my hand」連唱「hoʊl-maɪ-hænd」。",lines:[["Hold my hand hold my hand","握住我的手"],["Everything will be okay","一切都會沒事的"]],"voc":[["hold","握住"],["hand","手"],["hold my hand","牽我的手"],["help","幫助"],["need","需要"],["heart","心"],["together","一起"],["fall","墜落"],["save","拯救"],["cry","哭"],["strong","堅強的"],["near","靠近"]]}];
 
-const MIX=[{"n":1,"en":"Hero","zh":"英雄","era":"Mariah Carey 瑪麗亞凱莉","a":"Mariah Carey","story":"經典勵志情歌 ——「真正的英雄就在你心裡,撐不下去時要相信自己」。瑪麗亞凱莉的招牌高音神曲。","chorus":"副歌唱「there's a hero, if you look inside your heart」,情緒層層堆高,適合放開唱、練長音。","voc":[["hero","英雄"],["heart","心"],["inside","裡面、內心"],["strong","堅強的"],["fear","恐懼"],["survive","活下來、撐過"],["truth","真相"],["look inside","往內心看"],["be strong","要堅強"],["hold on","撐住"]],"pron":"hero=「HEER-oh」;「look inside」連著「lu-kin-side」。"},{"n":2,"en":"We Belong Together","zh":"我們命中註定在一起","era":"Mariah Carey 瑪麗亞凱莉","a":"Mariah Carey","story":"分手後才發現有多想念對方 ——「我們本來就該在一起」。她史上最暢銷的抒情 R&B 金曲。","chorus":"副歌反覆唱「we belong together」,情緒濃烈,跟著拉高音唱出思念。","voc":[["belong together","命中註定在一起"],["miss","想念"],["come back","回來"],["baby","寶貝"],["need","需要"],["without you","沒有你"],["wrong","錯了"],["why","為什麼"],["alone","孤單"],["return","回來"]],"pron":"belong=「bee-LONG」;together=「tuh-GEH-ther」。"},{"n":3,"en":"All I Want for Christmas Is You","zh":"聖誕節我只要你","era":"Mariah Carey 瑪麗亞凱莉","a":"Mariah Carey","story":"全世界最紅的聖誕歌 ——「禮物我都不要,我只要你」。每年聖誕必放、必合唱。","chorus":"副歌唱「all I want for Christmas is you」,歡樂又甜,跟著節奏唱超應景。","voc":[["Christmas","聖誕節"],["all I want","我只想要的"],["present","禮物"],["snow","雪"],["wish","願望"],["under the tree","在聖誕樹下"],["you","你"],["need","需要"],["more than","超過"],["baby","寶貝"]],"pron":"Christmas=「KRIS-mus」(t 不發音);want=「wahnt」。"},{"n":4,"en":"Without You","zh":"沒有你","era":"Mariah Carey 瑪麗亞凱莉","a":"Mariah Carey","story":"撕心裂肺的失戀名曲 ——「沒有你我活不下去」。被她唱成跨時代的經典高音。","chorus":"副歌悲痛地唱「I can't live, if living is without you」,情緒滿到爆,適合投入感情唱。","voc":[["without you","沒有你"],["live","活著"],["can't","不能"],["give","給"],["forget","忘記"],["regret","後悔"],["cry","哭"],["alone","獨自"],["too long","太久"],["each day","每一天"]],"pron":"without=「wi-THOWT」;live=「liv」(動詞短音)。"},{"n":5,"en":"Fantasy","zh":"幻想","era":"Mariah Carey 瑪麗亞凱莉","a":"Mariah Carey","story":"沉浸在對某人的幻想裡 ——「一想到你,我就像進入夢幻世界」。輕快俏皮的 90 年代舞曲。","chorus":"副歌唱「sweet sweet fantasy baby」,輕盈洗腦,跟著擺動哼唱。","voc":[["fantasy","幻想"],["sweet","甜美的"],["dream","夢"],["baby","寶貝"],["mind","腦海"],["real","真實的"],["feel","感覺"],["close my eyes","閉上眼睛"],["high","陶醉、飄飄然"],["imagine","想像"]],"pron":"fantasy=「FAN-tuh-see」;sweet=「sweet」。"},{"n":6,"en":"Always Be My Baby","zh":"永遠是我的寶貝","era":"Mariah Carey 瑪麗亞凱莉","a":"Mariah Carey","story":"就算分開,對方永遠在心裡有個位置 ——「你永遠是我的寶貝」。慵懶甜美的 R&B 金曲。","chorus":"副歌唱「you'll always be my baby」,旋律好記,跟著輕鬆搖擺。","voc":[["always","永遠、總是"],["baby","寶貝"],["mine","我的"],["stay","留下"],["part of me","我的一部分"],["never","從不"],["goodbye","再見"],["come back","回來"],["destiny","命運"],["still","仍然"]],"pron":"always=「AWL-wayz」;baby=「BAY-bee」。"},{"n":7,"en":"Maria","zh":"瑪麗亞(別為難自己)","era":"華莎 Hwasa","a":"Hwasa","story":"華莎寫給自己的歌 ——「Maria 啊,別再為難自己了」,面對流言也要好好愛自己。拉丁風 K-pop,副歌是英文(韓文歌,我們學裡面的英文)。","chorus":"副歌反覆唱英文「oh Maria」,慵懶有態度,跟著哼名字就能融入。","voc":[["Maria","瑪麗亞(歌中對自己的暱稱)"],["no more","不要再"],["why","為什麼"],["so what","那又怎樣"],["love","愛"],["free","自由"],["enough","夠了"],["don't worry","別擔心"],["beautiful","美麗的"],["yourself","你自己"]],"pron":"Maria=「ma-REE-a」;「no more」連著「noh-mor」。"},{"n":8,"en":"Twit","zh":"笨蛋","era":"華莎 Hwasa","a":"Hwasa","story":"罵那個讓自己心動的對象是「笨蛋」,又愛又氣的俏皮戀曲。韓文歌,夾雜好記的英文字。","chorus":"副歌帶著嬌嗔的口氣,英文穿插其中,跟著節奏唱很可愛。","voc":[["twit","笨蛋、傻瓜"],["fool","傻子"],["crazy","瘋狂"],["heart","心"],["love","愛"],["stupid","笨的"],["baby","寶貝"],["boy","男孩"],["why","為什麼"],["oh my","我的天"]],"pron":"twit=「twit」;fool=「fool」。"},{"n":9,"en":"Chili","zh":"辣椒","era":"華莎 Hwasa","a":"Hwasa","story":"像辣椒一樣火辣有個性,展現滿滿自信。復古放克風 K-pop,副歌有英文 hook。","chorus":"副歌唱「chili」帶著辣勁,跟著律動扭擺很帶感。","voc":[["chili","辣椒"],["hot","辣的、火熱"],["spicy","辣的"],["red","紅色"],["taste","味道、嚐"],["dance","跳舞"],["tonight","今晚"],["feel","感覺"],["groove","律動"],["so good","很讚"]],"pron":"chili=「CHIL-ee」;hot=「haht」。"},{"n":10,"en":"I Love My Body","zh":"我愛我的身體","era":"華莎 Hwasa","a":"Hwasa","story":"大方歌頌愛自己的身體、做自己最美 —— 充滿自信的正能量宣言。歌名就是英文金句。","chorus":"副歌直接唱「I love my body」,自信滿滿,抬頭挺胸大聲唱。","voc":[["body","身體"],["love","愛"],["myself","我自己"],["beautiful","美麗的"],["free","自由"],["proud","驕傲的"],["shine","發光"],["confident","有自信的"],["mine","我的"],["feel good","感覺很好"]],"pron":"body=「BAH-dee」;「love my body」連著唱。"},{"n":11,"en":"Good Goodbye","zh":"好好說再見","era":"華莎 Hwasa","a":"Hwasa","story":"華莎 2025 年底發行、紅遍韓國的超級代表作(達成完美 all-kill,生涯最紅)——唱出「就算要分開,也要好好、體面地說再見」的成熟與灑脫。復古情歌,今年初到處都在播。","chorus":"副歌反覆唱英文「good goodbye」,優雅又帶點不捨,跟著哼這句就能跟上。","voc":[["good goodbye","好好說再見"],["goodbye","再見"],["good","好的"],["love","愛"],["end","結束、結局"],["miss","想念"],["last","最後"],["let go","放手"],["thank you","謝謝"],["smile","微笑"]],"pron":"goodbye=「gud-BAI」;「good goodbye」連著「gud-gud-bai」。"},{"n":12,"en":"So Cute","zh":"好可愛","era":"華莎 Hwasa","a":"Hwasa","story":"華莎 2026 年 4 月的回歸曲 —— 一改以往的性感路線,用輕快俏皮的舞曲展現「出乎意料的可愛」。和 PSY 一起寫詞,輕鬆好跳。","chorus":"副歌帶著俏皮口吻唱「so cute」,輕快洗腦,跟著節奏擺動著唱。","voc":[["so cute","好可愛"],["cute","可愛的"],["love","愛"],["baby","寶貝"],["smile","微笑"],["dance","跳舞"],["pretty","漂亮的"],["look at me","看著我"],["my style","我的風格"],["tonight","今晚"]],"pron":"cute=「kyoot」;「so cute」連著「soh-kyoot」。"},{"n":13,"en":"DDU-DU DDU-DU","zh":"嘟嘟","era":"BLACKPINK","a":"BLACKPINK","story":"BLACKPINK 爆紅代表作,展現霸氣自信 ——「我們又美又狠」。韓文饒舌+英文 hook,「ddu-du」是開槍的擬聲。","chorus":"副歌那串「ddu-du ddu-du」最好跟,配上手勢超有戲。","voc":[["pretty","漂亮"],["savage","狠角色、兇猛"],["hit","打、擊中"],["money","錢"],["gold","金"],["love","愛"],["boss","老大"],["shine","發光"],["look at me","看著我"],["so hot","超辣"]],"pron":"pretty=「PRIH-tee」;savage=「SA-vij」。"},{"n":14,"en":"Kill This Love","zh":"終結這段愛","era":"BLACKPINK","a":"BLACKPINK","story":"決心斬斷一段傷人的愛 ——「我要終結這段愛」。氣勢磅礴,副歌是英文,超好合唱。","chorus":"副歌大喊「let's kill this love」,跟著重拍吼出來最過癮。","voc":[["kill this love","終結這段愛"],["love","愛"],["let's go","走吧"],["heart","心"],["goodbye","再見"],["stop","停"],["brave","勇敢"],["end","結束"],["pull","拉、扣(扳機)"],["strong","堅強的"]],"pron":"kill=「kil」;「this love」連著「ðis-lʌv」。"},{"n":15,"en":"How You Like That","zh":"你覺得如何","era":"BLACKPINK","a":"BLACKPINK","story":"從谷底翻身、華麗回歸的宣言 ——「現在你覺得我如何?」充滿自信的嗆聲歌。副歌英文。","chorus":"副歌唱「how you like that」,跟著節拍唱出那股霸氣。","voc":[["how you like that","你覺得如何"],["look up","抬頭看"],["down","向下、低潮"],["shine","發光"],["bring","帶來"],["back","回來"],["now","現在"],["like","喜歡"],["so good","很讚"],["up","向上、振作"]],"pron":"「how you like that」連著「how-yu-laik-dæt」。"},{"n":16,"en":"Pink Venom","zh":"粉紅毒液","era":"BLACKPINK","a":"BLACKPINK","story":"強勢回歸曲 ——「我們的魅力像粉紅色的毒液,一沾就上癮」。酷帥帶東方味的 hip-hop,副歌英文。","chorus":"副歌唱「pink venom」,神祕又狠,跟著哼很上頭。","voc":[["pink","粉紅色"],["venom","毒液"],["taste","嚐、品嚐"],["kick in","發作、生效"],["straight","直接"],["one shot","一擊"],["dance","跳舞"],["bad","壞的、厲害的"],["get them","拿下他們"],["shoot","射擊"]],"pron":"venom=「VEH-num」;pink=「pink」。"},{"n":17,"en":"Shut Down","zh":"全場靜止","era":"BLACKPINK","a":"BLACKPINK","story":"自信展現實力 ——「我們一登場就讓全場安靜、被征服」。沿用古典名曲旋律的 hip-hop,副歌英文。","chorus":"副歌反覆唱「shut it down」,跟著強拍唱出氣勢。","voc":[["shut down","關閉、讓全場停擺"],["keep","保持"],["low","低調"],["watch","看、注意"],["move","行動"],["respect","尊重"],["top","頂端"],["back","回來"],["still","仍然"],["the best","最棒的"]],"pron":"「shut down」連著「shʌt-dawn」。"},{"n":18,"en":"Lovesick Girls","zh":"相思病女孩","era":"BLACKPINK","a":"BLACKPINK","story":"唱出明知會受傷還是渴望愛的女孩心情 ——「我們都是害相思病的女孩」。副歌英文、旋律抓耳。","chorus":"副歌唱「lovesick girls」,帶著傷感又釋放,跟著大聲唱。","voc":[["lovesick","害相思病的"],["girls","女孩們"],["love","愛"],["pain","痛"],["cry","哭"],["night","夜晚"],["run","奔跑"],["wild","狂野的"],["need","需要"],["no love","沒有愛"]],"pron":"lovesick=「LʌV-sik」;girls=「gurlz」。"},{"n":19,"en":"As If It's Your Last","zh":"像最後一次那樣","era":"BLACKPINK","a":"BLACKPINK","story":"叫對方「像今天是最後一天那樣愛我、為我心動」。甜美又抓耳的夏日 K-pop。","chorus":"副歌活潑地唱出渴望被愛的心情,跟著輕快節奏唱跳。","voc":[["last","最後"],["love me","愛我"],["like","像、喜歡"],["today","今天"],["heart","心"],["come to me","到我這來"],["only","只有"],["forever","永遠"],["dance","跳舞"],["boy","男孩"]],"pron":"「as if」連著「æ-zif」;last=「læst」。"},{"n":20,"en":"Crooked","zh":"放縱","era":"G-Dragon 權志龍","a":"G-Dragon","story":"GD 失戀後乾脆放縱自我、四處遊蕩發洩 ——「就讓我歪一下、亂一下」。搖滾感十足的韓文歌,英文 hook 好記。","chorus":"副歌唱「I'm so crooked」,帶著叛逆與宣洩,跟著吼很爽。","voc":[["crooked","歪的、放縱的"],["alone","獨自"],["tonight","今晚"],["cry","哭"],["crazy","瘋狂"],["run","跑"],["free","自由"],["broken","破碎的"],["bad","壞的"],["let me","讓我"]],"pron":"crooked=「KRUH-kid」;alone=「uh-LOHN」。"},{"n":21,"en":"Heartbreaker","zh":"心碎製造者","era":"G-Dragon 權志龍","a":"G-Dragon","story":"GD 的出道個人曲 ——「你是個讓人心碎的傢伙」。讓他紅遍亞洲的招牌歌,副歌英文。","chorus":"副歌唱「you're my heartbreaker」,跟著洗腦旋律哼。","voc":[["heartbreaker","讓人心碎的人"],["heart","心"],["break","打破、心碎"],["love","愛"],["girl","女孩"],["why","為什麼"],["baby","寶貝"],["leave","離開"],["alone","獨自"],["come back","回來"]],"pron":"heartbreaker=「HART-bray-ker」。"},{"n":22,"en":"Crayon","zh":"瘋一波","era":"G-Dragon 權志龍","a":"G-Dragon","story":"叫大家拋開煩惱、盡情瘋一波 ——「Why so serious? 來吧!」充滿玩心的電音嘻哈。","chorus":"副歌帶著俏皮口吻喊出來,跟著節拍 high 起來。","voc":[["crayon","蠟筆(諧音「瘋一波」)"],["why so serious","幹嘛這麼嚴肅"],["let's go","走吧"],["party","派對"],["crazy","瘋狂"],["up","嗨起來"],["bounce","彈跳"],["good","好的"],["now","現在"],["get up","站起來、嗨起來"]],"pron":"crayon=「KRAY-on」;serious=「SEER-ee-us」。"},{"n":23,"en":"Untitled, 2014","zh":"無題","era":"G-Dragon 權志龍","a":"G-Dragon","story":"樸實深情的鋼琴情歌 ——寫給逝去的愛,滿是思念與遺憾。GD 親手包辦的催淚之作(韓文歌,情感共通)。","chorus":"副歌情緒滿溢,即使是韓文,跟著旋律哼也很有感;學裡面少數的英文字。","voc":[["untitled","無題的"],["miss","想念"],["love","愛"],["alone","獨自"],["tears","眼淚"],["goodbye","再見"],["heart","心"],["call","打電話"],["come back","回來"],["still","仍然"]],"pron":"untitled=「un-TY-tld」;tears=「teerz」。"},{"n":24,"en":"POWER","zh":"力量","era":"G-Dragon 權志龍","a":"G-Dragon","story":"GD 2024 回歸曲 ——霸氣宣告「我就是有那股力量」,充滿王者氣場。副歌英文 hook 超好跟。","chorus":"副歌反覆唱「power」,氣勢全開,跟著重拍喊出來。","voc":[["power","力量"],["king","王"],["money","錢"],["top","頂端"],["shine","發光"],["bad","厲害的"],["boss","老大"],["up","向上"],["never stop","從不停"],["now","現在"]],"pron":"power=「POW-er」;king=「king」。"}];
+const MIX=[{"n":1,"en":"Hero","zh":"英雄","era":"Mariah Carey 瑪麗亞凱莉","a":"Mariah Carey","story":"經典勵志情歌 ——「真正的英雄就在你心裡,撐不下去時要相信自己」。瑪麗亞凱莉的招牌高音神曲。","chorus":"副歌唱「there's a hero, if you look inside your heart」,情緒層層堆高,適合放開唱、練長音。","voc":[["hero","英雄"],["heart","心"],["inside","裡面、內心"],["strong","堅強的"],["fear","恐懼"],["survive","活下來、撐過"],["truth","真相"],["look inside","往內心看"],["be strong","要堅強"],["hold on","撐住"]],"pron":"hero=「HEER-oh」;「look inside」連著「lu-kin-side」。",lines:[["There's a hero if you look inside your heart","往心裡看就有個英雄"],["You don't have to be afraid","你不必害怕"]]},{"n":2,"en":"We Belong Together","zh":"我們命中註定在一起","era":"Mariah Carey 瑪麗亞凱莉","a":"Mariah Carey","story":"分手後才發現有多想念對方 ——「我們本來就該在一起」。她史上最暢銷的抒情 R&B 金曲。","chorus":"副歌反覆唱「we belong together」,情緒濃烈,跟著拉高音唱出思念。","voc":[["belong together","命中註定在一起"],["miss","想念"],["come back","回來"],["baby","寶貝"],["need","需要"],["without you","沒有你"],["wrong","錯了"],["why","為什麼"],["alone","孤單"],["return","回來"]],"pron":"belong=「bee-LONG」;together=「tuh-GEH-ther」。",lines:[["We belong together","我們命中註定在一起"],["When you left I lost a part of me","你離開時我失去了自己"]]},{"n":3,"en":"All I Want for Christmas Is You","zh":"聖誕節我只要你","era":"Mariah Carey 瑪麗亞凱莉","a":"Mariah Carey","story":"全世界最紅的聖誕歌 ——「禮物我都不要,我只要你」。每年聖誕必放、必合唱。","chorus":"副歌唱「all I want for Christmas is you」,歡樂又甜,跟著節奏唱超應景。","voc":[["Christmas","聖誕節"],["all I want","我只想要的"],["present","禮物"],["snow","雪"],["wish","願望"],["under the tree","在聖誕樹下"],["you","你"],["need","需要"],["more than","超過"],["baby","寶貝"]],"pron":"Christmas=「KRIS-mus」(t 不發音);want=「wahnt」。",lines:[["All I want for Christmas is you","聖誕節我只要你"],["You make my wish come true","你讓我的願望成真"]]},{"n":4,"en":"Without You","zh":"沒有你","era":"Mariah Carey 瑪麗亞凱莉","a":"Mariah Carey","story":"撕心裂肺的失戀名曲 ——「沒有你我活不下去」。被她唱成跨時代的經典高音。","chorus":"副歌悲痛地唱「I can't live, if living is without you」,情緒滿到爆,適合投入感情唱。","voc":[["without you","沒有你"],["live","活著"],["can't","不能"],["give","給"],["forget","忘記"],["regret","後悔"],["cry","哭"],["alone","獨自"],["too long","太久"],["each day","每一天"]],"pron":"without=「wi-THOWT」;live=「liv」(動詞短音)。",lines:[["I can't live if living is without you","沒有你我活不下去"]]},{"n":5,"en":"Fantasy","zh":"幻想","era":"Mariah Carey 瑪麗亞凱莉","a":"Mariah Carey","story":"沉浸在對某人的幻想裡 ——「一想到你,我就像進入夢幻世界」。輕快俏皮的 90 年代舞曲。","chorus":"副歌唱「sweet sweet fantasy baby」,輕盈洗腦,跟著擺動哼唱。","voc":[["fantasy","幻想"],["sweet","甜美的"],["dream","夢"],["baby","寶貝"],["mind","腦海"],["real","真實的"],["feel","感覺"],["close my eyes","閉上眼睛"],["high","陶醉、飄飄然"],["imagine","想像"]],"pron":"fantasy=「FAN-tuh-see」;sweet=「sweet」。",lines:[["Sweet sweet fantasy baby","甜蜜的幻想寶貝"],["Close my eyes","閉上眼睛"]]},{"n":6,"en":"Always Be My Baby","zh":"永遠是我的寶貝","era":"Mariah Carey 瑪麗亞凱莉","a":"Mariah Carey","story":"就算分開,對方永遠在心裡有個位置 ——「你永遠是我的寶貝」。慵懶甜美的 R&B 金曲。","chorus":"副歌唱「you'll always be my baby」,旋律好記,跟著輕鬆搖擺。","voc":[["always","永遠、總是"],["baby","寶貝"],["mine","我的"],["stay","留下"],["part of me","我的一部分"],["never","從不"],["goodbye","再見"],["come back","回來"],["destiny","命運"],["still","仍然"]],"pron":"always=「AWL-wayz」;baby=「BAY-bee」。",lines:[["You'll always be my baby","你永遠是我的寶貝"],["I'll hold on to the memories","緊抓著回憶不放"]]},{"n":7,"en":"Maria","zh":"瑪麗亞(別為難自己)","era":"華莎 Hwasa","a":"Hwasa","story":"華莎寫給自己的歌 ——「Maria 啊,別再為難自己了」,面對流言也要好好愛自己。拉丁風 K-pop,副歌是英文(韓文歌,我們學裡面的英文)。","chorus":"副歌反覆唱英文「oh Maria」,慵懶有態度,跟著哼名字就能融入。","voc":[["Maria","瑪麗亞(歌中對自己的暱稱)"],["no more","不要再"],["why","為什麼"],["so what","那又怎樣"],["love","愛"],["free","自由"],["enough","夠了"],["don't worry","別擔心"],["beautiful","美麗的"],["yourself","你自己"]],"pron":"Maria=「ma-REE-a」;「no more」連著「noh-mor」。",lines:[["Maria Maria tell yourself","Maria告訴你自己"],["You're beautiful and enough","你很美已經足夠了"]]},{"n":8,"en":"Twit","zh":"笨蛋","era":"華莎 Hwasa","a":"Hwasa","story":"罵那個讓自己心動的對象是「笨蛋」,又愛又氣的俏皮戀曲。韓文歌,夾雜好記的英文字。","chorus":"副歌帶著嬌嗔的口氣,英文穿插其中,跟著節奏唱很可愛。","voc":[["twit","笨蛋、傻瓜"],["fool","傻子"],["crazy","瘋狂"],["heart","心"],["love","愛"],["stupid","笨的"],["baby","寶貝"],["boy","男孩"],["why","為什麼"],["oh my","我的天"]],"pron":"twit=「twit」;fool=「fool」。",lines:[["You're such a twit","你真是個呆瓜"],["Why you acting like a fool","為什麼像個傻瓜"]]},{"n":9,"en":"Chili","zh":"辣椒","era":"華莎 Hwasa","a":"Hwasa","story":"像辣椒一樣火辣有個性,展現滿滿自信。復古放克風 K-pop,副歌有英文 hook。","chorus":"副歌唱「chili」帶著辣勁,跟著律動扭擺很帶感。","voc":[["chili","辣椒"],["hot","辣的、火熱"],["spicy","辣的"],["red","紅色"],["taste","味道、嚐"],["dance","跳舞"],["tonight","今晚"],["feel","感覺"],["groove","律動"],["so good","很讚"]],"pron":"chili=「CHIL-ee」;hot=「haht」。",lines:[["I'm hot like chili","我像辣椒一樣辣"],["I'm spicy hot","我夠嗆夠辣"]]},{"n":10,"en":"I Love My Body","zh":"我愛我的身體","era":"華莎 Hwasa","a":"Hwasa","story":"大方歌頌愛自己的身體、做自己最美 —— 充滿自信的正能量宣言。歌名就是英文金句。","chorus":"副歌直接唱「I love my body」,自信滿滿,抬頭挺胸大聲唱。","voc":[["body","身體"],["love","愛"],["myself","我自己"],["beautiful","美麗的"],["free","自由"],["proud","驕傲的"],["shine","發光"],["confident","有自信的"],["mine","我的"],["feel good","感覺很好"]],"pron":"body=「BAH-dee」;「love my body」連著唱。",lines:[["I love my body","我愛我的身體"],["I'm beautiful and free","我既美麗又自由"]]},{"n":11,"en":"Good Goodbye","zh":"好好說再見","era":"華莎 Hwasa","a":"Hwasa","story":"華莎 2025 年底發行、紅遍韓國的超級代表作(達成完美 all-kill,生涯最紅)——唱出「就算要分開,也要好好、體面地說再見」的成熟與灑脫。復古情歌,今年初到處都在播。","chorus":"副歌反覆唱英文「good goodbye」,優雅又帶點不捨,跟著哼這句就能跟上。","voc":[["good goodbye","好好說再見"],["goodbye","再見"],["good","好的"],["love","愛"],["end","結束、結局"],["miss","想念"],["last","最後"],["let go","放手"],["thank you","謝謝"],["smile","微笑"]],"pron":"goodbye=「gud-BAI」;「good goodbye」連著「gud-gud-bai」。",lines:[["Good goodbye","好好說再見"],["Even though it hurts I'll smile","即使心痛我還是會微笑"]]},{"n":12,"en":"So Cute","zh":"好可愛","era":"華莎 Hwasa","a":"Hwasa","story":"華莎 2026 年 4 月的回歸曲 —— 一改以往的性感路線,用輕快俏皮的舞曲展現「出乎意料的可愛」。和 PSY 一起寫詞,輕鬆好跳。","chorus":"副歌帶著俏皮口吻唱「so cute」,輕快洗腦,跟著節奏擺動著唱。","voc":[["so cute","好可愛"],["cute","可愛的"],["love","愛"],["baby","寶貝"],["smile","微笑"],["dance","跳舞"],["pretty","漂亮的"],["look at me","看著我"],["my style","我的風格"],["tonight","今晚"]],"pron":"cute=「kyoot」;「so cute」連著「soh-kyoot」。",lines:[["So cute so cute","好可愛好可愛"],["You make me smile","你讓我微笑"]]},{"n":13,"en":"DDU-DU DDU-DU","zh":"嘟嘟","era":"BLACKPINK","a":"BLACKPINK","story":"BLACKPINK 爆紅代表作,展現霸氣自信 ——「我們又美又狠」。韓文饒舌+英文 hook,「ddu-du」是開槍的擬聲。","chorus":"副歌那串「ddu-du ddu-du」最好跟,配上手勢超有戲。","voc":[["pretty","漂亮"],["savage","狠角色、兇猛"],["hit","打、擊中"],["money","錢"],["gold","金"],["love","愛"],["boss","老大"],["shine","發光"],["look at me","看著我"],["so hot","超辣"]],"pron":"pretty=「PRIH-tee」;savage=「SA-vij」。",lines:[["Pretty pretty savage","又美又野"],["Hit you with that ddu-du ddu-du","用嘟嘟嘟嘟擊中你"]]},{"n":14,"en":"Kill This Love","zh":"終結這段愛","era":"BLACKPINK","a":"BLACKPINK","story":"決心斬斷一段傷人的愛 ——「我要終結這段愛」。氣勢磅礴,副歌是英文,超好合唱。","chorus":"副歌大喊「let's kill this love」,跟著重拍吼出來最過癮。","voc":[["kill this love","終結這段愛"],["love","愛"],["let's go","走吧"],["heart","心"],["goodbye","再見"],["stop","停"],["brave","勇敢"],["end","結束"],["pull","拉、扣(扳機)"],["strong","堅強的"]],"pron":"kill=「kil」;「this love」連著「ðis-lʌv」。",lines:[["Let's kill this love","讓我們終結這份愛"],["I'm done","我受夠了"]]},{"n":15,"en":"How You Like That","zh":"你覺得如何","era":"BLACKPINK","a":"BLACKPINK","story":"從谷底翻身、華麗回歸的宣言 ——「現在你覺得我如何?」充滿自信的嗆聲歌。副歌英文。","chorus":"副歌唱「how you like that」,跟著節拍唱出那股霸氣。","voc":[["how you like that","你覺得如何"],["look up","抬頭看"],["down","向下、低潮"],["shine","發光"],["bring","帶來"],["back","回來"],["now","現在"],["like","喜歡"],["so good","很讚"],["up","向上、振作"]],"pron":"「how you like that」連著「how-yu-laik-dæt」。",lines:[["How you like that","你滿意了嗎"],["Look up in the sky","抬頭看天空"]]},{"n":16,"en":"Pink Venom","zh":"粉紅毒液","era":"BLACKPINK","a":"BLACKPINK","story":"強勢回歸曲 ——「我們的魅力像粉紅色的毒液,一沾就上癮」。酷帥帶東方味的 hip-hop,副歌英文。","chorus":"副歌唱「pink venom」,神祕又狠,跟著哼很上頭。","voc":[["pink","粉紅色"],["venom","毒液"],["taste","嚐、品嚐"],["kick in","發作、生效"],["straight","直接"],["one shot","一擊"],["dance","跳舞"],["bad","壞的、厲害的"],["get them","拿下他們"],["shoot","射擊"]],"pron":"venom=「VEH-num」;pink=「pink」。",lines:[["Pink venom","粉紅毒液"],["One shot one shot","一槍一槍"]]},{"n":17,"en":"Shut Down","zh":"全場靜止","era":"BLACKPINK","a":"BLACKPINK","story":"自信展現實力 ——「我們一登場就讓全場安靜、被征服」。沿用古典名曲旋律的 hip-hop,副歌英文。","chorus":"副歌反覆唱「shut it down」,跟著強拍唱出氣勢。","voc":[["shut down","關閉、讓全場停擺"],["keep","保持"],["low","低調"],["watch","看、注意"],["move","行動"],["respect","尊重"],["top","頂端"],["back","回來"],["still","仍然"],["the best","最棒的"]],"pron":"「shut down」連著「shʌt-dawn」。",lines:[["Shut down shut down","關閉關閉"],["Whip it whip it","甩起來甩起來"]]},{"n":18,"en":"Lovesick Girls","zh":"相思病女孩","era":"BLACKPINK","a":"BLACKPINK","story":"唱出明知會受傷還是渴望愛的女孩心情 ——「我們都是害相思病的女孩」。副歌英文、旋律抓耳。","chorus":"副歌唱「lovesick girls」,帶著傷感又釋放,跟著大聲唱。","voc":[["lovesick","害相思病的"],["girls","女孩們"],["love","愛"],["pain","痛"],["cry","哭"],["night","夜晚"],["run","奔跑"],["wild","狂野的"],["need","需要"],["no love","沒有愛"]],"pron":"lovesick=「LʌV-sik」;girls=「gurlz」。",lines:[["We are the lovesick girls","我們是相思病女孩"]]},{"n":19,"en":"As If It's Your Last","zh":"像最後一次那樣","era":"BLACKPINK","a":"BLACKPINK","story":"叫對方「像今天是最後一天那樣愛我、為我心動」。甜美又抓耳的夏日 K-pop。","chorus":"副歌活潑地唱出渴望被愛的心情,跟著輕快節奏唱跳。","voc":[["last","最後"],["love me","愛我"],["like","像、喜歡"],["today","今天"],["heart","心"],["come to me","到我這來"],["only","只有"],["forever","永遠"],["dance","跳舞"],["boy","男孩"]],"pron":"「as if」連著「æ-zif」;last=「læst」。",lines:[["Make me feel like I'm the only one","讓我觉得我是唯一"],["Do it like it's your last","做得像是最後一次"]]},{"n":20,"en":"Crooked","zh":"放縱","era":"G-Dragon 權志龍","a":"G-Dragon","story":"GD 失戀後乾脆放縱自我、四處遊蕩發洩 ——「就讓我歪一下、亂一下」。搖滾感十足的韓文歌,英文 hook 好記。","chorus":"副歌唱「I'm so crooked」,帶著叛逆與宣洩,跟著吼很爽。","voc":[["crooked","歪的、放縱的"],["alone","獨自"],["tonight","今晚"],["cry","哭"],["crazy","瘋狂"],["run","跑"],["free","自由"],["broken","破碎的"],["bad","壞的"],["let me","讓我"]],"pron":"crooked=「KRUH-kid」;alone=「uh-LOHN」。",lines:[["I'm so crooked","我如此扭曲"],["Tonight I just want to be free","今晚我只想要自由"]]},{"n":21,"en":"Heartbreaker","zh":"心碎製造者","era":"G-Dragon 權志龍","a":"G-Dragon","story":"GD 的出道個人曲 ——「你是個讓人心碎的傢伙」。讓他紅遍亞洲的招牌歌,副歌英文。","chorus":"副歌唱「you're my heartbreaker」,跟著洗腦旋律哼。","voc":[["heartbreaker","讓人心碎的人"],["heart","心"],["break","打破、心碎"],["love","愛"],["girl","女孩"],["why","為什麼"],["baby","寶貝"],["leave","離開"],["alone","獨自"],["come back","回來"]],"pron":"heartbreaker=「HART-bray-ker」。",lines:[["You're my heartbreaker","你讓我心碎"],["Why you gotta break my heart","為什麼要傷我的心"]]},{"n":22,"en":"Crayon","zh":"瘋一波","era":"G-Dragon 權志龍","a":"G-Dragon","story":"叫大家拋開煩惱、盡情瘋一波 ——「Why so serious? 來吧!」充滿玩心的電音嘻哈。","chorus":"副歌帶著俏皮口吻喊出來,跟著節拍 high 起來。","voc":[["crayon","蠟筆(諧音「瘋一波」)"],["why so serious","幹嘛這麼嚴肅"],["let's go","走吧"],["party","派對"],["crazy","瘋狂"],["up","嗨起來"],["bounce","彈跳"],["good","好的"],["now","現在"],["get up","站起來、嗨起來"]],"pron":"crayon=「KRAY-on」;serious=「SEER-ee-us」。",lines:[["Why so serious","為什麼這麼嚴肅"],["Let's just party","我們就開趴吧"]]},{"n":23,"en":"Untitled, 2014","zh":"無題","era":"G-Dragon 權志龍","a":"G-Dragon","story":"樸實深情的鋼琴情歌 ——寫給逝去的愛,滿是思念與遺憾。GD 親手包辦的催淚之作(韓文歌,情感共通)。","chorus":"副歌情緒滿溢,即使是韓文,跟著旋律哼也很有感;學裡面少數的英文字。","voc":[["untitled","無題的"],["miss","想念"],["love","愛"],["alone","獨自"],["tears","眼淚"],["goodbye","再見"],["heart","心"],["call","打電話"],["come back","回來"],["still","仍然"]],"pron":"untitled=「un-TY-tld」;tears=「teerz」。",lines:[["I miss you","我想你"],["Without your love I'm nothing","沒有你的愛我什麼都不是"]]},{"n":24,"en":"POWER","zh":"力量","era":"G-Dragon 權志龍","a":"G-Dragon","story":"GD 2024 回歸曲 ——霸氣宣告「我就是有那股力量」,充滿王者氣場。副歌英文 hook 超好跟。","chorus":"副歌反覆唱「power」,氣勢全開,跟著重拍喊出來。","voc":[["power","力量"],["king","王"],["money","錢"],["top","頂端"],["shine","發光"],["bad","厲害的"],["boss","老大"],["up","向上"],["never stop","從不停"],["now","現在"]],"pron":"power=「POW-er」;king=「king」。",lines:[["I got the power","我擁有力量"]]}];
 
 const ARTISTS={
   taylor:{name:"泰勒絲",emoji:"🎤",search:"Taylor Swift",key:"tsLearn26",
@@ -441,6 +457,30 @@ function load(){
   document.getElementById("h1").textContent=cur.emoji+" "+cur.name+" 跟唱學英文";
   document.getElementById("sub").textContent=cur.sub;
 }
+function lyricsHtml(s){
+  if(!s.lines||!s.lines.length)return '';
+  return `<div class="sec"><div class="lab">📜 逐句歌詞（點單字看中文 · 點 🔊 聽這句）</div>
+    <div class="lyrbox">${s.lines.map(l=>`<div class="lyrline">
+      <button class="lyrplay" onclick="speak('${l[0].replace(/'/g,"\\'")}');event.stopPropagation()">🔊</button>
+      <div class="lyren">${l[0].split(/(\s+)/).map(w=>{
+        const t=w.trim();if(!t)return w;
+        return `<span class="lyrw" onclick="onWord('${t.replace(/'/g,"\\'")}',event)">${w}</span>`;
+      }).join('')}</div>
+      <div class="lyrcn">${l[1]}</div>
+    </div>`).join('')}</div></div>`;
+}
+function onWord(word,e){
+  e.stopPropagation();
+  const el=e.currentTarget;const old=document.querySelector('.lyrtip');
+  if(old&&old.dataset.word===word&&el.contains(old)){old.remove();return}
+  if(old)old.remove();
+  const allVoc=SONGS.reduce((a,s)=>a.concat(s.voc||[]),[]);
+  const m=allVoc.find(v=>v[0].toLowerCase()===word.toLowerCase());
+  const tip=document.createElement('div');tip.className='lyrtip';tip.dataset.word=word;
+  tip.textContent=m?m[0]+' = '+m[1]:word;
+  el.appendChild(tip);el.classList.add('show');
+  setTimeout(()=>{tip.remove();el.classList.remove('show')},m?3000:1500);
+}
 function links(t,a){
   const who=a||cur.search;const q=enc(who+" "+t);
   return `<div class="links">
@@ -452,6 +492,32 @@ function links(t,a){
 function speak(t,lang){
   try{const u=new SpeechSynthesisUtterance(t);u.lang=lang||"en-US";u.rate=RATE;
     speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}
+}
+const LYRICS_CACHE_KEY="fullLyrics";
+function findSong(n){return SONGS.find(x=>x.n===n);}
+async function loadFullLyrics(n){
+  const btn=event.target;if(btn.dataset.loading)return;
+  const wrap=document.getElementById("fullwrap"+n);
+  if(wrap.innerHTML){wrap.innerHTML="";btn.classList.remove("on");return;}
+  btn.dataset.loading="1";btn.textContent="⏳";
+  const s=findSong(n);const cache=JSON.parse(localStorage.getItem(LYRICS_CACHE_KEY)||"{}");
+  const artist=s.a||cur.search;const key=artist+"__"+s.en;
+  if(cache[key]){showFullLyrics(n,cache[key]);btn.dataset.loading="";btn.textContent="📄 收起";btn.classList.add("on");return;}
+  try{
+    const r=await fetch("https://api.lyrics.ovh/v1/"+encodeURIComponent(artist)+"/"+encodeURIComponent(s.en));
+    const d=await r.json();
+    if(d.lyrics){
+      const lines=d.lyrics.split("\n").filter(l=>l.trim());cache[key]=lines;
+      localStorage.setItem(LYRICS_CACHE_KEY,JSON.stringify(cache));
+      showFullLyrics(n,lines);
+      btn.textContent="📄 收起";btn.classList.add("on");
+    }else{btn.textContent="❌";setTimeout(()=>{btn.textContent="📄 完整歌詞"},1500);}
+  }catch(e){btn.textContent="❌";setTimeout(()=>{btn.textContent="📄 完整歌詞"},1500);}
+  btn.dataset.loading="";
+}
+function showFullLyrics(n,lines){
+  const wrap=document.getElementById("fullwrap"+n);
+  wrap.innerHTML=`<div class="sec"><div class="lab">📄 完整歌詞</div><div class="fulllyr">${lines.map(l=>`<div class="fulllyrln">${l}</div>`).join("")}</div></div>`;
 }
 // 韓文跟唱攻略(常用字為一般詞彙,非歌詞;整首歌詞一律走外部連結)
 const KCHEAT=[
@@ -564,8 +630,11 @@ function render(){
         ${links(s.en,s.a)}
         ${(ART==="mix"&&s.a&&s.a!=="Mariah Carey")?koLinks(s):""}
         <div class="sec"><div class="lab">🎵 這首在唱什麼</div>${s.story}</div>
-        <div class="sec"><div class="lab">🎤 副歌跟唱重點</div><div class="chorus">${s.chorus}</div></div>
-        <div class="sec"><div class="lab">📖 ${(ART==="mix"&&s.a&&s.a!=="Mariah Carey")?"歌裡的英文單字 &amp; hook":"重點單字 &amp; 片語"}(點 🔊 聽發音)</div>
+         <div class="sec"><div class="lab">🎤 副歌跟唱重點</div><div class="chorus">${s.chorus}</div></div>
+         ${lyricsHtml(s)}
+         <button class="fb" onclick="loadFullLyrics(${s.n})">📄 完整歌詞</button>
+         <div id="fullwrap${s.n}"></div>
+         <div class="sec"><div class="lab">📖 ${(ART==="mix"&&s.a&&s.a!=="Mariah Carey")?"歌裡的英文單字 &amp; hook":"重點單字 &amp; 片語"}(點 🔊 聽發音)</div>
           ${s.voc.map(v=>`<div class="voc"><button class="spk" onclick="speak('${v[0].replace(/'/g,"\\'")}')">🔊</button>
             <div><span class="en2">${v[0]}</span> <span class="zh2">${v[1]}</span></div></div>`).join("")}</div>
         ${(ART==="mix"&&s.a&&s.a!=="Mariah Carey")?koVocHtml(s):""}
