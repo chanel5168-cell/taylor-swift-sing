@@ -733,4 +733,102 @@ document.body.className=ART;
 document.querySelectorAll(".art").forEach(b=>b.classList.toggle("on",b.dataset.a===ART));
 document.querySelectorAll(".spd").forEach(b=>b.classList.toggle("on",parseFloat(b.dataset.r)===RATE));
 load();render();
-</script></body></html>
+</script><!-- ===== 🤖 AI 英文家教（cy-english-camp + taylor-swift-sing 共用,自我包含）===== -->
+<style>
+#ait-fab{position:fixed;right:16px;bottom:16px;z-index:9998;width:60px;height:60px;border-radius:50%;
+  border:none;background:linear-gradient(135deg,#7c6cff,#b06bff);color:#fff;font-size:26px;cursor:pointer;
+  box-shadow:0 6px 20px rgba(0,0,0,.35)}
+#ait-wrap{position:fixed;inset:auto 12px 12px 12px;max-width:460px;margin:0 auto;z-index:9999;display:none;
+  height:min(78vh,620px);background:#1a1626;border:1px solid #3a3350;border-radius:18px;overflow:hidden;
+  flex-direction:column;box-shadow:0 12px 40px rgba(0,0,0,.5);font-size:15px;color:#f0edf7}
+#ait-wrap.on{display:flex}
+#ait-hd{display:flex;align-items:center;gap:8px;padding:12px 14px;background:#241d38;border-bottom:1px solid #3a3350}
+#ait-hd b{font-size:16px;flex:1}
+#ait-hd button{background:none;border:none;color:#cfc7e6;font-size:20px;cursor:pointer;padding:4px 8px}
+#ait-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
+.ait-b{max-width:88%;padding:10px 13px;border-radius:14px;line-height:1.55;white-space:pre-wrap;word-break:break-word;font-size:15px}
+.ait-b.u{align-self:flex-end;background:#4a3fb0;color:#fff;border-bottom-right-radius:4px}
+.ait-b.a{align-self:flex-start;background:#2c2540;color:#f0edf7;border-bottom-left-radius:4px}
+.ait-spk{display:inline-block;margin-top:6px;font-size:13px;color:#b8a9ff;cursor:pointer;user-select:none}
+#ait-quick{display:flex;gap:6px;padding:8px 10px 0;flex-wrap:wrap}
+#ait-quick button{flex:1;min-width:96px;padding:9px 6px;border-radius:10px;border:1px solid #4a4266;
+  background:#241d38;color:#e6def7;font-size:14px;cursor:pointer}
+#ait-in{display:flex;gap:6px;align-items:flex-end;padding:8px 10px 10px}
+#ait-in textarea{flex:1;resize:none;height:44px;max-height:110px;padding:10px 12px;border-radius:12px;
+  border:1px solid #4a4266;background:#0f0c18;color:#fff;font-size:15px;font-family:inherit}
+#ait-in button{border:none;border-radius:12px;cursor:pointer;font-size:20px;height:44px;padding:0 14px}
+#ait-mic{background:#332a52;color:#cfc7e6}
+#ait-mic.rec{background:#ff4d6d;color:#fff;animation:aitpulse 1s infinite}
+#ait-send{background:linear-gradient(135deg,#7c6cff,#b06bff);color:#fff}
+@keyframes aitpulse{50%{opacity:.5}}
+#ait-auto{display:flex;align-items:center;gap:5px;font-size:13px;color:#b8a9ff;padding:0 12px 8px}
+</style>
+<button id="ait-fab" title="AI 英文家教">🤖</button>
+<div id="ait-wrap" role="dialog" aria-label="AI 英文家教">
+  <div id="ait-hd"><b>🤖 AI 英文家教</b><button id="ait-close" title="關閉">✕</button></div>
+  <div id="ait-msgs"></div>
+  <div id="ait-quick">
+    <button data-q="quiz">📝 出題考我</button>
+    <button data-q="explain">🔤 解釋單字</button>
+    <button data-q="reset">🔄 重新開始</button>
+  </div>
+  <label id="ait-auto"><input type="checkbox" id="ait-autochk" checked> 🔊 自動朗讀 AI 的英文</label>
+  <div id="ait-in">
+    <textarea id="ait-text" placeholder="打字,或按 🎤 開口說英文…"></textarea>
+    <button id="ait-mic" title="開口說">🎤</button>
+    <button id="ait-send" title="送出">➤</button>
+  </div>
+</div>
+<script>
+(function(){
+  var API='https://cy-english-camp.pages.dev/api/chat';
+  var SYS="You are a warm, patient English tutor for a Taiwanese adult beginner named Chanel. "
+    +"Rules: (1) Keep replies SHORT (1-3 sentences). Write the English FIRST, then a brief Traditional-Chinese note in parentheses if needed. "
+    +"(2) Gently correct her English mistakes: show the corrected sentence, then a one-line Chinese reason. "
+    +"(3) When she asks to be quizzed, ask ONE question at a time, wait for her answer, then give short feedback and the next question. "
+    +"(4) When she asks a word's meaning, give: the meaning in Chinese, one simple English example sentence, and stop. "
+    +"(5) Always end your turn with a short question or prompt so she keeps practicing speaking. Never send long paragraphs.";
+  var msgs=[]; // {role, content} — ponytail: 記憶體暫存,不落地(關掉就重來)
+  var busy=false, voice=null;
+  var $=function(id){return document.getElementById(id);};
+  function pickVoice(){var vs=speechSynthesis.getVoices();voice=vs.find(function(v){return /en-GB|en-US/i.test(v.lang);})||vs.find(function(v){return /^en/i.test(v.lang);})||null;}
+  if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
+  function speak(t){ if(!('speechSynthesis' in window))return; var en=(t.match(/[A-Za-z][A-Za-z' ,.!?-]+/g)||[]).join(' '); if(!en.trim())return;
+    speechSynthesis.cancel(); var u=new SpeechSynthesisUtterance(en); if(voice){u.voice=voice;u.lang=voice.lang;}else u.lang='en-US'; u.rate=.9; speechSynthesis.speak(u); }
+  function bubble(role,text){ var d=document.createElement('div'); d.className='ait-b '+(role==='user'?'u':'a'); d.textContent=text;
+    if(role==='assistant'){ var s=document.createElement('span'); s.className='ait-spk'; s.textContent='🔊 再唸一次'; s.onclick=function(){speak(text);}; d.appendChild(document.createElement('br')); d.appendChild(s); }
+    $('ait-msgs').appendChild(d); $('ait-msgs').scrollTop=$('ait-msgs').scrollHeight; }
+  function greet(){ if(msgs.length)return; var hi="Hi Chanel! Let's practice English. 😊 (哈囉!想聊天、問單字,還是要我出題考你?)"; msgs.push({role:'assistant',content:hi}); bubble('assistant',hi); }
+  async function send(text){ if(busy||!text.trim())return; busy=true;
+    msgs.push({role:'user',content:text}); bubble('user',text);
+    var wait=document.createElement('div'); wait.className='ait-b a'; wait.textContent='…'; $('ait-msgs').appendChild(wait); $('ait-msgs').scrollTop=$('ait-msgs').scrollHeight;
+    try{ var r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:SYS,messages:msgs})});
+      var j=await r.json(); wait.remove();
+      if(j.text){ msgs.push({role:'assistant',content:j.text}); bubble('assistant',j.text); if($('ait-autochk').checked)speak(j.text); }
+      else bubble('assistant','⚠️ '+(j.error||'連線出問題,等一下再試')); }
+    catch(e){ wait.remove(); bubble('assistant','⚠️ 連不上網路,檢查一下再試'); }
+    busy=false; }
+  // 送出 / 快捷
+  $('ait-send').onclick=function(){ var v=$('ait-text').value; $('ait-text').value=''; send(v); };
+  $('ait-text').addEventListener('keydown',function(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('ait-send').click();} });
+  $('ait-quick').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return; var q=b.dataset.q;
+    if(q==='quiz') send('Please quiz me with one short English question. 請出一題考我。');
+    else if(q==='explain'){ var w=prompt('想問哪個英文單字或句子?'); if(w) send('What does "'+w+'" mean? 請解釋 "'+w+'"。'); }
+    else if(q==='reset'){ msgs=[]; $('ait-msgs').innerHTML=''; greet(); } });
+  // 開關
+  $('ait-fab').onclick=function(){ $('ait-wrap').classList.add('on'); greet(); };
+  $('ait-close').onclick=function(){ $('ait-wrap').classList.remove('on'); if('speechSynthesis' in window)speechSynthesis.cancel(); };
+  // 語音輸入
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(SR){ var rec=new SR(); rec.lang='en-US'; rec.interimResults=false; var recing=false;
+    $('ait-mic').onclick=function(){ if(recing){rec.stop();return;} try{rec.start();}catch(e){} };
+    rec.onstart=function(){recing=true;$('ait-mic').classList.add('rec');};
+    rec.onend=function(){recing=false;$('ait-mic').classList.remove('rec');};
+    rec.onresult=function(e){ var t=e.results[0][0].transcript; $('ait-text').value=t; send(t); $('ait-text').value=''; };
+    rec.onerror=function(){recing=false;$('ait-mic').classList.remove('rec');};
+  } else { $('ait-mic').style.display='none'; } // 此裝置不支援語音輸入(多為 iOS/內建瀏覽器),改用打字
+})();
+</script>
+<!-- ===== /AI 英文家教 ===== -->
+
+</body></html>
