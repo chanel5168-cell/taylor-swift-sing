@@ -744,6 +744,7 @@ load();render();
 #ait-wrap.on{display:flex}
 #ait-hd{display:flex;align-items:center;gap:8px;padding:12px 14px;background:#241d38;border-bottom:1px solid #3a3350}
 #ait-hd b{font-size:16px;flex:1}
+#ait-daily{font-size:13px;color:#b8a9ff;text-decoration:none;border:1px solid #4a4266;border-radius:8px;padding:4px 8px;white-space:nowrap}
 #ait-hd button{background:none;border:none;color:#cfc7e6;font-size:20px;cursor:pointer;padding:4px 8px}
 #ait-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
 .ait-b{max-width:88%;padding:10px 13px;border-radius:14px;line-height:1.55;white-space:pre-wrap;word-break:break-word;font-size:15px}
@@ -751,7 +752,7 @@ load();render();
 .ait-b.a{align-self:flex-start;background:#2c2540;color:#f0edf7;border-bottom-left-radius:4px}
 .ait-spk{display:inline-block;margin-top:6px;font-size:13px;color:#b8a9ff;cursor:pointer;user-select:none}
 #ait-quick{display:flex;gap:6px;padding:8px 10px 0;flex-wrap:wrap}
-#ait-quick button{flex:1;min-width:96px;padding:9px 6px;border-radius:10px;border:1px solid #4a4266;
+#ait-quick button{flex:1;min-width:88px;padding:9px 6px;border-radius:10px;border:1px solid #4a4266;
   background:#241d38;color:#e6def7;font-size:14px;cursor:pointer}
 #ait-in{display:flex;gap:6px;align-items:flex-end;padding:8px 10px 10px}
 #ait-in textarea{flex:1;resize:none;height:44px;max-height:110px;padding:10px 12px;border-radius:12px;
@@ -765,12 +766,13 @@ load();render();
 </style>
 <button id="ait-fab" title="AI 英文家教">🤖</button>
 <div id="ait-wrap" role="dialog" aria-label="AI 英文家教">
-  <div id="ait-hd"><b>🤖 AI 英文家教</b><button id="ait-close" title="關閉">✕</button></div>
+  <div id="ait-hd"><b>🤖 AI 英文家教</b><a id="ait-daily" href="https://cy-english-camp.pages.dev/daily.html" target="_blank" rel="noopener">📘 每日單字</a><button id="ait-close" title="關閉">✕</button></div>
   <div id="ait-msgs"></div>
   <div id="ait-quick">
+    <button data-q="learn">🔊 學新單字</button>
     <button data-q="quiz">📝 出題考我</button>
     <button data-q="explain">🔤 解釋單字</button>
-    <button data-q="reset">🔄 重新開始</button>
+    <button data-q="reset">🔄 重來</button>
   </div>
   <label id="ait-auto"><input type="checkbox" id="ait-autochk" checked> 🔊 自動朗讀 AI 的英文</label>
   <div id="ait-in">
@@ -782,13 +784,16 @@ load();render();
 <script>
 (function(){
   var API='https://cy-english-camp.pages.dev/api/chat';
-  var SYS="You are a warm, patient English tutor for a Taiwanese adult beginner named Chanel. "
-    +"Rules: (1) Keep replies SHORT (1-3 sentences). Write the English FIRST, then a brief Traditional-Chinese note in parentheses if needed. "
-    +"(2) Gently correct her English mistakes: show the corrected sentence, then a one-line Chinese reason. "
-    +"(3) When she asks to be quizzed, ask ONE question at a time, wait for her answer, then give short feedback and the next question. "
-    +"(4) When she asks a word's meaning, give: the meaning in Chinese, one simple English example sentence, and stop. "
-    +"(5) Always end your turn with a short question or prompt so she keeps practicing speaking. Never send long paragraphs.";
-  var msgs=[]; // {role, content} — ponytail: 記憶體暫存,不落地(關掉就重來)
+  var SYS="You are a warm, patient English tutor for a Taiwanese adult beginner named Chanel. Teach with the '3-step method'. "
+    +"When she wants to LEARN a new word, do 3 steps IN ORDER, one short message each: "
+    +"STEP1 先會唸 — give the word's KK phonetic (e.g. /prE'naUns/) and tell her to say it aloud; "
+    +"STEP2 用句子記 — give ONE short natural example sentence using the word (English first, then a short Traditional-Chinese meaning in parentheses); "
+    +"STEP3 自己造句 — ask her to make HER OWN sentence with the word, then gently fix it and encourage her. "
+    +"Other rules: keep EVERY reply SHORT (1-3 sentences), English FIRST then a brief Traditional-Chinese note in () if needed; "
+    +"gently correct her English mistakes (show the corrected sentence, then a one-line Chinese reason); prefer HIGH-FREQUENCY everyday words; "
+    +"when she asks to be quizzed, ask ONE question at a time then give feedback and the next; "
+    +"always end your turn with a short question or prompt so she keeps practicing speaking. Never send long paragraphs.";
+  var msgs=[]; // ponytail: 記憶體暫存,不落地(關掉就重來)
   var busy=false, voice=null;
   var $=function(id){return document.getElementById(id);};
   function pickVoice(){var vs=speechSynthesis.getVoices();voice=vs.find(function(v){return /en-GB|en-US/i.test(v.lang);})||vs.find(function(v){return /^en/i.test(v.lang);})||null;}
@@ -798,7 +803,7 @@ load();render();
   function bubble(role,text){ var d=document.createElement('div'); d.className='ait-b '+(role==='user'?'u':'a'); d.textContent=text;
     if(role==='assistant'){ var s=document.createElement('span'); s.className='ait-spk'; s.textContent='🔊 再唸一次'; s.onclick=function(){speak(text);}; d.appendChild(document.createElement('br')); d.appendChild(s); }
     $('ait-msgs').appendChild(d); $('ait-msgs').scrollTop=$('ait-msgs').scrollHeight; }
-  function greet(){ if(msgs.length)return; var hi="Hi Chanel! Let's practice English. 😊 (哈囉!想聊天、問單字,還是要我出題考你?)"; msgs.push({role:'assistant',content:hi}); bubble('assistant',hi); }
+  function greet(){ if(msgs.length)return; var hi="Hi Chanel! Let's practice English. 😊 (哈囉!想學新單字、聊天,還是要我出題考你?)"; msgs.push({role:'assistant',content:hi}); bubble('assistant',hi); }
   async function send(text){ if(busy||!text.trim())return; busy=true;
     msgs.push({role:'user',content:text}); bubble('user',text);
     var wait=document.createElement('div'); wait.className='ait-b a'; wait.textContent='…'; $('ait-msgs').appendChild(wait); $('ait-msgs').scrollTop=$('ait-msgs').scrollHeight;
@@ -812,7 +817,8 @@ load();render();
   $('ait-send').onclick=function(){ var v=$('ait-text').value; $('ait-text').value=''; send(v); };
   $('ait-text').addEventListener('keydown',function(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('ait-send').click();} });
   $('ait-quick').addEventListener('click',function(e){ var b=e.target.closest('button'); if(!b)return; var q=b.dataset.q;
-    if(q==='quiz') send('Please quiz me with one short English question. 請出一題考我。');
+    if(q==='learn'){ var w=prompt('想學哪個英文單字?'); if(w) send('請用 3 步驟法教我 "'+w+'":先給 KK 音標要我唸,再給一個例句,最後要我自己造句。一步一則、簡短。'); }
+    else if(q==='quiz') send('Please quiz me with one short English question. 請出一題考我。');
     else if(q==='explain'){ var w=prompt('想問哪個英文單字或句子?'); if(w) send('What does "'+w+'" mean? 請解釋 "'+w+'"。'); }
     else if(q==='reset'){ msgs=[]; $('ait-msgs').innerHTML=''; greet(); } });
   // 開關
